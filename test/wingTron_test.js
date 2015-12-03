@@ -17,7 +17,7 @@
 // Update their position based on their velocity
 // 
 
-module('field');
+module('fieldFactory');
 test('check default field settings are ok', function (assert) {
   var field = getField(),
   bounds = field.getBoundaries(),
@@ -53,7 +53,7 @@ test('check out of bounds functionality', function (assert) {
 });
 
 
-module('player');
+module('playerFactory');
 test('check that the default coords are set', function (assert) {
   var player = getPlayer(),
   playerCoords = player.getCoords(),
@@ -206,38 +206,38 @@ test('check that a player begins a new path when there position is set', functio
   testPathAgainstExpected(assert, player, expectedPath);
 });
 
-module('arena');
-// arena should be able to take a field and a number of players and store them locally
-// arena should be able to move all players in one go and evaluate whether each of them is dead and mark them as such if they are
+module('refereeFactory');
+// referee should be able to take a field and a number of players and store them locally
+// referee should be able to move all players in one go and evaluate whether each of them is dead and mark them as such if they are
 test('check if players & field are successfully stored together within the object, adding one player at a time', function (assert) {
   var player1 = getPlayer(),
   player2 = getPlayer(),
   field = getField(),
-  arena = getArena(),
+  referee = getReferee(),
   playerArray;
-  arena.addPlayer(player1);
-  arena.addPlayer(player2);
-  arena.setField(field);
-  playerArray = arena.getPlayers();
+  referee.addPlayer(player1);
+  referee.addPlayer(player2);
+  referee.setField(field);
+  playerArray = referee.getPlayers();
   assert.equal(playerArray[0], player1, 'The player1 is successfully added to the player list');
   assert.equal(playerArray[1], player2, 'The player2 is successfully added to the player list');
   assert.notEqual(playerArray[1], player1, 'Confirmed that the two players are not being mistaken for one another');
   assert.notEqual(playerArray[0], player2, 'Confirmed that the two players are not being mistaken for one another');
-  assert.equal(arena.getField(), field, 'The field is successfully set within the arena object');
+  assert.equal(referee.getField(), field, 'The field is successfully set within the referee object');
 });
 
-test('check that players positions are updated properly when instructed to move by the arena', function (assert) {
+test('check that players positions are updated properly when instructed to move by the referee', function (assert) {
   var player1 = getPlayer(),
   player2 = getPlayer(),
   field = getField(),
   player1Coords,
   player2Coords;
-  arena = getArena();
-  arena.addPlayer(player1);
-  arena.addPlayer(player2);
-  arena.setField(field);
+  referee = getReferee();
+  referee.addPlayer(player1);
+  referee.addPlayer(player2);
+  referee.setField(field);
 
-  arena.stepTime();
+  referee.stepTime();
   player1Coords = player1.getCoords();
   player2Coords = player2.getCoords();
   assert.equal(player1Coords[0], 1, 'Player1 x position updated correctly');
@@ -246,7 +246,7 @@ test('check that players positions are updated properly when instructed to move 
   assert.equal(player2Coords[1], 0, 'Player2 y position remained the same as expected');
 
   player1.turnRight();
-  arena.stepTime();
+  referee.stepTime();
   player1Coords = player1.getCoords();
   player2Coords = player2.getCoords();
   assert.equal(player1Coords[0], 1, 'Player1 x position remained the same as expected');
@@ -262,18 +262,18 @@ test('check that players die when they are moved outside of the field boundaries
   player3 = getPlayer(),
   player4 = getPlayer(),
   field = getField(),
-  arena = getArena(),
+  referee = getReferee(),
   player1Alive,
   player2Alive,
   player3Alive,
   player4Alive;
 
   field.setBoundaries(3,3);
-  arena.setField(field);
-  arena.addPlayer(player1);
-  arena.addPlayer(player2);
-  arena.addPlayer(player3);
-  arena.addPlayer(player4);
+  referee.setField(field);
+  referee.addPlayer(player1);
+  referee.addPlayer(player2);
+  referee.addPlayer(player3);
+  referee.addPlayer(player4);
 
   player1Alive = player1.isAlive();
   player2Alive = player2.isAlive();
@@ -286,7 +286,7 @@ test('check that players die when they are moved outside of the field boundaries
   player4.turnLeft();
   player4.turnLeft();
 
-  arena.stepTime();
+  referee.stepTime();
   player1Alive = player1.isAlive();
   player2Alive = player2.isAlive();
   player3Alive = player3.isAlive();
@@ -294,8 +294,8 @@ test('check that players die when they are moved outside of the field boundaries
   assert.ok(player1Alive && player2Alive, 'Players inside boundaries are alive');
   assert.ok(!player3Alive && !player4Alive, 'Players outside boundaries are dead');
 
-  arena.stepTime();
-  arena.stepTime();
+  referee.stepTime();
+  referee.stepTime();
     player1Alive = player1.isAlive();
   player2Alive = player2.isAlive();
   player3Alive = player3.isAlive();
@@ -303,7 +303,7 @@ test('check that players die when they are moved outside of the field boundaries
   assert.ok(player1Alive && player2Alive, 'Players inside boundaries are alive');
   assert.ok(!player3Alive && !player4Alive, 'Players outside boundaries are dead');
 
-  arena.stepTime();
+  referee.stepTime();
   player1Alive = player1.isAlive();
   player2Alive = player2.isAlive();
   player3Alive = player3.isAlive();
@@ -315,28 +315,50 @@ test('check that players die when they are moved outside of the field boundaries
 test('check a player is inside its own path and if so die', function (assert) {
   var player1 = getPlayer(),
   field = getField(),
-  arena = getArena(),
+  referee = getReferee(),
   loopIndex;
-  arena.setField(field);
-  arena.addPlayer(player1);
+  referee.setField(field);
+  referee.addPlayer(player1);
   for (loopIndex=0; loopIndex<20; loopIndex++) {
-    arena.stepTime();
+    referee.stepTime();
   }
   assert.equal(player1.isAlive(), true, 'Players outside their own path should not be dead');
 
   player1.turnRight();
   for (loopIndex=0; loopIndex<20; loopIndex++) {
-    arena.stepTime();
+    referee.stepTime();
   }
   assert.equal(player1.isAlive(), true, 'Players outside their own path should not be dead');
 
   player1.turnRight();
-  arena.stepTime();
+  referee.stepTime();
   assert.equal(player1.isAlive(), true, 'Players outside their own path should not be dead');
   
   player1.turnRight();
-  arena.stepTime();
+  referee.stepTime();
   assert.equal(player1.isAlive(), false, 'Players inside their own path should be dead');
 });
 
 // test that players become dead when they hit a polygon wall http://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon
+
+
+
+module('matchFactory');
+test('check that a match can be setup without any parameters', function (assert) {
+  var match = getMatch();
+  assert.ok(typeof match.getResults === 'function', 'The match produced has a getResults function');
+  assert.ok(typeof match.isInPlay === 'function', 'The match produced has a isInPlay function');
+  assert.ok(typeof match.stepTime === 'function', 'The match produced has a stepTime function');
+});
+test('check that the default values are set as expected', function (assert) {
+  var match = getMatch();
+  assert.equal(match.isInPlay(), true, 'Match starts inPlay');
+});
+test('check that a match will be over after some time - players will inevitably die after a long game', function (assert) {
+  var match = getMatch(),
+  loopIndex;
+  for (loopIndex=0; loopIndex < 5000; loopIndex++) {
+    match.stepTime();
+  }
+  assert.equal(match.isInPlay(), false, 'The game will end eventually without any intervention');
+});

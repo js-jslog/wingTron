@@ -101,7 +101,7 @@ var getPlayer = function getPLayer () {
 	return playerObj;
 };
 
-var getArena = function getIntegration () {
+var getReferee = function getIntegration () {
 	var players = [],
 	field,
 	addPlayer = function addPlayer (p) {
@@ -126,7 +126,7 @@ var getArena = function getIntegration () {
 			}
 		});
 	},
-	arenaObject = {
+	refereeObject = {
 		addPlayer: addPlayer,
 		getPlayers: getPlayers,
 		setField: setField,
@@ -149,11 +149,11 @@ var getArena = function getIntegration () {
 		});
 		return !pathHit;
 	};
-	return arenaObject;
+	return refereeObject;
 };
 
 // needs improving for more complex shapes
-var isPointWithinPath = function (point, path) {
+var isPointWithinPath = function isPointWithinPath (point, path) {
 	var simpleCheck = (function () {
 		var x = point[0],
 		y = point[1],
@@ -183,4 +183,49 @@ var isPointWithinPath = function (point, path) {
 	}
 	// Going to need to improve this check for more complex shapes
 	return true;
+};
+
+
+
+var getMatch = function getMatch () {
+	var inPlay = true,
+	matchResults,
+	players = [],
+	field = getField(),
+	referee = getReferee(),
+	isInPlay = function isInPlay () {
+		return inPlay;
+	},
+	stepTime = function stepTime () {
+		referee.stepTime();
+		evaluateGameStatus();
+	},
+	getResults = function getResults () {
+		return matchResults;
+	},
+	matchObject = {
+		isInPlay: isInPlay,
+		stepTime: stepTime,
+		getResults: getResults
+	},
+	initialise = function initialise () {
+		players.push(getPlayer());
+		referee.setField(getField());
+		players.forEach(function (p) {
+			referee.addPlayer(p);
+		});
+	},
+	evaluateGameStatus = function evaluateGameStatus () {
+		var deadNum = 0;
+		players.forEach(function (p) {
+			if (!p.isAlive()) {
+				deadNum += 1;
+			}
+		});
+		if (deadNum >= players.length) {
+			inPlay = false;
+		}
+	};
+	initialise();
+	return matchObject;
 };
