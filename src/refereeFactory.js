@@ -31,9 +31,10 @@ define(function () {
 		// Going to need to improve this check for more complex shapes
 		return true;
 	};
-	var getReferee = function getIntegration () {
-		var players = [],
+	var getReferee = function getReferee (options) {
+		var players,
 		field,
+		scores,
 		addPlayer = function addPlayer (p) {
 			players.push(p);
 		},
@@ -47,14 +48,23 @@ define(function () {
 			return field;
 		},
 		stepTime = function stepTime () {
+			deathRound = false;
 			players.forEach(function (player, index, array) {
 				if (player.isAlive()) {
 					player.move();
-					if (!isPlayerSafe(player, array, field)) {
+					if (isPlayerSafe(player, array, field) === false) {
 						player.die();
+						deathRound = true;
 					}
 				}
 			});
+			if (deathRound === true) {
+				scores.forEach(function (score, index) {
+					if (players[index].isAlive() === true) {
+						scores[index] +=1;		
+					}
+				});
+			}
 		},
 		refereeObject = {
 			addPlayer: addPlayer,
@@ -62,6 +72,10 @@ define(function () {
 			setField: setField,
 			getField: getField,
 			stepTime: stepTime
+		},
+		initialise = function initialise () {
+			players = [];
+			scores = options.gameOptions.scores;
 		},
 		isPlayerSafe = function isPlayerSafe (p, allPlayers, f) {
 			var playerCoords = p.getCoords(),
@@ -79,6 +93,7 @@ define(function () {
 			});
 			return !pathHit;
 		};
+		initialise();
 		return refereeObject;
 	};
 	return {getReferee: getReferee};

@@ -1,7 +1,13 @@
 requirejs(['../src/fieldFactory'], function(fieldFactory) {
-  module('fieldFactory');
-  test('check default field settings are ok', function (assert) {
-    var field = fieldFactory.getField(),
+  var options;
+  module('fieldFactory', {
+    setup: function setup () {
+        var gameOptions = {"scores": [0], "fieldDimensions": [100,100]};
+        options = {"gameOptions": gameOptions};
+    }
+  });
+  test('check set field settings are ok', function (assert) {
+    var field = fieldFactory.getField(options),
     bounds = field.getBoundaries(),
     width = bounds[0],
     height = bounds[1];
@@ -9,19 +15,8 @@ requirejs(['../src/fieldFactory'], function(fieldFactory) {
     assert.equal(height, 100, "The default height is 100");
   });
 
-  test('check default field settings are ok', function (assert) {
-    var field = fieldFactory.getField(),
-    bounds, width, height;
-    field.setBoundaries(150, 150);
-    bounds = field.getBoundaries();
-    width = bounds[0];
-    height = bounds[1];
-    assert.equal(width, 150, "The updated width is 150");
-    assert.equal(height, 150, "The updated height is 150");
-  });
-
   test('check out of bounds functionality', function (assert) {
-    var field = fieldFactory.getField(),
+    var field = fieldFactory.getField(options),
     safePoints = [[0,0],[0,100],[100,0],[100,100],[50,50]],
     deadPoints = [[-1,0],[0,-1],[-1,-1], [0,101],[101,0],[101,101], [-1,101],[101,-1]];
     safePoints.forEach(function (item, index, array) {
@@ -37,9 +32,17 @@ requirejs(['../src/fieldFactory'], function(fieldFactory) {
 
 
 requirejs(['../src/playerFactory'], function(playerFactory) {
-  module('playerFactory');
-  test('check that the default coords are set', function (assert) {
-    var player = playerFactory.getPlayer(),
+  var options;
+  module('playerFactory', {
+    setup: function setup () {
+        var playerOptions = {"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},
+        envOptions = {"keystateMap": {}},
+        gameOptions = {"scores": [0], "fieldDimensions": [100,100]};
+        options = {"environmentOptions": envOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
+    }
+  });
+  test('check that initial coords are set', function (assert) {
+    var player = playerFactory.getPlayer(options),
     playerCoords = player.getCoords(),
     playerx = playerCoords[0],
     playery = playerCoords[1],
@@ -50,7 +53,7 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
   });
 
   test('check that the updated properties are set', function (assert) {
-    var player = playerFactory.getPlayer(),
+    var player = playerFactory.getPlayer(options),
     playerCoords, playerx, playery, playerAlive;
     player.setCoords([100,100]);
     playerCoords = player.getCoords();
@@ -64,7 +67,7 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
   });
 
   test('check that the player can change direction & when moved the coordinates are updated correctly', function (assert) {
-    var player = playerFactory.getPlayer(),
+    var player = playerFactory.getPlayer(options),
     playerCoords;
     player.move();
     playerCoords = player.getCoords();
@@ -115,7 +118,7 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
   });
 
   test('check that players stop moving when they are dead', function (assert) {
-    var player = playerFactory.getPlayer(),
+    var player = playerFactory.getPlayer(options),
     playerCoords;
     player.die();
     player.move();
@@ -125,7 +128,7 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
   });
 
   test('check that a player has a record of all the points he has travelled', function (assert) {
-    var player = playerFactory.getPlayer(),
+    var player = playerFactory.getPlayer(options),
     expectedPath = [[0,0],[0,0]];
     testPathAgainstExpected(assert, player, expectedPath);
 
@@ -182,22 +185,46 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
   }
 
   test('check that a player begins a new path when there position is set', function (assert) {
-    var player = playerFactory.getPlayer(),
+    var player = playerFactory.getPlayer(options),
     expectedPath = [[0,0],[0,0]];
     testPathAgainstExpected(assert, player, expectedPath);
     player.setCoords([20,15]);
     expectedPath = [[20,15],[20,15]];
     testPathAgainstExpected(assert, player, expectedPath);
   });
+
+  test('check the keystate to left & right turn mapping', function (assert) {
+    var player = playerFactory.getPlayer(options),
+    playerCoords,
+    expectedCoords,
+    keystateMap = options.environmentOptions.keystateMap;
+    playerCoords = player.getCoords();
+    expectedCoords = [0,0];
+    assert.ok(Math.round(playerCoords[0]) === expectedCoords[0] && Math.round(playerCoords[0]) === expectedCoords[0], 'Player starts at 0,0');
+    keystateMap["39"] = true;
+    player.move();
+    playerCoords = player.getCoords();
+    expectedCoords = [0,1];
+    assert.ok(Math.round(playerCoords[0]) === expectedCoords[0] && Math.round(playerCoords[0]) === expectedCoords[0], 'Player starts at 0,0');
+  });
+  
 });
 
 requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory'], function(fieldFactory, playerFactory, refereeFactory) {
-  module('refereeFactory');
+  var options;
+  module('refereeFactory', {
+    setup: function setup () {
+        var playerOptions = {"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},
+        gameOptions = {"scores": [0,0], "fieldDimensions": [100,100]},
+        envOptions = {"keystateMap": {}};
+        options = {"environmentOptions": envOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
+    }
+  });
   test('check if players & field are successfully stored together within the object, adding one player at a time', function (assert) {
-    var player1 = playerFactory.getPlayer(),
-    player2 = playerFactory.getPlayer(),
-    field = fieldFactory.getField(),
-    referee = refereeFactory.getReferee(),
+    var player1 = playerFactory.getPlayer(options),
+    player2 = playerFactory.getPlayer(options),
+    field = fieldFactory.getField(options),
+    referee = refereeFactory.getReferee(options),
     playerArray;
     referee.addPlayer(player1);
     referee.addPlayer(player2);
@@ -211,12 +238,12 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
   });
 
   test('check that players positions are updated properly when instructed to move by the referee', function (assert) {
-    var player1 = playerFactory.getPlayer(),
-    player2 = playerFactory.getPlayer(),
-    field = fieldFactory.getField(),
+    var player1 = playerFactory.getPlayer(options),
+    player2 = playerFactory.getPlayer(options),
+    field = fieldFactory.getField(options),
     player1Coords,
     player2Coords;
-    referee = refereeFactory.getReferee();
+    referee = refereeFactory.getReferee(options);
     referee.addPlayer(player1);
     referee.addPlayer(player2);
     referee.setField(field);
@@ -241,12 +268,12 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
 
 
   test('check that players die when they are moved outside of the field boundaries', function (assert) {
-    var player1 = playerFactory.getPlayer(),
-    player2 = playerFactory.getPlayer(),
-    player3 = playerFactory.getPlayer(),
-    player4 = playerFactory.getPlayer(),
-    field = fieldFactory.getField(),
-    referee = refereeFactory.getReferee(),
+    var player1 = playerFactory.getPlayer(options),
+    player2 = playerFactory.getPlayer(options),
+    player3 = playerFactory.getPlayer(options),
+    player4 = playerFactory.getPlayer(options),
+    field = fieldFactory.getField(options),
+    referee = refereeFactory.getReferee(options),
     player1Alive,
     player2Alive,
     player3Alive,
@@ -280,7 +307,7 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
 
     referee.stepTime();
     referee.stepTime();
-      player1Alive = player1.isAlive();
+    player1Alive = player1.isAlive();
     player2Alive = player2.isAlive();
     player3Alive = player3.isAlive();
     player4Alive = player4.isAlive();
@@ -297,10 +324,12 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
   });
 
   test('check a player is inside its own path and if so die', function (assert) {
-    var player1 = playerFactory.getPlayer(),
-    field = fieldFactory.getField(),
-    referee = refereeFactory.getReferee(),
+    var player1 = playerFactory.getPlayer(options),
+    field = fieldFactory.getField(options),
+    referee,
     loopIndex;
+    options.gameOptions.scores = [0];
+    referee = refereeFactory.getReferee(options);
     referee.setField(field);
     referee.addPlayer(player1);
     for (loopIndex=0; loopIndex<20; loopIndex++) {
@@ -322,17 +351,54 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
     referee.stepTime();
     assert.equal(player1.isAlive(), false, 'Players inside their own path should be dead');
   });
+
+
+  test('check the referee updates the scores properly', function (assert) {
+    var p1playerOpts = {"playerOptions": {"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}},
+    p2playerOpts = {"playerOptions": {"startCoord": [1,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}},
+    p3playerOpts = {"playerOptions": {"startCoord": [2,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}},
+    // envOptions = {"keystateMap": {}},
+    field,
+    referee,
+    p1opts = {},
+    p2opts = {},
+    p3opts = {},
+    player1,
+    player2,
+    player3;
+    Object.assign(p1opts, options, p1playerOpts);
+    Object.assign(p2opts, options, p2playerOpts);
+    Object.assign(p3opts, options, p3playerOpts);
+    player1 = playerFactory.getPlayer(p1opts);
+    player2 = playerFactory.getPlayer(p2opts);
+    player3 = playerFactory.getPlayer(p3opts);
+    options.gameOptions.scores = [0,0,0];
+    options.gameOptions.fieldDimensions = [2,2];
+    referee = refereeFactory.getReferee(options);
+    expectedScores = [0,0,0];
+    field = fieldFactory.getField(options);
+    referee.setField(field);
+    referee.addPlayer(player1);
+    referee.addPlayer(player2);
+    referee.addPlayer(player3);
+    assert.ok(options.gameOptions.scores[0] === expectedScores[0] && options.gameOptions.scores[1] === expectedScores[1] && options.gameOptions.scores[2] === expectedScores[2]);
+    referee.stepTime();
+    expectedScores = [1,1,0];
+    assert.ok(options.gameOptions.scores[0] === expectedScores[0] && options.gameOptions.scores[1] === expectedScores[1] && options.gameOptions.scores[2] === expectedScores[2]);
+  });
 });
 
 // test that players become dead when they hit a polygon wall http://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon
-
 
 
 requirejs(['../src/matchFactory'], function(matchFactory) {
   var matchOptions;
   module('matchFactory', {
     setup: function(){
-        matchOptions = {"gameOptions": {}, "playerOptions": [{},{}]};
+        var environmentOptions = {"keystateMap": {}},
+        gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [20, 20]},
+        playerOptions = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}];
+        matchOptions = {"environmentOptions": environmentOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
     }
   });
   test('check that the default values are set as expected', function (assert) {
@@ -350,25 +416,22 @@ requirejs(['../src/matchFactory'], function(matchFactory) {
 });
 
 
-// game needs to be able to tell the app when the game is complete, what the winning criteria are and what the current status is
-// game needs to tell the 
-// check that a game can be set up with no parameters
-// check that a game will generate a certain number of matches and then complete
-// check that a score is kept for each player
-
 requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, gameFactory) {
-  var gameOptions;
+  var options;
   module('gameFactory', {
     setup: function(){
-        gameOptions = {"gameOptions": {"matches": 5, "fieldDims": [20, 20]}, "playerOptions": [{},{}]};
+        var environmentOptions = {"keystateMap": {}},
+        gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]},
+        playerOptions = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}];
+        options = {"environmentOptions": environmentOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
     }
   });
   test('check that a game can be set up without any parameters', function (assert) {
-    var game = gameFactory.getGame(gameOptions);
+    var game = gameFactory.getGame(options);
     assert.ok(typeof game === 'object', 'A game object is produced');
   });
   test('check that a game will iterate through a number of matches and then end at some point', function (assert) {
-    var game = gameFactory.getGame(gameOptions),
+    var game = gameFactory.getGame(options),
     loopIndex;
     assert.equal(game.isComplete(), false, 'The game will start in an incomplete state');
     for (loopIndex=0; loopIndex<2000; loopIndex++) {
@@ -376,12 +439,45 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
     }
     assert.equal(game.isComplete(), true, 'The game will end in a complete state');
   });
-  // test('check that the scores are kept as expected', function (assert) {
-  //   var game = gameFactory.getGame(gameOptions);
-  //   assert.equal(game.isComplete(), false, 'The game will start in an incomplete state');
-  //   for (loopIndex=0; loopIndex<2000; loopIndex++) {
-  //       game.stepTime();
-  //   }
-  //   assert.equal(game.isComplete(), true, 'The game will end in a complete state');
-  // });
+  test('check that the scores are kept as expected', function (assert) {
+    var p1winsOptsAdd = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [1,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
+    p2winsOptsAdd = [{"startCoord": [1,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
+    drawOptsAdd = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
+    gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]},
+    p1winsOpts = {"environmentOptions": options.environmentOptions, "gameOptions": gameOptions, "playerOptions": p1winsOptsAdd},
+    p2winsOpts,
+    drawOpts,
+    p1winsGame,
+    p2winsGame,
+    drawGame,
+    scores;
+
+    p1winsGame = gameFactory.getGame(p1winsOpts);
+    while (!p1winsGame.isComplete()) {
+        p1winsGame.stepTime();
+    }
+    scores = p1winsGame.getScores();
+    assert.equal(scores[0], 5);
+    assert.equal(scores[1], 0);
+
+    gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]};
+    p2winsOpts = {"environmentOptions": options.environmentOptions, "gameOptions": gameOptions, "playerOptions": p2winsOptsAdd};
+    p2winsGame = gameFactory.getGame(p2winsOpts);
+    while (!p2winsGame.isComplete()) {
+        p2winsGame.stepTime();
+    }
+    scores = p2winsGame.getScores();
+    assert.equal(scores[0], 0);
+    assert.equal(scores[1], 5);
+
+    gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]};
+    drawOpts = {"environmentOptions": options.environmentOptions, "gameOptions": gameOptions, "playerOptions": drawOptsAdd};
+    drawGame = gameFactory.getGame(drawOpts);
+    while (!drawGame.isComplete()) {
+        drawGame.stepTime();
+    }
+    scores = drawGame.getScores();
+    assert.equal(scores[0], 0);
+    assert.equal(scores[1], 0);
+  });
 });

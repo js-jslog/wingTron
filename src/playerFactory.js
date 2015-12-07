@@ -21,12 +21,18 @@ define(function () {
 		turnCood[1] = path[0][1];
 		path.unshift(turnCood);
 	},
-	getPlayer = function getPLayer () {
-		var coords = [0,0],
-		speed = 1,
-		direction = 0,
-		alive = true,
-		path = [],
+	attachSetterToKeystateMap = function attachSetterToKeystateMap (keystateMap, code, func) {
+		Object.defineProperty(keystateMap, code, {
+		    set: function (value) {
+		      if (value === true) {
+		      	func();
+		      }
+		    },
+		    configurable: true
+		});
+	},
+	getPlayer = function getPlayer (options) {
+		var coords, speed, direction, alive, path, keystateMap, leftCode, rightCode,
 		setCoords = function setCoords (arrayPoint) {
 			coords = arrayPoint;
 			beginPath(path, coords);
@@ -67,8 +73,21 @@ define(function () {
 			die: die,
 			isAlive: isAlive,
 			getPath: getPath
+		},
+		initialise = function initialise () {
+			coords = options.playerOptions.startCoord.slice();
+			speed = options.playerOptions.speed || 1;
+			direction = options.playerOptions.direction || 0;
+			keystateMap = options.environmentOptions.keystateMap;
+			leftCode = options.playerOptions.keyCodes.leftCode;
+			rightCode = options.playerOptions.keyCodes.rightCode;
+			attachSetterToKeystateMap(keystateMap, leftCode, turnLeft);
+			attachSetterToKeystateMap(keystateMap, rightCode, turnRight);
+			alive = true;
+			path = [];
+			beginPath(path, coords);
 		};
-		beginPath(path, coords);
+		initialise();
 		return playerObj;
 	};
 	return {getPlayer: getPlayer};

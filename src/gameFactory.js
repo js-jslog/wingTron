@@ -1,10 +1,9 @@
 define(["./matchFactory"], function (matchFactory) {
 	var getGame = function getGame (options) {
-		var match,
-		complete = false,
-		matchesToComplete = 0,
-		matchesCompleted = 0,
-		scores,
+		var match, complete, matchesToComplete, matchesCompleted, scores,
+		getScores = function getScores () {
+			return scores;
+		},
 		isComplete = function isComplete () {
 			return (matchesCompleted >= matchesToComplete);
 		},
@@ -18,11 +17,14 @@ define(["./matchFactory"], function (matchFactory) {
 		initialise = function initialise () {
 			scores = Array.apply(null, Array(options.playerOptions.length)).map(Number.prototype.valueOf,0);
 			options.gameOptions.scores = scores;
-			matchesToComplete = options.gameOptions.matches;
+			complete = false;
+			matchesToComplete = options.gameOptions.matches || 0;
+			matchesCompleted = 0;
 			match = matchFactory.getMatch(options);
 		};
 		initialise();
-		return {isComplete: isComplete,
+		return {getScores: getScores,
+				isComplete: isComplete,
 				stepTime: stepTime};
 	};
 	return {getGame: getGame};

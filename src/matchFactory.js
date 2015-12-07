@@ -1,42 +1,41 @@
 define(["./fieldFactory", "./playerFactory", './refereeFactory'], function (fieldFactory, playerFactory, refereeFactory) {
 	var getMatch = function getMatch (options) {
-		var inPlay = true,
-		matchResults,
-		players = [],
-		field = fieldFactory.getField(options.gameOptions.fieldDims),
-		referee = refereeFactory.getReferee(),
+		var inPlay, field, players, referee,
 		isInPlay = function isInPlay () {
 			return inPlay;
 		},
 		stepTime = function stepTime () {
 			referee.stepTime();
-			evaluateGameStatus();
-		},
-		getResults = function getResults () {
-			return matchResults;
+			evaluateMatchStatus();
 		},
 		matchObject = {
 			isInPlay: isInPlay,
-			stepTime: stepTime,
-			getResults: getResults
+			stepTime: stepTime
 		},
 		initialise = function initialise () {
-			options.playerOptions.forEach(function () {
-				players.push(playerFactory.getPlayer());
+			inPlay = true;
+			field = fieldFactory.getField(options);
+			players = [];
+			options.playerOptions.forEach(function (playerN_opt) {
+				var nthPlayerOptions = {"environmentOptions": options.environmentOptions,
+										"gameOptions": options.gameOptions,
+										"playerOptions": playerN_opt};
+				players.push(playerFactory.getPlayer(nthPlayerOptions));
 			});
+			referee = refereeFactory.getReferee(options);
 			referee.setField(field);
 			players.forEach(function (p) {
 				referee.addPlayer(p);
 			});
 		},
-		evaluateGameStatus = function evaluateGameStatus () {
+		evaluateMatchStatus = function evaluateMatchStatus () {
 			var deadNum = 0;
 			players.forEach(function (p) {
 				if (!p.isAlive()) {
 					deadNum += 1;
 				}
 			});
-			if (deadNum >= players.length) {
+			if (deadNum >= players.length-1) {
 				inPlay = false;
 			}
 		};
