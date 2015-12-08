@@ -216,7 +216,7 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
     setup: function setup () {
         var playerOptions = {"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},
         gameOptions = {"scores": [0,0], "fieldDimensions": [100,100]},
-        envOptions = {"keystateMap": {}};
+        envOptions = {"keystateMap": {}, "scoreboardFunction": function scoreboardFunction () {}};
         options = {"environmentOptions": envOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
     }
   });
@@ -357,7 +357,6 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
     var p1playerOpts = {"playerOptions": {"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}},
     p2playerOpts = {"playerOptions": {"startCoord": [1,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}},
     p3playerOpts = {"playerOptions": {"startCoord": [2,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}},
-    // envOptions = {"keystateMap": {}},
     field,
     referee,
     p1opts = {},
@@ -388,14 +387,12 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
   });
 });
 
-// test that players become dead when they hit a polygon wall http://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon
-
 
 requirejs(['../src/matchFactory'], function(matchFactory) {
   var matchOptions;
   module('matchFactory', {
     setup: function(){
-        var environmentOptions = {"keystateMap": {}},
+        var environmentOptions = {"keystateMap": {}, "scoreboardFunction": function scoreboardFunction () {}},
         gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [20, 20]},
         playerOptions = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}];
         matchOptions = {"environmentOptions": environmentOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
@@ -420,7 +417,7 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
   var options;
   module('gameFactory', {
     setup: function(){
-        var environmentOptions = {"keystateMap": {}},
+        var environmentOptions = {"keystateMap": {}, "scoreboardFunction": function scoreboardFunction () {}},
         gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]},
         playerOptions = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}];
         options = {"environmentOptions": environmentOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
@@ -481,3 +478,72 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
     assert.equal(scores[1], 0);
   });
 });
+
+
+requirejs(['../src/collisionDetection'], function(collisionDetection) {
+  module('isPointWithinPath');
+  test('check that points outsdie paths are evaluated as such', function (assert) {
+    var points, path;
+    path = [[10,10],[20,10],[20,20],[10,20]];
+    outsidePoints = [[ 0, 0],[15, 0],[30, 0],[30,15],[30,30],[15,30],[0 ,30],[0 ,15],
+                     [10, 0],[20, 0],[30,10],[30,20],[20,30],[10,30],[0 ,20],[0 ,10],
+                     [10,10],[15,10],[20,10],[20,15],[20,20],[15,20],[10,20]]; // [10,15] has to count as inside the path because of the way that we match touching points
+    outsidePoints.forEach(function (point, index) {
+        assert.equal(collisionDetection.isPointWithinPath(point, path), false, '[' + point[0] + '][' + point[1] + '] should not be inside the path');
+    });
+  });
+  // test('check a few specific path & point combos which have caused problems in the past', function (assert) {
+  //   var points, path;
+  //   path = [[10,12],[10,10],[20,10],[20,15],[15,15]];
+  //   point = [10,12];
+  //   assert.equal(collisionDetection.isPointWithinPath(point, path), false, 'this point should be outside');
+  // });
+});
+
+requirejs(['../src/lineIntersects'], function(lineIntersects) {
+  module('lineIntersects');
+  var checkIntersectNo = function checkIntersectNo (points, path, expectedCount, assert) {
+    points.forEach(function (point, index) {
+        var ray = [point, [9999,point[0]]],
+        intersectCount = 0,
+        nextPoint;
+        path.forEach(function (pathPoint, index, array) {
+            if (index === path.length-1) {
+                nextPoint = array[0];
+            } else {
+                nextPoint = array[index+1];
+            }
+            if (lineIntersects.isIntersection(ray, [pathPoint, nextPoint]) === true) {
+                intersectCount +=1;
+            }
+        });
+        assert.equal(intersectCount, expectedCount, 'These rays have ' + expectedCount + ' intersections');
+    });
+  };
+  test('check that ray casting various paths produces the correct number of intersects', function (assert) {
+    var points, path;
+    path = [[10,10],[20,10],[20,20],[10,20]];
+    points = [[0,0],[21,21],[11,0],[11,21],[21,11]];
+    checkIntersectNo(points, path, 0, assert);
+
+    points = [[11,11], [10,20], [11,20]];
+    checkIntersectNo(points, path, 1, assert);
+
+    points = [[0,11]];
+    checkIntersectNo(points, path, 2, assert);
+
+
+    path = [[10,10], [20,10]];
+    points = [[20,10]];
+    checkIntersectNo(points, path, 2, assert);
+
+    path = [[10,10], [20,10], [20,1]];
+    points = [[20,1]];
+    checkIntersectNo(points, path, 2, assert);
+
+    path = [[10,10], [20,10], [20,1], [5,1]];
+    points = [[5,1]];
+    checkIntersectNo(points, path, 0, assert);
+  });
+});
+

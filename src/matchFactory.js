@@ -8,9 +8,16 @@ define(["./fieldFactory", "./playerFactory", './refereeFactory'], function (fiel
 			referee.stepTime();
 			evaluateMatchStatus();
 		},
+		draw = function draw (ctx) {
+			field.draw(ctx);
+			players.forEach(function (p) {
+				p.draw(ctx);
+			});
+		},
 		matchObject = {
 			isInPlay: isInPlay,
-			stepTime: stepTime
+			stepTime: stepTime,
+			draw: draw
 		},
 		initialise = function initialise () {
 			inPlay = true;
@@ -35,7 +42,7 @@ define(["./fieldFactory", "./playerFactory", './refereeFactory'], function (fiel
 					deadNum += 1;
 				}
 			});
-			if (deadNum >= players.length-1) {
+			if (deadNum >= players.length) {
 				inPlay = false;
 			}
 		};

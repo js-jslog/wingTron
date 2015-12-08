@@ -14,6 +14,15 @@ define(["./matchFactory"], function (matchFactory) {
 				match = matchFactory.getMatch(options);
 			}
 		},
+		draw = function draw (ctx) {
+			if (isComplete() === false) {
+				match.draw(ctx);
+			} else {
+				ctx.fillStyle = "#444";
+				ctx.strokeStyle = "#444";
+				ctx.fillRect(0, 0, options.gameOptions.fieldDimensions[0], options.gameOptions.fieldDimensions[1]);
+			}
+		},
 		initialise = function initialise () {
 			scores = Array.apply(null, Array(options.playerOptions.length)).map(Number.prototype.valueOf,0);
 			options.gameOptions.scores = scores;
@@ -25,7 +34,8 @@ define(["./matchFactory"], function (matchFactory) {
 		initialise();
 		return {getScores: getScores,
 				isComplete: isComplete,
-				stepTime: stepTime};
+				stepTime: stepTime,
+				draw: draw};
 	};
 	return {getGame: getGame};
 });

@@ -18,10 +18,16 @@ define(function () {
 			}
 			return result;
 		},
+		draw = function draw (ctx) {
+			ctx.fillStyle = "#000";
+			ctx.strokeStyle = "#000";
+			ctx.fillRect(0, 0, width, height);
+		},
 		fieldObj = {
 			setBoundaries: setBoundaries,
 			getBoundaries: getBoundaries,
-			isPointOutOfBounds: isPointOutOfBounds
+			isPointOutOfBounds: isPointOutOfBounds,
+			draw: draw
 		};
 		return fieldObj;
 	};

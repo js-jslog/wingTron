@@ -31,6 +31,25 @@ define(function () {
 		    configurable: true
 		});
 	},
+	drawPath = function drawPath (ctx, path) {
+		var path2d = new Path2D(),
+		pathRecord = [].slice.call(path, 0).reverse();
+
+		path2d.moveTo(pathRecord[0][0], pathRecord[0][1]);
+		pathRecord.forEach(function (coord) {
+			path2d.lineTo(coord[0], coord[1]);
+		});
+		ctx.fillStyle = "rgba(255, 60, 52, 0.5)";
+		ctx.strokeStyle = "rgba(255, 60, 52, 0.5)";
+		ctx.fill(path2d);
+	},
+	drawSelf = function drawSelf (ctx, coords) {
+		var selfSize = 3,
+		offset = 1;
+		ctx.fillStyle = "rgba(255, 60, 52, 0.5)";
+		ctx.strokeStyle = "rgba(255, 60, 52, 0.5)";
+		ctx.fillRect(coords[0]-offset, coords[1]-offset, selfSize, selfSize);
+	},
 	getPlayer = function getPlayer (options) {
 		var coords, speed, direction, alive, path, keystateMap, leftCode, rightCode,
 		setCoords = function setCoords (arrayPoint) {
@@ -57,12 +76,19 @@ define(function () {
 		},
 		die = function die () {
 			alive = false;
+			console.log("dead");
+			console.log(JSON.stringify(path));
+			console.log(JSON.stringify(coords));
 		},
 		isAlive = function isAlive () {
 			return alive;
 		},
 		getPath = function getPath () {
 			return path;
+		},
+		draw = function draw (ctx) {
+			drawPath(ctx, path);
+			drawSelf(ctx, coords);
 		},
 		playerObj = {
 			setCoords: setCoords,
@@ -72,7 +98,8 @@ define(function () {
 			move: move,
 			die: die,
 			isAlive: isAlive,
-			getPath: getPath
+			getPath: getPath,
+			draw: draw
 		},
 		initialise = function initialise () {
 			coords = options.playerOptions.startCoord.slice();
