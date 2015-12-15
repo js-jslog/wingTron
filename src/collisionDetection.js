@@ -12,7 +12,7 @@ define(["./polygonIntersect"], function (polygonIntersect) {
 		return false;
 	},
 	isPointWithinPath = function isPointWithinPath (point, path) {
-		if (isDetailedIntersect(point, path) === true) {
+		if (isSimpleIntersect(point, path) === true && isDetailedIntersect(point, path) === true) {
 			return true;
 		}
 		return false;
@@ -42,35 +42,7 @@ define(["./polygonIntersect"], function (polygonIntersect) {
 		return true;
 	},
 	isDetailedIntersect = function isDetailedIntersect (point, path) {
-		// Make faster??
-		// create a ray from our point out to the right
-		// get all the lines forom the polygon which cross the y coord of our ray
-		// check how many times our ray intersects those
 		return polygonIntersect.inPolygon(point, path);
-		// var nextPoint,
-		// intCount = 0,
-		// ray = [point, [9999, point[1]]],
-		// pathLine;
-		// path.every(function (pathPoint, index, array) {
-		// 	// if (pathPoint[1] === point[1] && index !== 0) { // abort - do not evaluate when lines are on a matching horizontal except the last one..
-		// 	// 	intCount = 0;
-		// 	// 	return false;
-		// 	// }
-		// 	if (index === path.length-1) {
-		// 		nextPoint = array[0];
-		// 	} else {
-		// 		nextPoint = array[index+1];
-		// 	}
-		// 	pathLine = [pathPoint, nextPoint];
-		// 	if (lineIntersects.isIntersection(ray, pathLine) === true) {
-		// 		intCount +=1;
-		// 	}
-		// 	return true;
-		// });
-		// if (intCount%2 === 1) {
-		// 	return true;
-		// }
-		// return false;
 	};
 	return {boundaryHit: boundaryHit,
 			isPointWithinPath: isPointWithinPath

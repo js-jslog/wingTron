@@ -459,7 +459,6 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
     p2winsGame = gameFactory.getGame(p2winsOpts);
     while (!p2winsGame.isComplete()) {
         p2winsGame.stepTime();
-        debugger;
     }
     scores = p2winsGame.getScores();
     assert.equal(scores[0], 0);
