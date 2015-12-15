@@ -2,7 +2,7 @@ requirejs(['../src/fieldFactory'], function(fieldFactory) {
   var options;
   module('fieldFactory', {
     setup: function setup () {
-        var gameOptions = {"scores": [0], "fieldDimensions": [100,100]};
+        var gameOptions = {"scores": [0], "fieldWidth": 100, "fieldHeight": 100};
         options = {"gameOptions": gameOptions};
     }
   });
@@ -37,7 +37,7 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
     setup: function setup () {
         var playerOptions = {"startCoord": [10,10], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},
         envOptions = {"keystateMap": {}},
-        gameOptions = {"scores": [0], "fieldDimensions": [100,100]};
+        gameOptions = {"scores": [0], "fieldWidth": 100, "fieldHeight": 100};
         options = {"environmentOptions": envOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
     }
   });
@@ -211,7 +211,7 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
   module('refereeFactory', {
     setup: function setup () {
         var playerOptions = {"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},
-        gameOptions = {"scores": [0,0], "fieldDimensions": [100,100]},
+        gameOptions = {"scores": [0,0], "fieldWidth": 100, "fieldHeight": 100},
         envOptions = {"keystateMap": {}, "scoreboardFunction": function scoreboardFunction () {}};
         options = {"environmentOptions": envOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
     }
@@ -368,7 +368,8 @@ requirejs(['../src/fieldFactory', '../src/playerFactory', '../src/refereeFactory
     player2 = playerFactory.getPlayer(p2opts);
     player3 = playerFactory.getPlayer(p3opts);
     options.gameOptions.scores = [0,0,0];
-    options.gameOptions.fieldDimensions = [2,2];
+    options.gameOptions.fieldWidth = 2;
+    options.gameOptions.fieldHeight = 2;
     referee = refereeFactory.getReferee(options);
     expectedScores = [0,0,0];
     field = fieldFactory.getField(options);
@@ -389,7 +390,7 @@ requirejs(['../src/matchFactory'], function(matchFactory) {
   module('matchFactory', {
     setup: function(){
         var environmentOptions = {"keystateMap": {}, "scoreboardFunction": function scoreboardFunction () {}},
-        gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [20, 20]},
+        gameOptions = {"scores": [0,0], "matches": 5, "fieldWidth": 20, "fieldHeight": 20},
         playerOptions = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}];
         matchOptions = {"environmentOptions": environmentOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
     }
@@ -414,7 +415,7 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
   module('gameFactory', {
     setup: function(){
         var environmentOptions = {"keystateMap": {}, "scoreboardFunction": function scoreboardFunction () {}},
-        gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]},
+        gameOptions = {"scores": [0,0], "matches": 5, "fieldWidth": 2, "fieldHeight": 2},
         playerOptions = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}];
         options = {"environmentOptions": environmentOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
     }
@@ -436,7 +437,7 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
     var p1winsOptsAdd = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [1,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
     p2winsOptsAdd = [{"startCoord": [3,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
     drawOptsAdd = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
-    gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [4, 2]},
+    gameOptions = {"scores": [0,0], "matches": 5, "fieldWidth": 4, "fieldHeight": 2},
     p1winsOpts = {"environmentOptions": options.environmentOptions, "gameOptions": gameOptions, "playerOptions": p1winsOptsAdd},
     p2winsOpts,
     drawOpts,
@@ -453,7 +454,7 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
     assert.equal(scores[0], 5);
     assert.equal(scores[1], 0);
 
-    gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]};
+    gameOptions = {"scores": [0,0], "matches": 5, "fieldWidth": 2, "fieldHeight": 2};
     p2winsOpts = {"environmentOptions": options.environmentOptions, "gameOptions": gameOptions, "playerOptions": p2winsOptsAdd};
     p2winsGame = gameFactory.getGame(p2winsOpts);
     while (!p2winsGame.isComplete()) {
@@ -464,7 +465,7 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
     assert.equal(scores[0], 0);
     assert.equal(scores[1], 5);
 
-    gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]};
+    gameOptions = {"scores": [0,0], "matches": 5, "fieldWidth": 2, "fieldHeight": 2};
     drawOpts = {"environmentOptions": options.environmentOptions, "gameOptions": gameOptions, "playerOptions": drawOptsAdd};
     drawGame = gameFactory.getGame(drawOpts);
     while (!drawGame.isComplete()) {
@@ -494,12 +495,12 @@ requirejs(['../src/collisionDetection'], function(collisionDetection) {
   });
   test('check a few specific path & point combos which have caused problems in the past', function (assert) {
     var points, path;
-    // path = [[10,12],[10,10],[20,10],[20,15],[15,15]];
-    // point = [10,13];
-    // assert.equal(collisionDetection.isPointWithinPath(point, path), false, '[' + point[0] + '][' + point[1] + '] should be outside the path');
-    // path = [[19,20],[20,20],[20,0],[0,0]];
-    // point = [19,19];
-    // assert.equal(collisionDetection.isPointWithinPath(point, path), true, '[' + point[0] + '][' + point[1] + '] should be inside the path');
+    path = [[10,12],[10,10],[20,10],[20,15],[15,15]];
+    point = [10,13];
+    assert.equal(collisionDetection.isPointWithinPath(point, path), false, '[' + point[0] + '][' + point[1] + '] should be outside the path');
+    path = [[19,20],[20,20],[20,0],[0,0]];
+    point = [19,19];
+    assert.equal(collisionDetection.isPointWithinPath(point, path), true, '[' + point[0] + '][' + point[1] + '] should be inside the path');
     path = [[5,11],[5,15],[20,15],[20,5],[15,5],[15,10],[10,10]];
     point = [5,10];
     assert.equal(collisionDetection.isPointWithinPath(point, path), false, '[' + point[0] + '][' + point[1] + '] should be outside the path');

@@ -20,7 +20,7 @@ define(["./matchFactory"], function (matchFactory) {
 			} else {
 				ctx.fillStyle = "#444";
 				ctx.strokeStyle = "#444";
-				ctx.fillRect(0, 0, options.gameOptions.fieldDimensions[0], options.gameOptions.fieldDimensions[1]);
+				ctx.fillRect(0, 0, options.gameOptions.fieldWidth, options.gameOptions.fieldHeight);
 			}
 		},
 		initialise = function initialise () {

@@ -33,17 +33,25 @@ define(["./gameFactory", "./jquery"], function (gameFactory, jquery) {
 	};
 
 	var registerKeystateListener = function registerKeystateListener (options) {
-  
-	  keystateMap = {};
-	  document.addEventListener("keydown", function (evt) {
-	    keystateMap[evt.keyCode] = true;
-	  });
-	  document.addEventListener("keyup", function (evt) {
-	    keystateMap[evt.keyCode] = false;
-	  });
 
-	  options.environmentOptions.keystateMap = keystateMap;
-	}
+		keystateMap = {};
+
+		document.removeEventListener("keydown", addKeyDown);
+		document.removeEventListener("keyup", addKeyUp);
+
+		document.addEventListener("keydown", addKeyDown);
+		document.addEventListener("keyup", addKeyUp);
+
+		options.environmentOptions.keystateMap = keystateMap;
+	};
+
+	var addKeyDown = function addKeyDown (evt) {
+		keystateMap[evt.keyCode] = true;
+	};
+
+	var addKeyUp = function addKeyUp (evt) {
+		keystateMap[evt.keyCode] = false;
+	};
 
 	return {startGame: startGame};
 

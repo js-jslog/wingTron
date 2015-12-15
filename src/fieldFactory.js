@@ -1,7 +1,7 @@
 define(function () {
 	var getField  = function getField (options) {
-		var width = options.gameOptions.fieldDimensions[0],
-		height = options.gameOptions.fieldDimensions[1],
+		var width = options.gameOptions.fieldWidth,
+		height = options.gameOptions.fieldHeight,
 		setBoundaries = function setBoundaries (w, h) {
 			width = w;
 			height = h;

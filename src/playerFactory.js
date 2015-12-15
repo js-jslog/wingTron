@@ -32,7 +32,7 @@ define(function () {
 		    configurable: true
 		});
 	},
-	drawPath = function drawPath (ctx, path) {
+	drawPath = function drawPath (ctx, path, colour) {
 		var path2d = new Path2D(),
 		pathRecord = [].slice.call(path, 0).reverse();
 
@@ -40,19 +40,19 @@ define(function () {
 		pathRecord.forEach(function (coord) {
 			path2d.lineTo(coord[0], coord[1]);
 		});
-		ctx.fillStyle = "rgba(255, 60, 52, 0.5)";
-		ctx.strokeStyle = "rgba(255, 60, 52, 0.5)";
+		ctx.fillStyle = colour;
+		ctx.strokeStyle = colour;
 		ctx.fill(path2d);
 	},
-	drawSelf = function drawSelf (ctx, coords) {
+	drawSelf = function drawSelf (ctx, coords, colour) {
 		var selfSize = 3,
 		offset = 1;
-		ctx.fillStyle = "rgba(255, 60, 52, 0.5)";
-		ctx.strokeStyle = "rgba(255, 60, 52, 0.5)";
+		ctx.fillStyle = colour;
+		ctx.strokeStyle = colour;
 		ctx.fillRect(coords[0]-offset, coords[1]-offset, selfSize, selfSize);
 	},
 	getPlayer = function getPlayer (options) {
-		var coords, speed, direction, alive, path, keystateMap, leftCode, rightCode,
+		var coords, speed, direction, alive, path, keystateMap, leftCode, rightCode, colour,
 		setCoords = function setCoords (arrayPoint) {
 			coords = arrayPoint;
 			beginPath(path, coords);
@@ -85,8 +85,8 @@ define(function () {
 			return path.slice(1);
 		},
 		draw = function draw (ctx) {
-			drawPath(ctx, path);
-			drawSelf(ctx, coords);
+			drawPath(ctx, path, colour);
+			drawSelf(ctx, coords, colour);
 		},
 		playerObj = {
 			setCoords: setCoords,
@@ -110,6 +110,7 @@ define(function () {
 			attachSetterToKeystateMap(keystateMap, rightCode, turnRight);
 			alive = true;
 			path = [];
+			colour = options.playerOptions.colour;
 			beginPath(path, coords);
 		};
 		initialise();
