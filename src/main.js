@@ -1,6 +1,6 @@
 requirejs(['./applicationInterface', "./jquery"], function(applicationInterface, jquery) {
 
-	window.startWingTronGame = function startGame () {
+	var startWingTronGame = function startGame () {
 
 		var environmentOptions, gameOptions, p1Options, p2Options, playerOptions, options, canvas,
 		createCanvas = function createCanvas() {
@@ -21,7 +21,7 @@ requirejs(['./applicationInterface', "./jquery"], function(applicationInterface,
 		gameOptions = {"matches": 5, "fieldDimensions": [300, 300]};
 		p1Options = {"startCoord": [150,150], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}};
 		p2Options = {"startCoord": [150,150], "direction": Math.PI, "keyCodes": {"leftCode": 65, "rightCode": 68}};
-		playerOptions = [p1Options];
+		playerOptions = [p1Options, p2Options];
 		options = {"environmentOptions": environmentOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
 
 		createCanvas();
@@ -29,6 +29,11 @@ requirejs(['./applicationInterface', "./jquery"], function(applicationInterface,
 		options.environmentOptions.scoreboardFunction = buildScoreboard;
 	
 		applicationInterface.startGame(options);
-	}
+	};
 
+	jQuery("#gameStartButton").on("click", function(e) {
+		startWingTronGame();
+		e.preventDefault();
+	});
+	
 });

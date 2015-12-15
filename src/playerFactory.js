@@ -7,19 +7,20 @@ define(function () {
 				   },
 	beginPath = function beginPath (path, coords) {
 		path.length = 0;
-		path.push([]);
-		updatePathPoint(path, coords);
-		addPathTurn(path);
+		path.push([].slice.call(coords, 0));
+		path.push([].slice.call(coords, 0));
+		path.push([].slice.call(coords, 0));
 	},
 	updatePathPoint = function updatePathPoint (path, coords) {
+		path[1][0] = path[0][0];
+		path[1][1] = path[0][1];
 		path[0][0] = coords[0];
 		path[0][1] = coords[1];
 	},
 	addPathTurn = function addPathTurn (path) {
-		var turnCood = [];
-		turnCood[0] = path[0][0];
-		turnCood[1] = path[0][1];
-		path.unshift(turnCood);
+		path[1][0] = path[0][0];
+		path[1][1] = path[0][1];
+		path.unshift([].slice.call(path[0], 0));
 	},
 	attachSetterToKeystateMap = function attachSetterToKeystateMap (keystateMap, code, func) {
 		Object.defineProperty(keystateMap, code, {
@@ -76,15 +77,12 @@ define(function () {
 		},
 		die = function die () {
 			alive = false;
-			console.log("dead");
-			console.log(JSON.stringify(path));
-			console.log(JSON.stringify(coords));
 		},
 		isAlive = function isAlive () {
 			return alive;
 		},
 		getPath = function getPath () {
-			return path;
+			return path.slice(1);
 		},
 		draw = function draw (ctx) {
 			drawPath(ctx, path);

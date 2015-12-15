@@ -42,7 +42,7 @@ define(["./fieldFactory", "./playerFactory", './refereeFactory'], function (fiel
 					deadNum += 1;
 				}
 			});
-			if (deadNum >= players.length) {
+			if (deadNum >= players.length-1) {
 				inPlay = false;
 			}
 		};

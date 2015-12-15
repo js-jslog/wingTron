@@ -1,4 +1,4 @@
-define(["./lineIntersects"], function (lineIntersects) {
+define(["./polygonIntersect"], function (polygonIntersect) {
 	var boundaryHit = function boundaryHit (playerCoords, fieldBounds) {
 		var px = playerCoords[0],
 		py = playerCoords[1],
@@ -46,25 +46,31 @@ define(["./lineIntersects"], function (lineIntersects) {
 		// create a ray from our point out to the right
 		// get all the lines forom the polygon which cross the y coord of our ray
 		// check how many times our ray intersects those
-		var extraPath,
-		intCount = 0,
-		ray = [point, [9999, point[1]]];
-		path.forEach(function (pathPoint, index, array) {
-			if (pathPoint[1] !== point[1]) { // ignore instances where the line hits a point twice by ignoring one of the lines for which this is true
-				if (index === path.length-1) {
-					extraPath = array[0];
-				} else {
-					extraPath = array[index+1];
-				}
-				if (lineIntersects.isIntersection(ray, [pathPoint,extraPath]) === true) {
-					intCount +=1;
-				}
-			}
-		});
-		if (intCount%2 === 1) {
-			return true;
-		}
-		return false;
+		return polygonIntersect.inPolygon(point, path);
+		// var nextPoint,
+		// intCount = 0,
+		// ray = [point, [9999, point[1]]],
+		// pathLine;
+		// path.every(function (pathPoint, index, array) {
+		// 	// if (pathPoint[1] === point[1] && index !== 0) { // abort - do not evaluate when lines are on a matching horizontal except the last one..
+		// 	// 	intCount = 0;
+		// 	// 	return false;
+		// 	// }
+		// 	if (index === path.length-1) {
+		// 		nextPoint = array[0];
+		// 	} else {
+		// 		nextPoint = array[index+1];
+		// 	}
+		// 	pathLine = [pathPoint, nextPoint];
+		// 	if (lineIntersects.isIntersection(ray, pathLine) === true) {
+		// 		intCount +=1;
+		// 	}
+		// 	return true;
+		// });
+		// if (intCount%2 === 1) {
+		// 	return true;
+		// }
+		// return false;
 	};
 	return {boundaryHit: boundaryHit,
 			isPointWithinPath: isPointWithinPath

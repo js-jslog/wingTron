@@ -35,7 +35,7 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
   var options;
   module('playerFactory', {
     setup: function setup () {
-        var playerOptions = {"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},
+        var playerOptions = {"startCoord": [10,10], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},
         envOptions = {"keystateMap": {}},
         gameOptions = {"scores": [0], "fieldDimensions": [100,100]};
         options = {"environmentOptions": envOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
@@ -47,8 +47,8 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
     playerx = playerCoords[0],
     playery = playerCoords[1],
     playerAlive = player.isAlive();
-    assert.equal(playerx, 0, "Players default x coord is 0");
-    assert.equal(playery, 0, "Players default y coord is 0");
+    assert.equal(playerx, 10, "Players x coord is set to 10");
+    assert.equal(playery, 10, "Players y coord is set to 10");
     assert.equal(playerAlive, true, "Players are alive by default");
   });
 
@@ -71,50 +71,50 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
     playerCoords;
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(Math.round(playerCoords[0]), 1, 'Moving east - Player x position moved to 1');
-    assert.equal(Math.round(playerCoords[1]), 0, 'Moving east - Player y position stayed the same');
+    assert.equal(Math.round(playerCoords[0]), 11, 'Moving east - Player x position moved to 11');
+    assert.equal(Math.round(playerCoords[1]), 10, 'Moving east - Player y position stayed the same');
     
     player.turnRight();
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(Math.round(playerCoords[0]), 1, 'Moving south - Player x position stayed the same');
-    assert.equal(Math.round(playerCoords[1]), 1, 'Moving south - Player y position moved to 1');
+    assert.equal(Math.round(playerCoords[0]), 11, 'Moving south - Player x position stayed the same');
+    assert.equal(Math.round(playerCoords[1]), 11, 'Moving south - Player y position moved to 11');
 
     player.turnRight();
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(Math.round(playerCoords[0]), 0, 'Moving west - Player x position moved to 0');
-    assert.equal(Math.round(playerCoords[1]), 1, 'Moving west - Player y position stayed the same');
+    assert.equal(Math.round(playerCoords[0]), 10, 'Moving west - Player x position moved to 10');
+    assert.equal(Math.round(playerCoords[1]), 11, 'Moving west - Player y position stayed the same');
 
     player.turnLeft();
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(Math.round(playerCoords[0]), 0, 'Moving south - Player x position stayed the same');
-    assert.equal(Math.round(playerCoords[1]), 2, 'Moving south - Player y position moved to 2');
+    assert.equal(Math.round(playerCoords[0]), 10, 'Moving south - Player x position stayed the same');
+    assert.equal(Math.round(playerCoords[1]), 12, 'Moving south - Player y position moved to 12');
 
     player.turnLeft();
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(Math.round(playerCoords[0]), 1, 'Moving east - Player x position moved to 1');
-    assert.equal(Math.round(playerCoords[1]), 2, 'Moving east - Player y position stayed the same');
+    assert.equal(Math.round(playerCoords[0]), 11, 'Moving east - Player x position moved to 11');
+    assert.equal(Math.round(playerCoords[1]), 12, 'Moving east - Player y position stayed the same');
 
     player.turnLeft();
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(Math.round(playerCoords[0]), 1, 'Moving north - Player x position has stayed the same');
-    assert.equal(Math.round(playerCoords[1]), 1, 'Moving north - Player y position moved to 1');
+    assert.equal(Math.round(playerCoords[0]), 11, 'Moving north - Player x position has stayed the same');
+    assert.equal(Math.round(playerCoords[1]), 11, 'Moving north - Player y position moved to 11');
 
     player.turnLeft();
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(Math.round(playerCoords[0]), 0, 'Moving west - Player x position has moved to 0');
-    assert.equal(Math.round(playerCoords[1]), 1, 'Moving west - Player y position stayed the same');
+    assert.equal(Math.round(playerCoords[0]), 10, 'Moving west - Player x position has moved to 10');
+    assert.equal(Math.round(playerCoords[1]), 11, 'Moving west - Player y position stayed the same');
 
     player.turnRight();
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(Math.round(playerCoords[0]), 0, 'Moving north - Player x position has stayed the same');
-    assert.equal(Math.round(playerCoords[1]), 0, 'Moving north - Player y position moved to 0');
+    assert.equal(Math.round(playerCoords[0]), 10, 'Moving north - Player x position has stayed the same');
+    assert.equal(Math.round(playerCoords[1]), 10, 'Moving north - Player y position moved to 10');
   });
 
   test('check that players stop moving when they are dead', function (assert) {
@@ -123,74 +123,70 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
     player.die();
     player.move();
     playerCoords = player.getCoords();
-    assert.equal(playerCoords[0], 0, 'A dead player cannot move');
-    assert.equal(playerCoords[1], 0, 'A dead player cannot move');
+    assert.equal(playerCoords[0], 10, 'A dead player cannot move');
+    assert.equal(playerCoords[1], 10, 'A dead player cannot move');
   });
 
-  test('check that a player has a record of all the points he has travelled', function (assert) {
-    var player = playerFactory.getPlayer(options),
-    expectedPath = [[0,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-    player.move();
-    expectedPath = [[1,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-    player.move();
-    expectedPath = [[2,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-    player.turnRight();
-    player.move();
-    expectedPath = [[2,1],[2,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-    player.turnRight();
-    player.move();
-    expectedPath = [[1,1],[2,1],[2,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-    player.turnLeft();
-    player.move();
-    expectedPath = [[1,2],[1,1],[2,1],[2,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-    player.turnLeft();
-    player.move();
-    expectedPath = [[2,2],[1,2],[1,1],[2,1],[2,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-
-    player.move();
-    expectedPath = [[3,2],[1,2],[1,1],[2,1],[2,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-    player.move();
-    expectedPath = [[4,2],[1,2],[1,1],[2,1],[2,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-
-    player.turnLeft();
-    player.move();
-    expectedPath = [[4,1],[4,2],[1,2],[1,1],[2,1],[2,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
-  });
-
-  function testPathAgainstExpected (assert, player, expectedPath) {
-    var playerPath = player.getPath();
+  var testPathAgainstExpected = function testPathAgainstExpected (assert, player, expectedPath, expectedCoords) {
+    var playerPath = player.getPath(),
+    playerCoords = player.getCoords();
     assert.equal(playerPath.length, expectedPath.length, 'Player has recorded the correct number of points on the path');
     expectedPath.forEach(function (point, index) {
-      assert.equal(Math.round(playerPath[index][0]), point[0], 'x point is recorded in the correct location');
-      assert.equal(Math.round(playerPath[index][1]), point[1], 'y point is recorded in the correct location');
+      assert.equal(Math.round(playerPath[index][0]), point[0], 'x path point at ' + playerPath[index][0] + ' should be at ' + point[0] + '.');
+      assert.equal(Math.round(playerPath[index][1]), point[1], 'y path point at ' + playerPath[index][1] + ' should be at ' + point[1] + '.');
     });
-  }
+    assert.equal(Math.round(playerCoords[0]), expectedCoords[0], 'x coord at ' + playerCoords[0] + ' should be at ' + expectedCoords[0] + '.');
+    assert.equal(Math.round(playerCoords[1]), expectedCoords[1], 'y coord at ' + playerCoords[1] + ' should be at ' + expectedCoords[1] + '.');
+  };
+
+  test('check that a player records their path and coords properly', function (assert) {
+    var player = playerFactory.getPlayer(options),
+    expectedPath = [[10,10],[10,10]],
+    expectedCoords = [10,10];
+    testPathAgainstExpected(assert, player, expectedPath, expectedCoords);
+
+    player.move();
+    expectedPath = [[10,10],[10,10]];
+    expectedCoords = [11,10];
+    testPathAgainstExpected(assert, player, expectedPath, expectedCoords);
+
+    player.move();
+    expectedPath = [[11,10],[10,10]];
+    expectedCoords = [12,10];
+    testPathAgainstExpected(assert, player, expectedPath, expectedCoords);
+
+    player.turnRight();
+    player.move();
+    expectedPath = [[12,10],[12,10],[10,10]];
+    expectedCoords = [12,11];
+    testPathAgainstExpected(assert, player, expectedPath, expectedCoords);
+
+    player.turnRight();
+    player.move();
+    expectedPath = [[12,11],[12,11],[12,10],[10,10]];
+    expectedCoords = [11,11];
+    testPathAgainstExpected(assert, player, expectedPath, expectedCoords);
+
+    player.move();
+    player.move();
+    expectedPath = [[10,11],[12,11],[12,10],[10,10]];
+    expectedCoords = [9,11];
+
+    player.turnRight();
+    player.move();
+    expectedPath = [[9,11],[9,11],[12,11],[12,10],[10,10]];
+    expectedCoords = [9,10];
+  });
 
   test('check that a player begins a new path when there position is set', function (assert) {
     var player = playerFactory.getPlayer(options),
-    expectedPath = [[0,0],[0,0]];
-    testPathAgainstExpected(assert, player, expectedPath);
+    expectedPath = [[10,10],[10,10]],
+    expectedCoords = [10,10];
+    testPathAgainstExpected(assert, player, expectedPath, expectedCoords);
     player.setCoords([20,15]);
     expectedPath = [[20,15],[20,15]];
-    testPathAgainstExpected(assert, player, expectedPath);
+    expectedCoords = [20,15];
+    testPathAgainstExpected(assert, player, expectedPath, expectedCoords);
   });
 
   test('check the keystate to left & right turn mapping', function (assert) {
@@ -199,12 +195,12 @@ requirejs(['../src/playerFactory'], function(playerFactory) {
     expectedCoords,
     keystateMap = options.environmentOptions.keystateMap;
     playerCoords = player.getCoords();
-    expectedCoords = [0,0];
+    expectedCoords = [10,10];
     assert.ok(Math.round(playerCoords[0]) === expectedCoords[0] && Math.round(playerCoords[0]) === expectedCoords[0], 'Player starts at 0,0');
     keystateMap["39"] = true;
     player.move();
     playerCoords = player.getCoords();
-    expectedCoords = [0,1];
+    expectedCoords = [10,11];
     assert.ok(Math.round(playerCoords[0]) === expectedCoords[0] && Math.round(playerCoords[0]) === expectedCoords[0], 'Player starts at 0,0');
   });
   
@@ -438,9 +434,9 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
   });
   test('check that the scores are kept as expected', function (assert) {
     var p1winsOptsAdd = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [1,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
-    p2winsOptsAdd = [{"startCoord": [1,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
+    p2winsOptsAdd = [{"startCoord": [3,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
     drawOptsAdd = [{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}},{"startCoord": [0,0], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}}],
-    gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [2, 2]},
+    gameOptions = {"scores": [0,0], "matches": 5, "fieldDimensions": [4, 2]},
     p1winsOpts = {"environmentOptions": options.environmentOptions, "gameOptions": gameOptions, "playerOptions": p1winsOptsAdd},
     p2winsOpts,
     drawOpts,
@@ -462,6 +458,7 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
     p2winsGame = gameFactory.getGame(p2winsOpts);
     while (!p2winsGame.isComplete()) {
         p2winsGame.stepTime();
+        debugger;
     }
     scores = p2winsGame.getScores();
     assert.equal(scores[0], 0);
@@ -482,68 +479,30 @@ requirejs(['../src/matchFactory', '../src/gameFactory'], function(matchFactory, 
 
 requirejs(['../src/collisionDetection'], function(collisionDetection) {
   module('isPointWithinPath');
-  test('check that points outsdie paths are evaluated as such', function (assert) {
-    var points, path;
+  test('check that points outsdie / inside paths are evaluated as such', function (assert) {
+    var points, path, outsidePoints, insidePoints;
     path = [[10,10],[20,10],[20,20],[10,20]];
     outsidePoints = [[ 0, 0],[15, 0],[30, 0],[30,15],[30,30],[15,30],[0 ,30],[0 ,15],
-                     [10, 0],[20, 0],[30,10],[30,20],[20,30],[10,30],[0 ,20],[0 ,10],
-                     [10,10],[15,10],[20,10],[20,15],[20,20],[15,20],[10,20]]; // [10,15] has to count as inside the path because of the way that we match touching points
+                     [10, 0],[20, 0],[30,10],[30,20],[20,30],[10,30],[0 ,20],[0 ,10]];
+    insidePoints  = [[10,10],[15,10],[20,10],[20,15],[20,20],[15,20],[10,20],[10,15]];
     outsidePoints.forEach(function (point, index) {
         assert.equal(collisionDetection.isPointWithinPath(point, path), false, '[' + point[0] + '][' + point[1] + '] should not be inside the path');
     });
-  });
-  // test('check a few specific path & point combos which have caused problems in the past', function (assert) {
-  //   var points, path;
-  //   path = [[10,12],[10,10],[20,10],[20,15],[15,15]];
-  //   point = [10,12];
-  //   assert.equal(collisionDetection.isPointWithinPath(point, path), false, 'this point should be outside');
-  // });
-});
-
-requirejs(['../src/lineIntersects'], function(lineIntersects) {
-  module('lineIntersects');
-  var checkIntersectNo = function checkIntersectNo (points, path, expectedCount, assert) {
-    points.forEach(function (point, index) {
-        var ray = [point, [9999,point[0]]],
-        intersectCount = 0,
-        nextPoint;
-        path.forEach(function (pathPoint, index, array) {
-            if (index === path.length-1) {
-                nextPoint = array[0];
-            } else {
-                nextPoint = array[index+1];
-            }
-            if (lineIntersects.isIntersection(ray, [pathPoint, nextPoint]) === true) {
-                intersectCount +=1;
-            }
-        });
-        assert.equal(intersectCount, expectedCount, 'These rays have ' + expectedCount + ' intersections');
+    insidePoints.forEach(function (point, index) {
+        assert.equal(collisionDetection.isPointWithinPath(point, path), true, '[' + point[0] + '][' + point[1] + '] should be inside the path');
     });
-  };
-  test('check that ray casting various paths produces the correct number of intersects', function (assert) {
+  });
+  test('check a few specific path & point combos which have caused problems in the past', function (assert) {
     var points, path;
-    path = [[10,10],[20,10],[20,20],[10,20]];
-    points = [[0,0],[21,21],[11,0],[11,21],[21,11]];
-    checkIntersectNo(points, path, 0, assert);
-
-    points = [[11,11], [10,20], [11,20]];
-    checkIntersectNo(points, path, 1, assert);
-
-    points = [[0,11]];
-    checkIntersectNo(points, path, 2, assert);
-
-
-    path = [[10,10], [20,10]];
-    points = [[20,10]];
-    checkIntersectNo(points, path, 2, assert);
-
-    path = [[10,10], [20,10], [20,1]];
-    points = [[20,1]];
-    checkIntersectNo(points, path, 2, assert);
-
-    path = [[10,10], [20,10], [20,1], [5,1]];
-    points = [[5,1]];
-    checkIntersectNo(points, path, 0, assert);
+    // path = [[10,12],[10,10],[20,10],[20,15],[15,15]];
+    // point = [10,13];
+    // assert.equal(collisionDetection.isPointWithinPath(point, path), false, '[' + point[0] + '][' + point[1] + '] should be outside the path');
+    // path = [[19,20],[20,20],[20,0],[0,0]];
+    // point = [19,19];
+    // assert.equal(collisionDetection.isPointWithinPath(point, path), true, '[' + point[0] + '][' + point[1] + '] should be inside the path');
+    path = [[5,11],[5,15],[20,15],[20,5],[15,5],[15,10],[10,10]];
+    point = [5,10];
+    assert.equal(collisionDetection.isPointWithinPath(point, path), false, '[' + point[0] + '][' + point[1] + '] should be outside the path');
   });
 });
 
