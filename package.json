@@ -1,0 +1,25 @@
+{
+  "name": "wing-tron",
+  "version": "1.0.0",
+  "description": "a drawing combat game based on the famous 'tron'",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/js-jslog/wingTron.git"
+  },
+  "author": "js-jslog",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/js-jslog/wingTron/issues"
+  },
+  "homepage": "https://github.com/js-jslog/wingTron#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
