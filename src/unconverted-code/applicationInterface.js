@@ -1,58 +1,59 @@
-define(["./gameFactory", "./jquery"], function (gameFactory, jquery) {
-	
-	var canvas, ctx, game, requestId;
+import gameFactory from './gameFactory.js'
 
-	var startGame = function startGame (options) {
-		stopAnimation();
-		registerKeystateListener(options);
-		canvas = options.environmentOptions.canvas;
-		ctx = canvas.getContext("2d");
-		game = gameFactory.getGame(options);
-		startAnimation();
-	};
+var canvas;
+var ctx;
+var game;
+var requestId;
 
-	var stopAnimation = function stopAnimation () {
-		if (requestId !== undefined) {
-			window.cancelAnimationFrame(requestId);
-			requestId = undefined;
-		}
-	};
+var startGame = function startGame (options) {
+  stopAnimation();
+  registerKeystateListener(options);
+  canvas = options.environmentOptions.canvas;
+  ctx = canvas.getContext("2d");
+  game = gameFactory.getGame(options);
+  startAnimation();
+};
 
-	var startAnimation = function startAnimation () {
-		if (requestId === undefined) {
-			loop();
-		}
-	};
+var stopAnimation = function stopAnimation () {
+  if (requestId !== undefined) {
+    window.cancelAnimationFrame(requestId);
+    requestId = undefined;
+  }
+};
 
-	var loop = function loop () {
-		game.stepTime();
-		game.draw(ctx);
-		if (game.isComplete() === false) {
-			requestId = window.requestAnimationFrame(loop, canvas);
-		}
-	};
+var startAnimation = function startAnimation () {
+  if (requestId === undefined) {
+    loop();
+  }
+};
 
-	var registerKeystateListener = function registerKeystateListener (options) {
+var loop = function loop () {
+  game.stepTime();
+  game.draw(ctx);
+  if (game.isComplete() === false) {
+    requestId = window.requestAnimationFrame(loop, canvas);
+  }
+};
 
-		keystateMap = {};
+var registerKeystateListener = function registerKeystateListener (options) {
 
-		document.removeEventListener("keydown", addKeyDown);
-		document.removeEventListener("keyup", addKeyUp);
+  keystateMap = {};
 
-		document.addEventListener("keydown", addKeyDown);
-		document.addEventListener("keyup", addKeyUp);
+  document.removeEventListener("keydown", addKeyDown);
+  document.removeEventListener("keyup", addKeyUp);
 
-		options.environmentOptions.keystateMap = keystateMap;
-	};
+  document.addEventListener("keydown", addKeyDown);
+  document.addEventListener("keyup", addKeyUp);
 
-	var addKeyDown = function addKeyDown (evt) {
-		keystateMap[evt.keyCode] = true;
-	};
+  options.environmentOptions.keystateMap = keystateMap;
+};
 
-	var addKeyUp = function addKeyUp (evt) {
-		keystateMap[evt.keyCode] = false;
-	};
+var addKeyDown = function addKeyDown (evt) {
+  keystateMap[evt.keyCode] = true;
+};
 
-	return {startGame: startGame};
+var addKeyUp = function addKeyUp (evt) {
+  keystateMap[evt.keyCode] = false;
+};
 
-});
+module.exports = {startGame: startGame};
