@@ -56,4 +56,6 @@ var addKeyUp = function addKeyUp (evt) {
   keystateMap[evt.keyCode] = false;
 };
 
-module.exports = {startGame: startGame};
+module.exports = {
+  startGame: startGame,
+};
