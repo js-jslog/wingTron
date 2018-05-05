@@ -16,10 +16,18 @@ class WingTron extends Component {
     // set the canvas to fill the component it is placed inside
     // this should probably be done using css for the first 2 lines
     var canvas = this.refs.canvas;
-    var playerOptions = {"startCoord": [10,10], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}};
-    var envOptions = {"keystateMap": {}, "canvas": canvas, "scoreboardFunction": function(a) {console.log(a)}};
-    var gameOptions = {"scores": [0], "fieldWidth": 100, "fieldHeight": 100};
-    var options = {"environmentOptions": envOptions, "gameOptions": gameOptions, "playerOptions": [playerOptions]};
+    var environmentOptions = {};
+    var gameOptions = {fieldWidth: "300", fieldHeight: "300", matches: "10"};
+    var p1Options = {"startCoord": [150,150], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}, "colour": "rgba(255,0,0,0.5)"};
+    var p2Options = {"startCoord": [150,150], "direction": Math.PI, "keyCodes": {"leftCode": 65, "rightCode": 68}, "colour": "rgba(0,0,255,0.5)"};
+    var playerOptions = [p1Options, p2Options];
+    var options = {"environmentOptions": environmentOptions, "gameOptions": gameOptions, "playerOptions": playerOptions};
+
+    options.environmentOptions.canvas = canvas;
+    options.environmentOptions.scoreboardFunction = function (a) {
+      console.log(a);
+    }
+
     canvas.style.height = '100%';
     canvas.style.width = '100%';
     canvas.width = canvas.offsetWidth;

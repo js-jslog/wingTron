@@ -34,7 +34,6 @@ var getMatch = function getMatch (options) {
     inPlay = true;
     field = FieldFactory.getField(options);
     players = [];
-    console.log(JSON.stringify(options.playerOptions));
     options.playerOptions.forEach(function (playerN_opt) {
       var nthPlayerOptions = {"environmentOptions": options.environmentOptions,
         "gameOptions": options.gameOptions,
