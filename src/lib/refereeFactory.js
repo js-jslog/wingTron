@@ -1,3 +1,5 @@
+import CollisionDetection from './collisionDetection.js';
+
 var getReferee = function getReferee (options) {
   var players;
   var field;
@@ -58,18 +60,18 @@ var getReferee = function getReferee (options) {
   };
 
   var isPlayerSafe = function isPlayerSafe (p, allPlayers, f) {
-    var playerCoords = p.getCoords(),
-    var fieldBounds = f.getBoundaries(),
+    var playerCoords = p.getCoords();
+    var fieldBounds = f.getBoundaries();
     var pathHit;
 
-    if (collisionDetection.boundaryHit(playerCoords, fieldBounds) === true) {
+    if (CollisionDetection.boundaryHit(playerCoords, fieldBounds) === true) {
       return false;
     }
     pathHit = allPlayers.some(function (player) {
       if (p === player) {
         //return false;
       }
-      return collisionDetection.isPointWithinPath(p.getCoords(), player.getPath());
+      return CollisionDetection.isPointWithinPath(p.getCoords(), player.getPath());
     });
     return !pathHit;
   };

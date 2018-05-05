@@ -136,4 +136,7 @@ var getPlayer = function getPlayer (options) {
 
   return playerObj;
 };
-return {getPlayer: getPlayer};
+
+module.exports = {
+  getPlayer: getPlayer,
+};

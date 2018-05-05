@@ -1,6 +1,6 @@
-import fieldFactory from './fieldFactory.js';
-import playerFactory from './playerFactory.js';
-import refereeFactory from './refereeFactory.js';
+import FieldFactory from './fieldFactory.js';
+import PlayerFactory from './playerFactory.js';
+import RefereeFactory from './refereeFactory.js';
 
 var getMatch = function getMatch (options) {
   var inPlay;
@@ -32,16 +32,17 @@ var getMatch = function getMatch (options) {
 
   var initialise = function initialise () {
     inPlay = true;
-    field = fieldFactory.getField(options);
+    field = FieldFactory.getField(options);
     players = [];
+    console.log(JSON.stringify(options.playerOptions));
     options.playerOptions.forEach(function (playerN_opt) {
       var nthPlayerOptions = {"environmentOptions": options.environmentOptions,
         "gameOptions": options.gameOptions,
         "playerOptions": playerN_opt};
-      players.push(playerFactory.getPlayer(nthPlayerOptions));
+      players.push(PlayerFactory.getPlayer(nthPlayerOptions));
     });
 
-    referee = refereeFactory.getReferee(options);
+    referee = RefereeFactory.getReferee(options);
     referee.setField(field);
     players.forEach(function (p) {
       referee.addPlayer(p);

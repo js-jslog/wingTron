@@ -1,4 +1,4 @@
-import gameFactory from './gameFactory.js'
+import GameFactory from './gameFactory.js'
 
 var canvas;
 var ctx;
@@ -10,7 +10,7 @@ var startGame = function startGame (options) {
   registerKeystateListener(options);
   canvas = options.environmentOptions.canvas;
   ctx = canvas.getContext("2d");
-  game = gameFactory.getGame(options);
+  game = GameFactory.getGame(options);
   startAnimation();
 };
 
@@ -37,7 +37,7 @@ var loop = function loop () {
 
 var registerKeystateListener = function registerKeystateListener (options) {
 
-  keystateMap = {};
+  var keystateMap = {};
 
   document.removeEventListener("keydown", addKeyDown);
   document.removeEventListener("keyup", addKeyUp);

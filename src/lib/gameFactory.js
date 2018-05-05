@@ -1,4 +1,4 @@
-import matchFactory from './matchFactory';
+import MatchFactory from './matchFactory';
 
 var getGame = function getGame (options) {
   var match;
@@ -19,7 +19,7 @@ var getGame = function getGame (options) {
     match.stepTime();
     if (!match.isInPlay()) {
       matchesCompleted +=1;
-      match = matchFactory.getMatch(options);
+      match = MatchFactory.getMatch(options);
     }
   };
 
@@ -39,10 +39,10 @@ var getGame = function getGame (options) {
     complete = false;
     matchesToComplete = options.gameOptions.matches || 0;
     matchesCompleted = 0;
-    match = matchFactory.getMatch(options);
+    match = MatchFactory.getMatch(options);
   };
 
-  var initialise();
+  initialise();
 
   return {
     getScores: getScores,

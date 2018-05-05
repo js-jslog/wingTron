@@ -1,3 +1,5 @@
+import PolygonIntersect from './polygonIntersect.js';
+
 var boundaryHit = function boundaryHit (playerCoords, fieldBounds) {
   var px = playerCoords[0];
   var py = playerCoords[1];
@@ -44,7 +46,7 @@ var isSimpleIntersect = function isSimpleIntersect (point, path) {
 };
 
 var isDetailedIntersect = function isDetailedIntersect (point, path) {
-  return polygonIntersect.inPolygon(point, path);
+  return PolygonIntersect.inPolygon(point, path);
 };
 
 module.exports = {
