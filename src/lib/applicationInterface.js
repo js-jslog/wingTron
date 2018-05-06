@@ -4,6 +4,7 @@ var canvas;
 var ctx;
 var game;
 var requestId;
+var keystateMap;
 
 var startGame = function startGame (options) {
   stopAnimation();
@@ -37,7 +38,7 @@ var loop = function loop () {
 
 var registerKeystateListener = function registerKeystateListener (options) {
 
-  var keystateMap = {};
+  keystateMap = {};
 
   document.removeEventListener("keydown", addKeyDown);
   document.removeEventListener("keyup", addKeyUp);
