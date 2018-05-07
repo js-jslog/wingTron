@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import OptionsStore from "./optionsStore.js";
-import * as OptionsActions from "./optionsActions.js";
 import ApplicationInterface from "./applicationInterface.js";
 
 // provide another component for the scoreboard & control panel rendering and api call to the start game function
@@ -34,16 +33,10 @@ class WingTron extends Component {
 
     ApplicationInterface.startGame(this.state.options, canvas);
   }
-  updateOptions() {
-    OptionsActions.updateOptions();
-  }
   render() {
     const { color, children } = this.props;
     return (
-      <div>
-        <canvas ref="canvas" />
-        <button onClick={this.updateOptions.bind(this)}>Update!</button>
-      </div>
+      <canvas ref="canvas" />
     );
   }
 }
