@@ -13,6 +13,15 @@ class WingTron extends Component {
     // also render a "click here to start" text on the canvas if there is no control panel
     // a lot of what will be done here is contained in the startWingTronGame function
   }
+  componentWillMount() {
+    OptionsStore.on('change', () => {
+      this.setState({
+        options: OptionsStore.getAll(),
+      });
+      this.updateCanvas();
+    });
+  }
+
   componentDidMount() {
     this.updateCanvas();
   }

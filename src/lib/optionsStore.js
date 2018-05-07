@@ -19,6 +19,13 @@ class OptionsStore extends EventEmitter {
     };
   }
 
+  updateOption(fieldWidth) {
+    this.options.gameOptions.fieldWidth = fieldWidth;
+    this.options.gameOptions.fieldHeight = fieldWidth;
+
+    this.emit('change');
+  }
+
   getAll() {
     return this.options;
   }
