@@ -6,10 +6,9 @@ var game;
 var requestId;
 var keystateMap;
 
-var startGame = function startGame (options) {
+var startGame = function startGame (options, canvas) {
   stopAnimation();
   registerKeystateListener(options);
-  canvas = options.environmentOptions.canvas;
   ctx = canvas.getContext("2d");
   game = GameFactory.getGame(options);
   startAnimation();

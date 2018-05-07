@@ -16,7 +16,7 @@ class WingTron extends Component {
       environmentOptions: {
         scoreboardFunction: function (a) {
           console.log(a);
-        }
+        },
       },
     };
     // set a load of presets incase no control panel is provided
@@ -28,15 +28,11 @@ class WingTron extends Component {
   }
   updateCanvas() {
     var canvas = this.refs.canvas;
-    var environmentOptions = {};
-    var options = {"environmentOptions": this.state.environmentOptions, "gameOptions": this.state.gameOptions, "playerOptions": this.state.playerOptions};
-
-    options.environmentOptions.canvas = canvas;
-    canvas.width = options.gameOptions.fieldWidth;
-    canvas.height = options.gameOptions.fieldHeight;
+    canvas.width = this.state.gameOptions.fieldWidth;
+    canvas.height = this.state.gameOptions.fieldHeight;
     canvas.style.width = '100%';
 
-    ApplicationInterface.startGame(options);
+    ApplicationInterface.startGame(this.state, canvas);
   }
   render() {
     const { color, children } = this.props;
