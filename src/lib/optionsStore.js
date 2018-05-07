@@ -33,7 +33,7 @@ class OptionsStore extends EventEmitter {
 
   handleActions(action) {
     switch(action.type) {
-      case 'UPDATE_OPTIONS': {
+      case 'UPDATE_OPTION': {
         this.updateOption(500);
       }
     }
