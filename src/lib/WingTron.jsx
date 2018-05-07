@@ -13,8 +13,6 @@ class WingTron extends Component {
     this.updateCanvas();
   }
   updateCanvas() {
-    // set the canvas to fill the component it is placed inside
-    // this should probably be done using css for the first 2 lines
     var canvas = this.refs.canvas;
     var environmentOptions = {};
     var gameOptions = {fieldWidth: "300", fieldHeight: "300", matches: "10"};
@@ -28,10 +26,10 @@ class WingTron extends Component {
       console.log(a);
     }
 
-    canvas.style.height = '100%';
+    canvas.width = options.gameOptions.fieldWidth;
+    canvas.height = options.gameOptions.fieldHeight;
     canvas.style.width = '100%';
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+
     ApplicationInterface.startGame(options);
   }
   render() {
