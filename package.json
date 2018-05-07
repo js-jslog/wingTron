@@ -39,5 +39,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/js-jslog/wingTron.git"
+  },
+  "dependencies": {
+    "flux": "^3.1.3"
   }
 }

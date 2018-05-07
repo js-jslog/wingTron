@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import dispatcher from './dispatcher.js';
 
 class OptionsStore extends EventEmitter {
   constructor() {
@@ -29,8 +30,18 @@ class OptionsStore extends EventEmitter {
   getAll() {
     return this.options;
   }
+
+  handleActions(action) {
+    switch(action.type) {
+      case 'UPDATE_OPTIONS': {
+        this.updateOption(500);
+      }
+    }
+  }
 }
 
 const optionsStore = new OptionsStore;
+dispatcher.register(optionsStore.handleActions.bind(optionsStore));
+window.dispatcher = dispatcher;
 
 export default optionsStore;
