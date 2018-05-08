@@ -6,12 +6,32 @@ class ControlPanel extends Component {
     super(props)
   }
   updateOptions() {
-    OptionsActions.updateOptions();
+    var options = {
+      fieldWidth: this.refs.optionWidth.value,
+      fieldHeight: this.refs.optionHeight.value,
+      matches: this.refs.optionMatches.value,
+    }
+    console.log(options);
+    OptionsActions.updateOptions(options);
   }
   render() {
     const { color, children } = this.props;
     return (
-      <button onClick={this.updateOptions.bind(this)}>Update!</button>
+      <div>
+        <div>
+          <input ref='optionWidth' defaultValue='300' />
+          <span>Field width</span>
+        </div>
+        <div>
+          <input ref='optionHeight' defaultValue='300' />
+          <span>Field height</span>
+        </div>
+        <div>
+          <input ref='optionMatches' defaultValue='10' />
+          <span>Matches</span>
+        </div>
+        <button onClick={this.updateOptions.bind(this)}>Start Game!</button>
+      </div>
     );
   }
 }

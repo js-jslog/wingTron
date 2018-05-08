@@ -20,9 +20,10 @@ class OptionsStore extends EventEmitter {
     };
   }
 
-  updateOption(fieldWidth) {
-    this.options.gameOptions.fieldWidth = fieldWidth;
-    this.options.gameOptions.fieldHeight = fieldWidth;
+  updateOptions(options) {
+    this.options.gameOptions.fieldWidth = options.fieldWidth;
+    this.options.gameOptions.fieldHeight = options.fieldHeight;
+    this.options.gameOptions.matches = options.matches;
 
     this.emit('change');
   }
@@ -33,8 +34,8 @@ class OptionsStore extends EventEmitter {
 
   handleActions(action) {
     switch(action.type) {
-      case 'UPDATE_OPTION': {
-        this.updateOption(500);
+      case 'UPDATE_OPTIONS': {
+        this.updateOptions(action.options);
       }
     }
   }
@@ -42,6 +43,5 @@ class OptionsStore extends EventEmitter {
 
 const optionsStore = new OptionsStore;
 dispatcher.register(optionsStore.handleActions.bind(optionsStore));
-window.dispatcher = dispatcher;
 
 export default optionsStore;
