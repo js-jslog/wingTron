@@ -17,11 +17,34 @@ class OptionsStore extends EventEmitter {
   }
 
   updateOptions(options) {
-    this.options.gameOptions.fieldWidth = options.fieldWidth;
-    this.options.gameOptions.fieldHeight = options.fieldHeight;
-    this.options.gameOptions.matches = options.matches;
+    this.options = options;
+
+    console.log(options);
 
     this.emit('change');
+  }
+
+  addPlayer(options) {
+    const r = Math.round(Math.random() * 155) + 100;
+    const g = Math.round(Math.random() * 155) + 100;
+    const b = Math.round(Math.random() * 155) + 100;
+    this.options.playerOptions.push({
+      startCoord: [150,150],
+      direction: Math.random() * Math.PI * 2,
+      keyCodes: {
+        leftCode: undefined,
+        rightCode: undefined,
+      },
+      colour: 'rgba(' + r + ',' + g + ',' + b + ',0.5)',
+    })
+
+    this.emit('player_change');
+  }
+
+  removePlayer(index) {
+    this.options.playerOptions.splice(index, 1);
+    
+    this.emit('player_change');
   }
 
   getAll() {
@@ -31,7 +54,16 @@ class OptionsStore extends EventEmitter {
   handleActions(action) {
     switch(action.type) {
       case 'UPDATE_OPTIONS': {
-        this.updateOptions(action.options);
+        this.updateOptions(action.options)
+        break
+      }
+      case 'ADD_PLAYER': {
+        this.addPlayer(action.options)
+        break
+      }
+      case 'REMOVE_PLAYER': {
+        this.removePlayer(action.index)
+        break
       }
     }
   }

@@ -56,7 +56,6 @@ var getReferee = function getReferee (options) {
   var initialise = function initialise () {
     players = [];
     scores = options.gameOptions.scores;
-    ScoresActions.updateScores(scores);
   };
 
   var isPlayerSafe = function isPlayerSafe (p, allPlayers, f) {

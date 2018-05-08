@@ -4,10 +4,7 @@ import dispatcher from './dispatcher.js';
 class ScoresStore extends EventEmitter {
   constructor() {
     super()
-    this.scores = [
-      10,
-      10,
-    ]
+    this.scores = []
   }
 
   updateScores(scores) {

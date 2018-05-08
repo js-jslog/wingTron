@@ -6,3 +6,17 @@ export function updateOptions(options) {
     options: options,
   });
 }
+
+export function addPlayer(options) {
+  dispatcher.dispatch({
+    type: 'ADD_PLAYER',
+    options: options,
+  })
+}
+
+export function removePlayer(index) {
+  dispatcher.dispatch({
+    type: 'REMOVE_PLAYER',
+    index: index,
+  })
+}
