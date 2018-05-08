@@ -12,11 +12,7 @@ class OptionsStore extends EventEmitter {
         {"startCoord": [150,150], "direction": 0, "keyCodes": {"leftCode": 37, "rightCode": 39}, "colour": "rgba(255,0,0,0.5)",},
         {"startCoord": [150,150], "direction": Math.PI, "keyCodes": {"leftCode": 65, "rightCode": 68}, "colour": "rgba(0,0,255,0.5)",},
       ],
-      environmentOptions: {
-        scoreboardFunction: function (a) {
-          console.log(a);
-        },
-      },
+      environmentOptions: {},
     };
   }
 

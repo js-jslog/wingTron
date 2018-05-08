@@ -1,8 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
 import WingTron from "../../lib/WingTron.js";
-import ControlPanel from "../../lib/ControlPanel.js";
-import ScoreBoard from "../../lib/ScoreBoard.js";
+import ControlPanel from "./ControlPanel.jsx";
+import ScoreBoard from "./ScoreBoard.jsx";
 import "./styles.css";
 
 function Demo() {

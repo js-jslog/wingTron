@@ -1,4 +1,5 @@
 import CollisionDetection from './collisionDetection.js';
+import * as ScoresActions from './scoresActions.js';
 
 var getReferee = function getReferee (options) {
   var players;
@@ -35,12 +36,12 @@ var getReferee = function getReferee (options) {
       }
     });
     if (deathRound === true) {
-      scoreboardFunction(scores);
       scores.forEach(function (score, index) {
         if (players[index].isAlive() === true) {
           scores[index] +=1;    
         }
       });
+      ScoresActions.updateScores(scores);
     }
   };
 
@@ -55,8 +56,7 @@ var getReferee = function getReferee (options) {
   var initialise = function initialise () {
     players = [];
     scores = options.gameOptions.scores;
-    scoreboardFunction = options.environmentOptions.scoreboardFunction;
-    scoreboardFunction(scores);
+    ScoresActions.updateScores(scores);
   };
 
   var isPlayerSafe = function isPlayerSafe (p, allPlayers, f) {
