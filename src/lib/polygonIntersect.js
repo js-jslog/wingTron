@@ -424,16 +424,16 @@ VisibilityPolygon.isOnSegment = function(xi, yi, xj, yj, xk, yk) {
 };
 
 VisibilityPolygon.computeDirection = function(xi, yi, xj, yj, xk, yk) {
-  a = (xk - xi) * (yj - yi);
-  b = (xj - xi) * (yk - yi);
+  var a = (xk - xi) * (yj - yi);
+  var b = (xj - xi) * (yk - yi);
   return a < b ? -1 : a > b ? 1 : 0;
 };
 
 VisibilityPolygon.doLineSegmentsIntersect = function(x1, y1, x2, y2, x3, y3, x4, y4) {
-  d1 = VisibilityPolygon.computeDirection(x3, y3, x4, y4, x1, y1);
-  d2 = VisibilityPolygon.computeDirection(x3, y3, x4, y4, x2, y2);
-  d3 = VisibilityPolygon.computeDirection(x1, y1, x2, y2, x3, y3);
-  d4 = VisibilityPolygon.computeDirection(x1, y1, x2, y2, x4, y4);
+  var d1 = VisibilityPolygon.computeDirection(x3, y3, x4, y4, x1, y1);
+  var d2 = VisibilityPolygon.computeDirection(x3, y3, x4, y4, x2, y2);
+  var d3 = VisibilityPolygon.computeDirection(x1, y1, x2, y2, x3, y3);
+  var d4 = VisibilityPolygon.computeDirection(x1, y1, x2, y2, x4, y4);
   return (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
           ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0))) ||
          (d1 == 0 && VisibilityPolygon.isOnSegment(x3, y3, x4, y4, x1, y1)) ||
