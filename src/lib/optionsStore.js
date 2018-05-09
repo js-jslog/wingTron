@@ -18,10 +18,19 @@ class OptionsStore extends EventEmitter {
 
   updateOptions(options) {
     this.options = options;
+    this.cleanseOptions()
 
-    console.log(options);
+    this.emit('change')
+  }
 
-    this.emit('change');
+  cleanseOptions() {
+    this.options.playerOptions.forEach(function (playerOption) {
+      playerOption.startCoord[0] = parseInt(playerOption.startCoord[0])
+      playerOption.startCoord[1] = parseInt(playerOption.startCoord[1])
+      playerOption.direction = parseInt(playerOption.direction)
+      playerOption.keyCodes.leftCode = parseInt(playerOption.keyCodes.leftCode)
+      playerOption.keyCodes.rightCode = parseInt(playerOption.keyCodes.rightCode)
+    })
   }
 
   addPlayer(options) {
