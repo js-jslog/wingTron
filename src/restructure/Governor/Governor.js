@@ -1,5 +1,5 @@
 import OptionsStore from '../OptionsStore.js'
-import validateOptions from './validateOptions.js'
+import { validateOptions } from './validateOptions.js'
 
 class Governor {
 
