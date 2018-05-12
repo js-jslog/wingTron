@@ -15,4 +15,6 @@ class Governor {
   }
 }
 
-export default Governor
+const GovernorInstance = new Governor
+
+export default GovernorInstance
