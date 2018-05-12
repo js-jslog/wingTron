@@ -81,9 +81,12 @@ describe('validateOptions', () => {
       expect(validateOptions(valid_options_with_numeric_matches)).toBeFalsy()
     })
 
-    test('that the player_options option must be an array', () => {
+    test('that the player_options option must be an array of objects which each pass the player validation', () => {
       let valid_options_with_object_player_options = Object.assign({}, template_valid_options)
-      valid_options_with_object_player_options.player_options = {}
+      valid_options_with_object_player_options.player_options = [
+        { a: 'a' },
+        { b: 'b' },
+      ]
 
       expect(validateOptions(valid_options_with_object_player_options)).toBeFalsy()
     })

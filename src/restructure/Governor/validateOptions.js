@@ -1,7 +1,8 @@
 const validateOptions = (options) => {
   return options
     && checkPresenceOfMandatoryOptions(options)
-      && checkTypesOfMandatoryOptions(options)
+    && checkTypesOfMandatoryOptions(options)
+    && options.player_options.every(validatePlayerOptions)
 }
 
 const validatePlayerOptions = (player_options) => {
