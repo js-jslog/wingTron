@@ -1,5 +1,6 @@
 import Governor from '../src/restructure/Governor/Governor.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
+import GameStore from '../src/restructure/GameStore.js'
 
 const valid_options = {
   field_width: '200',
@@ -25,3 +26,8 @@ test('that governor can start game if the options are available', () => {
   return expect(Governor.startGame()).toBeTruthy()
 })
 
+test('that governor creates a game store state', () => {
+  OptionsStore.setOptions(valid_options)
+  Governor.startGame()
+  expect(GameStore.getState()).toEqual(expect.anything())
+})
