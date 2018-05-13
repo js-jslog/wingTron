@@ -5,6 +5,20 @@ class GameStore {
   setStateFromOptions(options) {
     this.state = optionsToGameState(options)
   }
+
+  movePlayers() {
+    let state = Object.assign({}, this.state)
+    state.player_state.forEach((ps, index) => {
+      this.state.player_state[index] = movePlayer(ps)
+    })
+  }
+}
+
+const movePlayer = (player_state) => {
+  let ps = Object.assign({}, player_state)
+  ps.path[0][0] += Math.cos(ps.direction);
+  ps.path[0][1] += Math.sin(ps.direction);
+  return ps
 }
 
 const optionsToGameState = (options) => {
