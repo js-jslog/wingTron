@@ -2,7 +2,7 @@ class GameStore {
 
   state = undefined
 
-  setState(state) {
+  set state(state) {
     this.state = state
   }
 

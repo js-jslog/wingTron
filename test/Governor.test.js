@@ -17,17 +17,17 @@ const valid_options = {
 }
 
 test('that the governor fails to start the game if there are no options', () => {
-  OptionsStore.setOptions({});
+  OptionsStore.options = {};
   return expect(Governor.startGame()).toBeFalsy()
 })
 
 test('that governor can start game if the options are available', () => {
-  OptionsStore.setOptions(valid_options)
+  OptionsStore.options = valid_options
   return expect(Governor.startGame()).toBeTruthy()
 })
 
 test('that governor creates a game store state', () => {
-  OptionsStore.setOptions(valid_options)
+  OptionsStore.options = valid_options
   Governor.startGame()
   expect(GameStore.state).toEqual(expect.anything())
 })

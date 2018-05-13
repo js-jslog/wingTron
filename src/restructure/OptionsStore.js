@@ -2,7 +2,7 @@ class OptionsStore {
 
   options = {}
 
-  setOptions(options) {
+  set options(options) {
     this.options = options
   }
 
