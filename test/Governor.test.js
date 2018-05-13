@@ -7,8 +7,8 @@ const valid_options = {
   field_height: '200',
   matches: '10',
   player_options: [{
-    start_coord_x: '200',
-    start_coord_y: '200',
+    start_coord_x: '150',
+    start_coord_y: '100',
     direction: '0',
     turn_left_keycode: '65',
     turn_right_keycode: '68',
@@ -20,9 +20,8 @@ const valid_converted_game_state = {
   field_width: 200,
   field_height: 200,
   matches: 10,
-  player_options: [{
-    start_coord_x: 200,
-    start_coord_y: 200,
+  player_state: [{
+    path: [[ 150, 100 ]],
     direction: 0,
     turn_left_keycode: 65,
     turn_right_keycode: 68,
@@ -49,5 +48,3 @@ test('that governor creates a game store state', () => {
   Governor.startGame()
   expect(GameStore.state).toEqual(valid_converted_game_state)
 })
-
-
