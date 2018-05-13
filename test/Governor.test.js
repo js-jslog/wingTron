@@ -30,8 +30,12 @@ const valid_converted_game_state = {
   }]
 }
 
+beforeEach(() => {
+  OptionsStore.options = undefined
+  GameStore.state = undefined
+})
+
 test('that the governor fails to start the game if there are no options', () => {
-  OptionsStore.options = {};
   return expect(Governor.startGame()).toBeFalsy()
 })
 
@@ -45,3 +49,5 @@ test('that governor creates a game store state', () => {
   Governor.startGame()
   expect(GameStore.state).toEqual(valid_converted_game_state)
 })
+
+

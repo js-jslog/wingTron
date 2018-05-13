@@ -4,10 +4,6 @@ import { validateOptions } from './validateOptions.js'
 
 class Governor {
 
-  state = {
-    options: {},
-  }
-
   startGame() {
     const options = OptionsStore.options
     if (!validateOptions(options)) {

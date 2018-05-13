@@ -1,4 +1,6 @@
-class OptionsStore {}
+class OptionsStore {
+  options = undefined
+}
 
 const OptionsStoreInstance = new OptionsStore
 

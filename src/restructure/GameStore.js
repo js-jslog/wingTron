@@ -1,6 +1,6 @@
 class GameStore {
 
-  state = {}
+  state = undefined
 
   setStateFromOptions(options) {
     this.state = optionsToGameState(options)
