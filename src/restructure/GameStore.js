@@ -1,12 +1,12 @@
 class GameStore {
 
-  state = {}
+  state = undefined
 
   setState(state) {
     this.state = state
   }
 
-  getState() {
+  get state() {
     return this.state
   }
 }

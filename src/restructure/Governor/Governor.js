@@ -8,7 +8,7 @@ class Governor {
   }
 
   startGame() {
-    const options = OptionsStore.getOptions()
+    const options = OptionsStore.options
     return validateOptions(options)
   }
 }

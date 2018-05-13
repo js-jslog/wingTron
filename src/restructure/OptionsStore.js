@@ -6,7 +6,7 @@ class OptionsStore {
     this.options = options
   }
 
-  getOptions() {
+  get options() {
     return this.options
   }
 }

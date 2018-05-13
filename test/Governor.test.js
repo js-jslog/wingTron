@@ -29,5 +29,5 @@ test('that governor can start game if the options are available', () => {
 test('that governor creates a game store state', () => {
   OptionsStore.setOptions(valid_options)
   Governor.startGame()
-  expect(GameStore.getState()).toEqual(expect.anything())
+  expect(GameStore.state).toEqual(expect.anything())
 })
