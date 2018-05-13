@@ -1,4 +1,5 @@
 import OptionsStore from '../OptionsStore.js'
+import GameStore from '../GameStore.js'
 import { validateOptions } from './validateOptions.js'
 
 class Governor {
@@ -9,7 +10,11 @@ class Governor {
 
   startGame() {
     const options = OptionsStore.options
-    return validateOptions(options)
+    if (!validateOptions(options)) {
+      return false
+    }
+    GameStore.setState(options)
+    return true
   }
 }
 
