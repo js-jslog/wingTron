@@ -1,8 +1,6 @@
 class OptionsStore {
 
-  constructor() {
-    this.options = {}
-  }
+  options = {}
 
   setOptions(options) {
     this.options = options

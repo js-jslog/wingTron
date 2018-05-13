@@ -3,10 +3,8 @@ import { validateOptions } from './validateOptions.js'
 
 class Governor {
 
-  constructor() {
-    this.state = {
-      options: {},
-    }
+  state = {
+    options: {},
   }
 
   startGame() {
