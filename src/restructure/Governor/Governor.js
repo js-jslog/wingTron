@@ -13,7 +13,7 @@ class Governor {
     if (!validateOptions(options)) {
       return false
     }
-    GameStore.state = options
+    GameStore.setStateFromOptions(options)
     return true
   }
 }
