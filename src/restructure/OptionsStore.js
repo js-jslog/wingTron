@@ -1,15 +1,4 @@
-class OptionsStore {
-
-  options = {}
-
-  set options(options) {
-    this.options = options
-  }
-
-  get options() {
-    return this.options
-  }
-}
+class OptionsStore {}
 
 const OptionsStoreInstance = new OptionsStore
 

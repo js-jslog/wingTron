@@ -1,15 +1,4 @@
-class GameStore {
-
-  state = undefined
-
-  set state(state) {
-    this.state = state
-  }
-
-  get state() {
-    return this.state
-  }
-}
+class GameStore {}
 
 const GameStoreInstance = new GameStore
 
