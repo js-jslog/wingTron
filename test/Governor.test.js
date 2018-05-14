@@ -21,7 +21,10 @@ const valid_converted_game_state = {
   field_height: 200,
   matches: 10,
   player_state: [{
-    path: [[ 150, 100 ]],
+    path: [
+      [ 150, 100 ],
+      [ 150, 100 ],
+    ],
     direction: 0,
     turn_left_keycode: 65,
     turn_right_keycode: 68,

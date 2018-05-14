@@ -56,7 +56,10 @@ const playerOptionsToPlayerState = (player_options) => {
     const player_option = player_options[key]
     state[key] = transformPlayerOption(key, player_option)
   })
-  state.path = [[ state.start_coord_x, state.start_coord_y ]]
+  state.path = [
+    [ state.start_coord_x, state.start_coord_y ],
+    [ state.start_coord_x, state.start_coord_y ],
+  ]
   delete state.start_coord_x
   delete state.start_coord_y
   return state
