@@ -43,6 +43,16 @@ describe('the turn key mapping', () => {
 
     return expect(GameStore.state.player_state[0].direction).toEqual(-1 * Math.PI * 0.5)
   })
+
+  test('a keycode which relates to a players right turn produces the expected change in direction', () => {
+
+    const valid_state = JSON.parse(JSON.stringify(valid_state_template))
+
+    GameStore.state = valid_state
+    GameStore.handleKeyPress(GameStore.state.player_state[0].turn_right_keycode)
+
+    return expect(GameStore.state.player_state[0].direction).toEqual(Math.PI * 0.5)
+  })
 })
 
 
