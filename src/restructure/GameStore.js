@@ -18,9 +18,11 @@ class GameStore {
     const state = JSON.parse(JSON.stringify(this.state))
     state.player_state.forEach((ps, index) => {
       if (ps.turn_left_keycode === keycode) {
+        addPathNode(state.player_state[index].path)
         state.player_state[index].direction -= (Math.PI * 0.5)
       }
       if (ps.turn_right_keycode === keycode) {
+        addPathNode(state.player_state[index].path)
         state.player_state[index].direction += (Math.PI * 0.5)
       }
     })
@@ -28,8 +30,8 @@ class GameStore {
   }
 }
 
-const updateDirections = (keycode) => {
-  const player_state = JSON.parse(JSON.stringify(this.state.player_state))
+const addPathNode = (path) => {
+  path.unshift([].slice.call(path[0], 0))
 }
 
 const movePlayer = (player_state) => {
