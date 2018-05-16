@@ -32,9 +32,23 @@ beforeEach(() => {
   GameStore.state = undefined
 })
 
+describe('the turn key mapping', () => {
+
+  test('a keycode which relates to a players left turn produces the expected change in direction', () => {
+
+    const valid_state = JSON.parse(JSON.stringify(valid_state_template))
+
+    GameStore.state = valid_state
+    GameStore.handleKeyPress(GameStore.state.player_state[0].turn_left_keycode)
+
+    return expect(GameStore.state.player_state[0].direction).toEqual(-1 * Math.PI * 0.5)
+  })
+})
+
+
 describe('the player position update logic', () => {
 
-  test('a pair of players moving away from one another', () => {
+  test('a pair of players with away from one another', () => {
 
     const valid_state = JSON.parse(JSON.stringify(valid_state_template))
 
@@ -52,8 +66,8 @@ describe('the player position update logic', () => {
       ]
     ]
     const actual_both_paths = [
-      valid_state.player_state[0].path,
-      valid_state.player_state[1].path,
+      GameStore.state.player_state[0].path,
+      GameStore.state.player_state[1].path,
     ]
 
     return expect(actual_both_paths).toEqual(expected_both_paths)

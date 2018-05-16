@@ -9,9 +9,27 @@ class GameStore {
   movePlayers() {
     const state = JSON.parse(JSON.stringify(this.state))
     state.player_state.forEach((ps, index) => {
-      this.state.player_state[index] = movePlayer(ps)
+      state.player_state[index] = movePlayer(ps)
     })
+    this.state = state
   }
+
+  handleKeyPress(keycode) {
+    const state = JSON.parse(JSON.stringify(this.state))
+    state.player_state.forEach((ps, index) => {
+      if (ps.turn_left_keycode === keycode) {
+        state.player_state[index].direction -= (Math.PI * 0.5)
+      }
+      if (ps.turn_right_keycode === keycode) {
+        state.player_state[index].direction += (Math.PI * 0.5)
+      }
+    })
+    this.state = state
+  }
+}
+
+const updateDirections = (keycode) => {
+  const player_state = JSON.parse(JSON.stringify(this.state.player_state))
 }
 
 const movePlayer = (player_state) => {
@@ -51,7 +69,7 @@ const playerOptionsArrayToPlayerStateArray = (player_options_array) => (
 
 const playerOptionsToPlayerState = (player_options) => {
   const player_options_keys = Object.keys(player_options)
-  var state = {}
+  const state = {}
   player_options_keys.forEach(key => {
     const player_option = player_options[key]
     state[key] = transformPlayerOption(key, player_option)
