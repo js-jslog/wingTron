@@ -7,7 +7,7 @@ class GameStore {
   }
 
   movePlayers() {
-    let state = Object.assign({}, this.state)
+    let state = JSON.parse(JSON.stringify(this.state))
     state.player_state.forEach((ps, index) => {
       this.state.player_state[index] = movePlayer(ps)
     })
