@@ -7,7 +7,7 @@ class GameStore {
   }
 
   movePlayers() {
-    let state = JSON.parse(JSON.stringify(this.state))
+    const state = JSON.parse(JSON.stringify(this.state))
     state.player_state.forEach((ps, index) => {
       this.state.player_state[index] = movePlayer(ps)
     })
@@ -15,7 +15,7 @@ class GameStore {
 }
 
 const movePlayer = (player_state) => {
-  let ps = Object.assign({}, player_state)
+  const ps = Object.assign({}, player_state)
   ps.path[0][0] += Math.cos(ps.direction);
   ps.path[0][1] += Math.sin(ps.direction);
   return ps
@@ -23,7 +23,7 @@ const movePlayer = (player_state) => {
 
 const optionsToGameState = (options) => {
   const options_keys = Object.keys(options)
-  let state = {}
+  const state = {}
   options_keys.forEach(key => {
     const option = options[key]
     state[key] = transformOption(key, option)

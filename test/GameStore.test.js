@@ -36,12 +36,12 @@ describe('the player position update logic', () => {
 
   test('a pair of players moving away from one another', () => {
 
-    let valid_state = JSON.parse(JSON.stringify(valid_state_template))
+    const valid_state = JSON.parse(JSON.stringify(valid_state_template))
 
     GameStore.state = valid_state
     GameStore.movePlayers()
 
-    let expected_both_paths = [
+    const expected_both_paths = [
       [
         [ 151, 200 ],
         [ 150, 200 ],
@@ -51,7 +51,7 @@ describe('the player position update logic', () => {
         [ 150, 200 ],
       ]
     ]
-    let actual_both_paths = [
+    const actual_both_paths = [
       valid_state.player_state[0].path,
       valid_state.player_state[1].path,
     ]
