@@ -282,7 +282,7 @@ describe('the collision detection positive results', () => {
 describe('the collision detection negative results', () => {
 
   test('that interaction along the path itself does not count as a collision', () => {
-    const collided_paths = [
+    const non_collided_paths = [
       [
         [ 0, 0 ],
         [ 100, 0 ],
@@ -305,7 +305,7 @@ describe('the collision detection negative results', () => {
         [ 0, 20 ],
       ],
     ]
-    const collided_state = JSON.parse(JSON.stringify(valid_state_template))
+    const non_collided_state = JSON.parse(JSON.stringify(valid_state_template))
     const expected_collision_matrix = [
       [false, false, false, false, false, false],
       [false, false, false, false, false, false],
@@ -314,19 +314,75 @@ describe('the collision detection negative results', () => {
       [false, false, false, false, false, false],
       [false, false, false, false, false, false],
     ]
-    collided_state.player_state.push(JSON.parse(JSON.stringify(collided_state.player_state[0])))
-    collided_state.player_state.push(JSON.parse(JSON.stringify(collided_state.player_state[0])))
-    collided_state.player_state.push(JSON.parse(JSON.stringify(collided_state.player_state[0])))
-    collided_state.player_state.push(JSON.parse(JSON.stringify(collided_state.player_state[0])))
+    non_collided_state.player_state.push(JSON.parse(JSON.stringify(non_collided_state.player_state[0])))
+    non_collided_state.player_state.push(JSON.parse(JSON.stringify(non_collided_state.player_state[0])))
+    non_collided_state.player_state.push(JSON.parse(JSON.stringify(non_collided_state.player_state[0])))
+    non_collided_state.player_state.push(JSON.parse(JSON.stringify(non_collided_state.player_state[0])))
 
-    collided_state.player_state[0].path = collided_paths[0]
-    collided_state.player_state[1].path = collided_paths[1]
-    collided_state.player_state[2].path = collided_paths[2]
-    collided_state.player_state[3].path = collided_paths[3]
-    collided_state.player_state[4].path = collided_paths[4]
-    collided_state.player_state[5].path = collided_paths[5]
+    non_collided_state.player_state[0].path = non_collided_paths[0]
+    non_collided_state.player_state[1].path = non_collided_paths[1]
+    non_collided_state.player_state[2].path = non_collided_paths[2]
+    non_collided_state.player_state[3].path = non_collided_paths[3]
+    non_collided_state.player_state[4].path = non_collided_paths[4]
+    non_collided_state.player_state[5].path = non_collided_paths[5]
 
-    GameStore.state = collided_state
+    GameStore.state = non_collided_state
+    GameStore.calculateCollisionMatrix()
+
+    return expect(GameStore.state.collision_matrix).toEqual(expected_collision_matrix)
+  })
+
+  test('that an individual previously inside an area is not recognised as collided if they are now outside', () => {
+    const non_collided_paths = [
+      [
+        [ 0, 0 ],
+        [ 100, 0 ],
+        [ 100, 100 ],
+        [ 0, 100 ],
+      ],
+      [
+        [ 100, 0 ],
+        [ 50, 50 ],
+      ],
+      [
+        [ 100, 50 ],
+        [ 50, 50 ],
+      ],
+      [
+        [ 50, 100 ],
+        [ 50, 50 ],
+      ],
+      [
+        [ 0, 0 ],
+        [ 50, 50 ],
+      ],
+      [
+        [ 0, 20 ],
+        [ 50, 50 ],
+      ],
+    ]
+    const non_collided_state = JSON.parse(JSON.stringify(valid_state_template))
+    const expected_collision_matrix = [
+      [false, false, false, false, false, false],
+      [false, false, false, false, false, false],
+      [false, false, false, false, false, false],
+      [false, false, false, false, false, false],
+      [false, false, false, false, false, false],
+      [false, false, false, false, false, false],
+    ]
+    non_collided_state.player_state.push(JSON.parse(JSON.stringify(non_collided_state.player_state[0])))
+    non_collided_state.player_state.push(JSON.parse(JSON.stringify(non_collided_state.player_state[0])))
+    non_collided_state.player_state.push(JSON.parse(JSON.stringify(non_collided_state.player_state[0])))
+    non_collided_state.player_state.push(JSON.parse(JSON.stringify(non_collided_state.player_state[0])))
+
+    non_collided_state.player_state[0].path = non_collided_paths[0]
+    non_collided_state.player_state[1].path = non_collided_paths[1]
+    non_collided_state.player_state[2].path = non_collided_paths[2]
+    non_collided_state.player_state[3].path = non_collided_paths[3]
+    non_collided_state.player_state[4].path = non_collided_paths[4]
+    non_collided_state.player_state[5].path = non_collided_paths[5]
+
+    GameStore.state = non_collided_state
     GameStore.calculateCollisionMatrix()
 
     return expect(GameStore.state.collision_matrix).toEqual(expected_collision_matrix)
