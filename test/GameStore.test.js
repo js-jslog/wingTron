@@ -4,6 +4,10 @@ const valid_state_template = {
   field_width: 200,
   field_height: 200,
   matches: 1,
+  collision_flags: [
+    [ false, false ],
+    [ false, false ],
+  ],
   player_state: [
     {
       path: [
@@ -134,5 +138,37 @@ describe('the player position update logic', () => {
     ]
 
     return expect(actual_both_paths).toEqual(expected_both_paths)
+  })
+})
+
+describe('the collision detection', () => {
+
+  test.only('that the collision flag is set when a point is inside a path', () => {
+    const collided_paths = [
+      [
+        [ 0, 0 ],
+        [ 100, 0 ],
+        [ 100, 100 ],
+        [ 0, 100 ],
+      ],
+      [
+        [ 50, 50 ],
+      ],
+    ]
+    const collided_state = JSON.parse(JSON.stringify(valid_state_template))
+    const expected_collision_flags = [
+      [false, false],
+      [true, false],
+    ]
+    collided_state.player_state[0].path = collided_paths[0]
+    collided_state.player_state[1].path = collided_paths[1]
+
+    GameStore.state = collided_state
+    GameStore.evaluatePositions()
+
+    return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
+  })
+
+  test('that the out_of_bounds flag is set when the player exits the field', () => {
   })
 })

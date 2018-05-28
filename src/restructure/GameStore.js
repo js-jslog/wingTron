@@ -1,3 +1,5 @@
+import CollisionDetection from './collisionDetection.js';
+
 class GameStore {
 
   state = undefined
@@ -28,6 +30,24 @@ class GameStore {
     })
     this.state = state
   }
+
+  evaluatePositions() {
+    const player_paths = getPathsFromGameState(this.state)
+    const collision_flags = player_paths.map(subject_path => (
+      player_paths.map(object_path => (
+        intersects(subject_path, object_path)
+      ))
+    ))
+    this.state.collision_flags = collision_flags
+  }
+}
+
+const getPathsFromGameState = (state) => {
+  return state.player_state.map(ps => ps.path)
+}
+
+const intersects = (path1, path2) => {
+  return CollisionDetection.isPointWithinPath(path1[0], path2)
 }
 
 const addPathNode = (path) => {
