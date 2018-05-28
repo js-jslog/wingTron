@@ -164,7 +164,7 @@ describe('the collision detection', () => {
     collided_state.player_state[1].path = collided_paths[1]
 
     GameStore.state = collided_state
-    GameStore.evaluatePositions()
+    GameStore.calculateCollisionMatrix()
 
     return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
   })
