@@ -169,6 +169,24 @@ describe('the collision detection', () => {
     return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
   })
 
-  test('that the out_of_bounds flag is set when the player exits the field', () => {
+  test('that the collision flag is set when a player runs in to their own anchor line', () => {
+    const self_collide_state = JSON.parse(JSON.stringify(valid_state_template))
+    const self_collision_path = [
+      [ 90, 90 ],
+      [ 90, 100 ],
+      [ 100, 100 ],
+      [ 100, 0 ],
+      [ 0, 0 ],
+    ]
+    const expected_collision_flags = [
+      [ true ],
+    ]
+    self_collide_state.player_state.splice(1, 1)
+    self_collide_state.player_state[0].path = self_collision_path
+
+    GameStore.state = self_collide_state
+    GameStore.calculateCollisionMatrix()
+
+    return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
   })
 })
