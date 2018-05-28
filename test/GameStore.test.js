@@ -189,4 +189,55 @@ describe('the collision detection', () => {
 
     return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
   })
+
+  test('that the collision flag is set for multiple players inside a single players area', () => {
+    const collided_paths = [
+      [
+        [ 0, 0 ],
+        [ 100, 0 ],
+        [ 100, 100 ],
+        [ 0, 100 ],
+      ],
+      [
+        [ 50, 50 ],
+      ],
+      [
+        [ 1, 1 ],
+      ],
+      [
+        [ 99, 1 ],
+      ],
+      [
+        [ 99, 99 ],
+      ],
+      [
+        [ 1, 99 ],
+      ],
+    ]
+    const collided_state = JSON.parse(JSON.stringify(valid_state_template))
+    const expected_collision_flags = [
+      [false, false, false, false, false, false],
+      [true, false, false, false, false, false],
+      [true, false, false, false, false, false],
+      [true, false, false, false, false, false],
+      [true, false, false, false, false, false],
+      [true, false, false, false, false, false],
+    ]
+    collided_state.player_state.push(JSON.parse(JSON.stringify(collided_state.player_state[0])))
+    collided_state.player_state.push(JSON.parse(JSON.stringify(collided_state.player_state[0])))
+    collided_state.player_state.push(JSON.parse(JSON.stringify(collided_state.player_state[0])))
+    collided_state.player_state.push(JSON.parse(JSON.stringify(collided_state.player_state[0])))
+
+    collided_state.player_state[0].path = collided_paths[0]
+    collided_state.player_state[1].path = collided_paths[1]
+    collided_state.player_state[2].path = collided_paths[2]
+    collided_state.player_state[3].path = collided_paths[3]
+    collided_state.player_state[4].path = collided_paths[4]
+    collided_state.player_state[5].path = collided_paths[5]
+
+    GameStore.state = collided_state
+    GameStore.calculateCollisionMatrix()
+
+    return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
+  })
 })
