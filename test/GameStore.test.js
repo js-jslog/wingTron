@@ -4,7 +4,7 @@ const valid_state_template = {
   field_width: 200,
   field_height: 200,
   matches: 1,
-  collision_flags: [
+  collision_matrix: [
     [ false, false ],
     [ false, false ],
   ],
@@ -152,7 +152,7 @@ describe('the collision detection positive results', () => {
       [ 100, 0 ],
       [ 0, 0 ],
     ]
-    const expected_collision_flags = [
+    const expected_collision_matrix = [
       [ true ],
     ]
     self_collide_state.player_state.splice(1, 1)
@@ -161,7 +161,7 @@ describe('the collision detection positive results', () => {
     GameStore.state = self_collide_state
     GameStore.calculateCollisionMatrix()
 
-    return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
+    return expect(GameStore.state.collision_matrix).toEqual(expected_collision_matrix)
   })
 
   test('that the collision flag is set for multiple players inside a single players area', () => {
@@ -189,7 +189,7 @@ describe('the collision detection positive results', () => {
       ],
     ]
     const collided_state = JSON.parse(JSON.stringify(valid_state_template))
-    const expected_collision_flags = [
+    const expected_collision_matrix = [
       [false, false, false, false, false, false],
       [true, false, false, false, false, false],
       [true, false, false, false, false, false],
@@ -212,7 +212,7 @@ describe('the collision detection positive results', () => {
     GameStore.state = collided_state
     GameStore.calculateCollisionMatrix()
 
-    return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
+    return expect(GameStore.state.collision_matrix).toEqual(expected_collision_matrix)
   })
 
   test('that the collision flag is set for a single player inside multiple players areas', () => {
@@ -252,7 +252,7 @@ describe('the collision detection positive results', () => {
       ],
     ]
     const collided_state = JSON.parse(JSON.stringify(valid_state_template))
-    const expected_collision_flags = [
+    const expected_collision_matrix = [
       [false, false, false, false, false, false],
       [false, false, false, false, false, false],
       [false, false, false, false, false, false],
@@ -275,7 +275,7 @@ describe('the collision detection positive results', () => {
     GameStore.state = collided_state
     GameStore.calculateCollisionMatrix()
 
-    return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
+    return expect(GameStore.state.collision_matrix).toEqual(expected_collision_matrix)
   })
 })
 
@@ -306,7 +306,7 @@ describe('the collision detection negative results', () => {
       ],
     ]
     const collided_state = JSON.parse(JSON.stringify(valid_state_template))
-    const expected_collision_flags = [
+    const expected_collision_matrix = [
       [false, false, false, false, false, false],
       [false, false, false, false, false, false],
       [false, false, false, false, false, false],
@@ -329,6 +329,6 @@ describe('the collision detection negative results', () => {
     GameStore.state = collided_state
     GameStore.calculateCollisionMatrix()
 
-    return expect(GameStore.state.collision_flags).toEqual(expected_collision_flags)
+    return expect(GameStore.state.collision_matrix).toEqual(expected_collision_matrix)
   })
 })

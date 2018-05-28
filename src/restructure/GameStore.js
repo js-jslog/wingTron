@@ -33,12 +33,12 @@ class GameStore {
 
   calculateCollisionMatrix() {
     const player_paths = getPathsFromGameState(this.state)
-    const collision_flags = player_paths.map(subject_path => (
+    const collision_matrix = player_paths.map(subject_path => (
       player_paths.map(object_path => (
         intersects(subject_path, object_path)
       ))
     ))
-    this.state.collision_flags = collision_flags
+    this.state.collision_matrix = collision_matrix
   }
 }
 
