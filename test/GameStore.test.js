@@ -143,7 +143,7 @@ describe('the player position update logic', () => {
 
 describe('the collision detection', () => {
 
-  test.only('that the collision flag is set when a point is inside a path', () => {
+  test('that the collision flag is set when a point is inside a path', () => {
     const collided_paths = [
       [
         [ 0, 0 ],
