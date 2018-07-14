@@ -39,18 +39,18 @@ beforeEach(() => {
 
 describe('the governors game setup', () => {
 
-    test('that the governor fails to start the game if there are no options', () => {
-      return expect(Governor.startGame()).toBeFalsy()
-    })
+  test('that the governor fails to start the game if there are no options', () => {
+    return expect(Governor.startGame()).toBeFalsy()
+  })
 
-    test('that governor can start game if the options are available', () => {
-      OptionsStore.options = valid_options
-      return expect(Governor.startGame()).toBeTruthy()
-    })
+  test('that governor can start game if the options are available', () => {
+    OptionsStore.options = valid_options
+    return expect(Governor.startGame()).toBeTruthy()
+  })
 
-    test('that governor creates a game store state', () => {
-      OptionsStore.options = valid_options
-      Governor.startGame()
-      expect(GameStore.state).toEqual(valid_converted_game_state)
-    })
+  test('that governor creates a game store state', () => {
+    OptionsStore.options = valid_options
+    Governor.startGame()
+    expect(GameStore.state).toEqual(valid_converted_game_state)
+  })
 })
