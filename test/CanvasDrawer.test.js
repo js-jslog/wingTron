@@ -14,8 +14,8 @@ const valid_state_template = {
   player_state: [
     {
       path: [
-        [ 150, 200 ],
-        [ 150, 200 ],
+        [ 100, 150 ],
+        [ 100, 150 ],
       ],
       direction: 0,
       turn_left_keycode: 37,
@@ -24,8 +24,8 @@ const valid_state_template = {
     },
     {
       path: [
-        [ 150, 200 ],
-        [ 150, 200 ],
+        [ 200, 250 ],
+        [ 200, 250 ],
       ],
       direction: Math.PI,
       turn_left_keycode: 65,
@@ -57,5 +57,31 @@ describe('the field drawing logic', () => {
     expect(ctx_mock.fillRect.mock.calls[0][1]).toBe(0)
     expect(ctx_mock.fillRect.mock.calls[0][2]).toBe(200)
     expect(ctx_mock.fillRect.mock.calls[0][3]).toBe(100)
+  })
+})
+
+describe('the player drawing logic', () => {
+
+  test('that a rectangle is rendered once per player', () => {
+    CanvasDrawer.drawPlayers(ctx_mock)
+
+    expect(ctx_mock.fillRect.mock.calls.length).toBe(2)
+  })
+
+  test('that the players are drawn in the correct position', () => {
+    const presumed_size = 3
+    const offset = (presumed_size -1) /2
+
+    CanvasDrawer.drawPlayers(ctx_mock)
+
+    expect(ctx_mock.fillRect.mock.calls[0][0]).toBe(100 - offset)
+    expect(ctx_mock.fillRect.mock.calls[0][1]).toBe(150 - offset)
+    expect(ctx_mock.fillRect.mock.calls[0][2]).toBe(presumed_size)
+    expect(ctx_mock.fillRect.mock.calls[0][3]).toBe(presumed_size)
+
+    expect(ctx_mock.fillRect.mock.calls[1][0]).toBe(200 - offset)
+    expect(ctx_mock.fillRect.mock.calls[1][1]).toBe(250 - offset)
+    expect(ctx_mock.fillRect.mock.calls[1][2]).toBe(presumed_size)
+    expect(ctx_mock.fillRect.mock.calls[1][3]).toBe(presumed_size)
   })
 })
