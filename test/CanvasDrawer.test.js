@@ -38,7 +38,7 @@ const valid_state_template = {
       direction: Math.PI,
       turn_left_keycode: 65,
       turn_right_keycode: 68,
-      colour: 'rgba(0,0,255, 0.5)',
+      colour: 'rgba(255,0,0, 0.5)',
     },
   ]
 } 
@@ -48,7 +48,7 @@ beforeEach(() => {
   colour_record.fillStyle = []
   colour_record.strokeStyle = []
   ctx_mock.fillRect = jest.fn(record_ctx_mock_colour)
-  ctx_mock.fill = jest.fn()
+  ctx_mock.fill = jest.fn(record_ctx_mock_colour)
   GameStore.state = valid_state
 })
 
@@ -70,6 +70,7 @@ describe('the field drawing logic', () => {
     expect(ctx_mock.fillRect.mock.calls[0][3]).toBe(100)
 
     expect(colour_record.fillStyle[0]).toBe("#444")
+    expect(colour_record.strokeStyle[0]).toBe("#444")
   })
 })
 
@@ -96,6 +97,11 @@ describe('the player drawing logic', () => {
     expect(ctx_mock.fillRect.mock.calls[1][1]).toBe(250 - offset)
     expect(ctx_mock.fillRect.mock.calls[1][2]).toBe(presumed_size)
     expect(ctx_mock.fillRect.mock.calls[1][3]).toBe(presumed_size)
+
+    expect(colour_record.fillStyle[0]).toBe('rgba(0,0,255, 0.5)')
+    expect(colour_record.strokeStyle[0]).toBe('rgba(0,0,255, 0.5)')
+    expect(colour_record.fillStyle[1]).toBe('rgba(255,0,0, 0.5)')
+    expect(colour_record.strokeStyle[1]).toBe('rgba(255,0,0, 0.5)')
   })
 })
 
@@ -106,5 +112,10 @@ describe('the path drawing logic', () => {
     CanvasDrawer.drawPaths(ctx_mock)
 
     expect(ctx_mock.fill.mock.calls.length).toBe(2)
+
+    expect(colour_record.fillStyle[0]).toBe('rgba(0,0,255, 0.5)')
+    expect(colour_record.strokeStyle[0]).toBe('rgba(0,0,255, 0.5)')
+    expect(colour_record.fillStyle[1]).toBe('rgba(255,0,0, 0.5)')
+    expect(colour_record.strokeStyle[1]).toBe('rgba(255,0,0, 0.5)')
   })
 })
