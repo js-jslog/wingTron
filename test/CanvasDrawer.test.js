@@ -38,6 +38,7 @@ const valid_state_template = {
 beforeEach(() => {
   const valid_state = JSON.parse(JSON.stringify(valid_state_template))
   ctx_mock.fillRect = jest.fn()
+  ctx_mock.fill = jest.fn()
   GameStore.state = valid_state
 })
 
@@ -62,7 +63,7 @@ describe('the field drawing logic', () => {
 
 describe('the player drawing logic', () => {
 
-  test('that a rectangle is rendered once per player', () => {
+  test('that a square is rendered once per player', () => {
     CanvasDrawer.drawPlayers(ctx_mock)
 
     expect(ctx_mock.fillRect.mock.calls.length).toBe(2)
@@ -83,5 +84,15 @@ describe('the player drawing logic', () => {
     expect(ctx_mock.fillRect.mock.calls[1][1]).toBe(250 - offset)
     expect(ctx_mock.fillRect.mock.calls[1][2]).toBe(presumed_size)
     expect(ctx_mock.fillRect.mock.calls[1][3]).toBe(presumed_size)
+  })
+})
+
+describe('the path drawing logic', () => {
+
+  test('that a polygon is rendered once per player', () => {
+
+    CanvasDrawer.drawPaths(ctx_mock)
+
+    expect(ctx_mock.fill.mock.calls.length).toBe(2)
   })
 })

@@ -17,7 +17,24 @@ class CanvasDrawer {
 
       ctx.fillStyle = colour
       ctx.strokeStyle = colour
-      ctx.fillRect(coords[0]-offset, coords[1]-offset, player_size, player_size);
+      ctx.fillRect(coords[0]-offset, coords[1]-offset, player_size, player_size)
+    })
+  }
+
+  drawPaths(ctx) {
+    GameStore.state.player_state.forEach(player_state => {
+      //const path2d = new Path2D()
+      const path2d = {}
+      const path = player_state.path
+      const colour = player_state.colour
+
+      //path2d.moveTo(path[0][0], path[0][1])
+      path.forEach(function (coord) {
+        //path2d.lineTo(coord[0], coord[1])
+      });
+      ctx.fillStyle = colour;
+      ctx.strokeStyle = colour;
+      ctx.fill(path2d);
     })
   }
 }
