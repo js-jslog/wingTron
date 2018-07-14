@@ -5,7 +5,7 @@ const ctx_mock = {}
 
 const valid_state_template = {
   field_width: 200,
-  field_height: 200,
+  field_height: 100,
   matches: 1,
   collision_matrix: [
     [ false, false ],
@@ -56,6 +56,6 @@ describe('the field drawing logic', () => {
     expect(ctx_mock.fillRect.mock.calls[0][0]).toBe(0)
     expect(ctx_mock.fillRect.mock.calls[0][1]).toBe(0)
     expect(ctx_mock.fillRect.mock.calls[0][2]).toBe(200)
-    expect(ctx_mock.fillRect.mock.calls[0][3]).toBe(200)
+    expect(ctx_mock.fillRect.mock.calls[0][3]).toBe(100)
   })
 })
