@@ -2,6 +2,14 @@ import CanvasDrawer from '../src/restructure/CanvasDrawer.js'
 import GameStore from '../src/restructure/GameStore.js'
 
 const ctx_mock = {}
+const colour_record = {
+  fillStyle: [],
+  strokeStyle: [],
+}
+const record_ctx_mock_colour = function (ctx_obj) {
+  colour_record.fillStyle.push(this.fillStyle)
+  colour_record.strokeStyle.push(this.strokeStyle)
+}
 
 const valid_state_template = {
   field_width: 200,
@@ -37,7 +45,9 @@ const valid_state_template = {
 
 beforeEach(() => {
   const valid_state = JSON.parse(JSON.stringify(valid_state_template))
-  ctx_mock.fillRect = jest.fn()
+  colour_record.fillStyle = []
+  colour_record.strokeStyle = []
+  ctx_mock.fillRect = jest.fn(record_ctx_mock_colour)
   ctx_mock.fill = jest.fn()
   GameStore.state = valid_state
 })
@@ -58,6 +68,8 @@ describe('the field drawing logic', () => {
     expect(ctx_mock.fillRect.mock.calls[0][1]).toBe(0)
     expect(ctx_mock.fillRect.mock.calls[0][2]).toBe(200)
     expect(ctx_mock.fillRect.mock.calls[0][3]).toBe(100)
+
+    expect(colour_record.fillStyle[0]).toBe("#444")
   })
 })
 

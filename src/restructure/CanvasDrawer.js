@@ -23,14 +23,13 @@ class CanvasDrawer {
 
   drawPaths(ctx) {
     GameStore.state.player_state.forEach(player_state => {
-      //const path2d = new Path2D()
-      const path2d = {}
+      const path2d = new Path2D()
       const path = player_state.path
       const colour = player_state.colour
 
-      //path2d.moveTo(path[0][0], path[0][1])
+      path2d.moveTo(path[0][0], path[0][1])
       path.forEach(function (coord) {
-        //path2d.lineTo(coord[0], coord[1])
+        path2d.lineTo(coord[0], coord[1])
       });
       ctx.fillStyle = colour;
       ctx.strokeStyle = colour;
