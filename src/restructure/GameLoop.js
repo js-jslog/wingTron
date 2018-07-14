@@ -5,7 +5,8 @@ class GameLoop {
 
   run() {
     if (GameStore.state.running) {
-      GameStore.update()
+      GameStore.movePlayers()
+      GameStore.calculateCollisionMatrix()
       Governor.render()
     }
   }
