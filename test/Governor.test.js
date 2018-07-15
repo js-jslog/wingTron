@@ -3,54 +3,71 @@ import OptionsStore from '../src/restructure/OptionsStore.js'
 import GameStore from '../src/restructure/GameStore.js'
 import CanvasDrawer from '../src/restructure/CanvasDrawer.js'
 
-const valid_options = {
-  field_width: '200',
-  field_height: '200',
-  matches: '10',
-  player_options: [{
-    start_coord_x: '150',
-    start_coord_y: '100',
-    direction: '0',
-    turn_left_keycode: '65',
-    turn_right_keycode: '68',
-    colour: 'rgba(0,0,255, 0.5)',
-  }]
-}
-
 const valid_converted_game_state = {
   field_width: 200,
   field_height: 200,
   matches: 10,
-  player_state: [{
+  player_state: [
+  {
     path: [
       [ 150, 100 ],
       [ 150, 100 ],
     ],
     direction: 0,
+    turn_left_keycode: 37,
+    turn_right_keycode: 39,
+    colour: 'rgba(255,0,0, 0.5)',
+  },
+  {
+    path: [
+      [ 150, 100 ],
+      [ 150, 100 ],
+    ],
+    direction: Math.PI,
     turn_left_keycode: 65,
     turn_right_keycode: 68,
     colour: 'rgba(0,0,255, 0.5)',
-  }]
+  },
+  ],
+  status: GameStore.RUNNING,
 }
+
+describe('the governors resetting functionality', () => {
+
+  test('that the GameStore is set back to NOT_STARTED', () => {
+    GameStore.state = undefined
+    Governor.reset()
+
+    expect(GameStore.NOT_STARTED).toBe('NOT_STARTED')
+    expect(GameStore.state).toEqual({status: GameStore.NOT_STARTED})
+  })
+
+  test('that the OptionsStore is set back to the default values', () => {
+    OptionsStore.options = undefined
+    Governor.reset()
+
+    expect(OptionsStore.options).toEqual(OptionsStore.DEFAULT_OPTIONS)
+  })
+})
 
 describe('the governors game setup', () => {
 
   beforeEach(() => {
-    OptionsStore.options = undefined
-    GameStore.state = undefined
+    Governor.reset()
   })
 
   test('that the governor fails to start the game if there are no options', () => {
-    return expect(Governor.startGame()).toBeFalsy()
+    OptionsStore.options = undefined
+    Governor.startGame()
+    expect(GameStore.state.status).not.toBe(GameStore.RUNNING)
   })
 
   test('that governor can start game if the options are available', () => {
-    OptionsStore.options = valid_options
-    return expect(Governor.startGame()).toBeTruthy()
+    Governor.startGame()
+    expect(GameStore.state.status).toBe(GameStore.RUNNING)
   })
 
   test('that governor creates a game store state', () => {
-    OptionsStore.options = valid_options
     Governor.startGame()
     expect(GameStore.state).toEqual(valid_converted_game_state)
   })

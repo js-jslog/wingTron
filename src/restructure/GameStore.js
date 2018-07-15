@@ -2,6 +2,13 @@ import CollisionDetection from './collisionDetection.js';
 
 class GameStore {
 
+  NOT_STARTED = 'NOT_STARTED'
+  RUNNING = 'RUNNING'
+
+  DEFAULT_STATE = {
+    status: this.NOT_STARTED
+  }
+
   state = undefined
 
   setStateFromOptions(options) {
@@ -39,6 +46,10 @@ class GameStore {
       ))
     ))
     this.state.collision_matrix = collision_matrix
+  }
+
+  evaluateGameStatus() {
+    this.state.status = "ENDED"
   }
 }
 
