@@ -15,5 +15,3 @@ class GameLoop {
 const GameLoopInstance = new GameLoop
 
 export default GameLoopInstance
-
-
