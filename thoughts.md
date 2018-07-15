@@ -1,0 +1,1 @@
+- Is React an automatic event emitting library specifically for rendering functions? I have built some event emitting in to the app and it feels tempting to turn the class in to a React class, use setState and expect it to update the listening objects but I don't think there's a way to make that work. It is React.Dom afterall.
