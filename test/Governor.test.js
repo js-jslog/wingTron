@@ -1,36 +1,8 @@
 import Governor from '../src/restructure/Governor/Governor.js'
-import OptionsStore from '../src/restructure/OptionsStore.js'
 import GameStore from '../src/restructure/GameStore.js'
+import OptionsStore from '../src/restructure/OptionsStore.js'
+import * as dependency from '../src/restructure/GameActions'
 import CanvasDrawer from '../src/restructure/CanvasDrawer.js'
-
-const valid_converted_game_state = {
-  field_width: 200,
-  field_height: 200,
-  matches: 10,
-  player_state: [
-  {
-    path: [
-      [ 150, 100 ],
-      [ 150, 100 ],
-    ],
-    direction: 0,
-    turn_left_keycode: 37,
-    turn_right_keycode: 39,
-    colour: 'rgba(255,0,0, 0.5)',
-  },
-  {
-    path: [
-      [ 150, 100 ],
-      [ 150, 100 ],
-    ],
-    direction: Math.PI,
-    turn_left_keycode: 65,
-    turn_right_keycode: 68,
-    colour: 'rgba(0,0,255, 0.5)',
-  },
-  ],
-  status: GameStore.RUNNING,
-}
 
 describe('the governors resetting functionality', () => {
 
@@ -54,21 +26,17 @@ describe('the governors game setup', () => {
 
   beforeEach(() => {
     Governor.reset()
+    dependency.startNewGame = jest.fn()
   })
 
-  test('that the governor fails to start the game if there are no options', () => {
+  test('that the Governor does not call startNewGame game action if there are no options', () => {
     OptionsStore.options = undefined
     Governor.startGame()
-    expect(GameStore.state.status).not.toBe(GameStore.RUNNING)
+    expect(dependency.startNewGame).toHaveBeenCalledTimes(0)
   })
 
-  test('that governor can start game if the options are available', () => {
+  test('that governor can start game if the options are available and valid', () => {
     Governor.startGame()
-    expect(GameStore.state.status).toBe(GameStore.RUNNING)
-  })
-
-  test('that governor creates a game store state', () => {
-    Governor.startGame()
-    expect(GameStore.state).toEqual(valid_converted_game_state)
+    expect(dependency.startNewGame).toHaveBeenCalledTimes(1)
   })
 })
