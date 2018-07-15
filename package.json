@@ -15,7 +15,9 @@
   "keywords": [],
   "license": "MIT",
   "jest": {
-    "setupFiles": ["jest-canvas-mock"]
+    "setupFiles": [
+      "jest-canvas-mock"
+    ]
   },
   "peerDependencies": {
     "react": "^15.3.0 || ^16.2.0",
