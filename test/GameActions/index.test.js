@@ -96,14 +96,7 @@ describe('the player position update logic', () => {
 
 describe('the updateCollisionMatrix action', () => {
 
-  test('that a payload is sent when updateCollisionMatrix is called', () => {
-
-    updateCollisionMatrix()
-
-    expect(dispatcher.dispatch).toBeCalledTimes(1)
-  })
-
-  test('that a non-colliding GameStore player state will return the expected matrix', () => {
+  test('that a payload is dispatched to upate the collision matrix', () => {
     const expected_payload = {
       type: 'UPDATE_COLLISION_MATRIX',
       matrix: [
@@ -117,5 +110,35 @@ describe('the updateCollisionMatrix action', () => {
 
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
+  })
+
+  test('that a payload is only dispatched if the collision matrix has changed', () => {
+    const non_colliding_matrix = [
+      [ false, false ],
+      [ false, false ],
+    ]
+    const self_collision_path = [
+      [ 90, 90 ],
+      [ 90, 100 ],
+      [ 100, 100 ],
+      [ 100, 0 ],
+      [ 0, 0 ],
+    ]
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+
+    updateCollisionMatrix()
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+
+    GameStore.state.collision_matrix = non_colliding_matrix
+
+    updateCollisionMatrix()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+
+    GameStore.state.player_state[0].path = self_collision_path
+
+    updateCollisionMatrix()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(2)
   })
 })
