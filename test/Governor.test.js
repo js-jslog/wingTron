@@ -82,12 +82,16 @@ describe('the governors rendering role', () => {
     CanvasDrawer.drawPaths = jest.fn()
   })
 
-  test('that the governor calls the canvas drawers render functions', () => {
+  test('that the render functions are called and in the correct order', () => {
     Governor.render()
 
     expect(CanvasDrawer.drawField.mock.calls.length).toBe(1)
     expect(CanvasDrawer.drawPaths.mock.calls.length).toBe(1)
     expect(CanvasDrawer.drawPlayers.mock.calls.length).toBe(1)
+
+    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(1)
+    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(2)
+    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(3)
   })
 
   test('that the governor passes a 2d context object to the canvas drawers render function', () => {
@@ -96,13 +100,5 @@ describe('the governors rendering role', () => {
     expect(CanvasDrawer.drawField).toBeCalledWith(Governor.ctx)
     expect(CanvasDrawer.drawPaths).toBeCalledWith(Governor.ctx)
     expect(CanvasDrawer.drawPlayers).toBeCalledWith(Governor.ctx)
-  })
-
-  test.skip('that the render functions are called in the correct order', () => {
-    Governor.render()
-
-    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(0)
-    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(1)
-    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(2)
   })
 })
