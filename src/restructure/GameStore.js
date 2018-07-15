@@ -29,11 +29,15 @@ class GameStore extends EventEmitter {
   }
 
   startNewGame(state) {
-    this.state = state
+    this.state = JSON.parse(JSON.stringify(state))
   }
 
   updatePlayerPaths(paths) {
     paths.forEach((path, index) => this.state.player_state[index].path = path)
+  }
+
+  updateCollisionMatrix(matrix) {
+    this.state.collision_matrix = JSON.parse(JSON.stringify(matrix))
   }
 
   handleActions(action) {
@@ -43,6 +47,9 @@ class GameStore extends EventEmitter {
         break
       case 'UPDATE_PLAYER_PATHS':
         this.updatePlayerPaths(action.paths)
+        break
+      case 'UPDATE_COLLISION_MATRIX':
+        this.updateCollisionMatrix(action.matrix)
         break
     }
   }
