@@ -15,10 +15,6 @@ const valid_state_template = {
   field_width: 200,
   field_height: 100,
   matches: 1,
-  collision_matrix: [
-    [ false, false ],
-    [ false, false ],
-  ],
   player_state: [
     {
       path: [
