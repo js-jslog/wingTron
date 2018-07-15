@@ -2,10 +2,18 @@ import GameLoop from '../src/restructure/GameLoop.js'
 import GameStore from '../src/restructure/GameStore.js'
 import Governor from '../src/restructure/Governor/Governor.js'
 
+let loop_index
+
 beforeEach(() => {
+  loop_index = 0
   GameStore.state = {}
   GameStore.movePlayers = jest.fn()
-  GameStore.calculateCollisionMatrix = jest.fn(() => GameStore.state.status = GameStore.ENDED)
+  GameStore.calculateCollisionMatrix = jest.fn(() => {
+    if (loop_index === 9) {
+      GameStore.state.status = GameStore.ENDED
+    }
+    loop_index +=1
+  })
   Governor.render = jest.fn()
 })
 
@@ -23,25 +31,11 @@ describe('the finite GameLoop', () => {
     GameStore.state.status = GameStore.RUNNING
     GameLoop.run()
 
-    expect(GameStore.movePlayers.mock.calls.length).toBe(1)
-    expect(GameStore.calculateCollisionMatrix.mock.calls.length).toBe(1)
+    expect(GameStore.movePlayers.mock.calls.length).toBe(10)
+    expect(GameStore.calculateCollisionMatrix.mock.calls.length).toBe(10)
   })
 
   test('that a running game is rendered', () => {
-    GameStore.state.status = GameStore.RUNNING
-    GameLoop.run()
-
-    expect(Governor.render.mock.calls.length).toBe(1)
-  })
-
-  test('that a game can run for multiple iterations', () => {
-    let loop_index = 0
-    GameStore.calculateCollisionMatrix = jest.fn(() => {
-      if (loop_index === 9) {
-        GameStore.state.status = GameStore.ENDED
-      }
-      loop_index +=1
-    })
     GameStore.state.status = GameStore.RUNNING
     GameLoop.run()
 
