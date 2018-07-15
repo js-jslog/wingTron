@@ -3,6 +3,8 @@ import OptionsStore from '../../restructure/OptionsStore.js'
 import GameStore from '../../restructure/GameStore.js'
 import optionsToGameState from './optionsToGameState.js'
 import { validateOptions } from './validateOptions.js'
+import progressPaths from './progressPaths.js'
+import reducePlayerPaths from './reducePlayerPaths.js'
 
 export function startNewGame() {
   if (!OptionsStore.options || !validateOptions(OptionsStore.options)) {
@@ -16,3 +18,12 @@ export function startNewGame() {
   })
 }
 
+export function updatePlayerPaths() {
+  const reduced_player_paths = reducePlayerPaths(GameStore.state)
+  const progressed_paths = progressPaths(reduced_player_paths)
+  const further_reduced_paths = progressed_paths.map(path_obj => path_obj.path)
+  dispatcher.dispatch({
+    type: 'UPDATE_PLAYER_PATHS',
+    paths: further_reduced_paths
+  })
+}

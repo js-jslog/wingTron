@@ -1,5 +1,6 @@
-import CollisionDetection from './collisionDetection.js';
+import CollisionDetection from './collisionDetection.js'
 import { EventEmitter } from 'events'
+import dispatcher from '../lib/dispatcher.js'
 
 class GameStore extends EventEmitter {
 
@@ -12,14 +13,6 @@ class GameStore extends EventEmitter {
   }
 
   state = undefined
-
-  movePlayers() {
-    const state = JSON.parse(JSON.stringify(this.state))
-    state.player_state.forEach((ps, index) => {
-      state.player_state[index] = movePlayer(ps)
-    })
-    this.state = state
-  }
 
   handleKeyPress(keycode) {
     const state = JSON.parse(JSON.stringify(this.state))
@@ -48,6 +41,25 @@ class GameStore extends EventEmitter {
       this.state.collision_matrix = collision_matrix
     }
   }
+
+  startNewGame(state) {
+    this.state = state
+  }
+
+  updatePlayerPaths(paths) {
+    paths.forEach((path, index) => this.state.player_state[index].path = path)
+  }
+
+  handleActions(action) {
+    switch(action.type) {
+      case 'START_NEW_GAME':
+        this.startNewGame(action.state)
+        break
+      case 'UPDATE_PLAYER_PATHS':
+        this.updatePlayerPaths(action.paths)
+        break
+    }
+  }
 }
 
 const getPathsFromGameState = (state) => {
@@ -62,14 +74,8 @@ const addPathNode = (path) => {
   path.unshift([].slice.call(path[0], 0))
 }
 
-const movePlayer = (player_state) => {
-  const ps = Object.assign({}, player_state)
-  ps.path[0][0] += Math.cos(ps.direction);
-  ps.path[0][1] += Math.sin(ps.direction);
-  return ps
-}
-
 const GameStoreInstance = new GameStore
+dispatcher.register(GameStoreInstance.handleActions.bind(GameStoreInstance))
 
 export default GameStoreInstance
 

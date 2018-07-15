@@ -1,4 +1,5 @@
-import { startNewGame } from '../src/restructure/GameActions'
+import { startNewGame, updatePlayerPaths } from '../src/restructure/GameActions'
+import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
 import GameStore from '../src/restructure/GameStore.js'
 import dispatcher from '../src/lib/dispatcher.js'
@@ -66,4 +67,29 @@ describe('the startNewGame action', () => {
 
     expect(dispatcher.dispatch).toBeCalledTimes(0)
   }) 
+})
+
+describe('the player position update logic', () => {
+
+  test('that a payload is dispatched to update player paths', () => {
+    const expected_payload = {
+      type: 'UPDATE_PLAYER_PATHS',
+      paths: [
+        [
+          [151, 100],
+          [150, 100],
+        ],
+        [
+          [149, 100],
+          [150, 100],
+        ],
+      ]
+    }
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+
+    updatePlayerPaths()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
+  })
 })
