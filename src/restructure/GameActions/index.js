@@ -2,9 +2,10 @@ import dispatcher from '../../lib/dispatcher'
 import OptionsStore from '../../restructure/OptionsStore.js'
 import GameStore from '../../restructure/GameStore.js'
 import optionsToGameState from './optionsToGameState.js'
+import { validateOptions } from './validateOptions.js'
 
 export function startNewGame() {
-  if (!OptionsStore.options) {
+  if (!OptionsStore.options || !validateOptions(OptionsStore.options)) {
     return
   }
   const game_state = optionsToGameState(OptionsStore.options)

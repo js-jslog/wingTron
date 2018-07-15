@@ -1,8 +1,6 @@
 import OptionsStore from '../OptionsStore.js'
 import { startNewGame } from '../GameActions'
 import GameStore from '../GameStore.js'
-import { validateOptions } from './validateOptions.js'
-import CanvasDrawer from '../CanvasDrawer.js'
 
 class Governor {
 
@@ -14,10 +12,7 @@ class Governor {
   }
 
   startGame() {
-    const options = OptionsStore.options
-    if (validateOptions(options)) {
-      startNewGame()
-    }
+    startNewGame()
   }
 }
 

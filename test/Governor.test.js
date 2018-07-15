@@ -29,13 +29,7 @@ describe('the governors game setup', () => {
     dependency.startNewGame = jest.fn()
   })
 
-  test('that the Governor does not call startNewGame game action if there are no options', () => {
-    OptionsStore.options = undefined
-    Governor.startGame()
-    expect(dependency.startNewGame).toHaveBeenCalledTimes(0)
-  })
-
-  test('that governor can start game if the options are available and valid', () => {
+  test('that the governors startGame function simple calls the startNewGame game action', () => {
     Governor.startGame()
     expect(dependency.startNewGame).toHaveBeenCalledTimes(1)
   })

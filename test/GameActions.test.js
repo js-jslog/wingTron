@@ -46,13 +46,21 @@ describe('the startNewGame action', () => {
 
     startNewGame()
 
-    expect(dispatcher.dispatch.mock.calls.length).toEqual(1)
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
   })
     
-
   test('that empty options will not trigger a dispatch', () => {
     OptionsStore.options = undefined
+
+    startNewGame()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(0)
+  }) 
+
+  test('that invalid options will not trigger a dispatch', () => {
+    OptionsStore.options = OptionsStore.DEFAULT_OPTIONS
+    delete OptionsStore.options.field_width
 
     startNewGame()
 

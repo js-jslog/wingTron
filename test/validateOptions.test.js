@@ -1,4 +1,4 @@
-import { validateOptions, validatePlayerOptions } from '../src/restructure/Governor/validateOptions.js'
+import { validateOptions, validatePlayerOptions } from '../src/restructure/GameActions/validateOptions.js'
 
 const template_valid_player_options = {
   start_coord_x: '200',
