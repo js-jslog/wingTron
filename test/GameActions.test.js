@@ -51,17 +51,11 @@ describe('the startNewGame action', () => {
   })
     
 
-  test.skip('that empty options do not modify the GameStore state', () => {
-    OptionsStore.options = {
-      an: 'option',
-      another: 'option',
-    }
-    GameStore.state = {
-      a: 'load of nonesense',
-    }
+  test('that empty options will not trigger a dispatch', () => {
     OptionsStore.options = undefined
-    GameStore.state = {
-      a: 'load of nonesense',
-    }
+
+    startNewGame()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(0)
   }) 
 })

@@ -4,6 +4,9 @@ import GameStore from '../../restructure/GameStore.js'
 import optionsToGameState from './optionsToGameState.js'
 
 export function startNewGame() {
+  if (!OptionsStore.options) {
+    return
+  }
   const game_state = optionsToGameState(OptionsStore.options)
   game_state.status = GameStore.RUNNING
   dispatcher.dispatch({
