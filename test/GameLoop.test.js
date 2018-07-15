@@ -1,6 +1,6 @@
 import GameLoop from '../src/restructure/GameLoop.js'
 import GameStore from '../src/restructure/GameStore.js'
-import Governor from '../src/restructure/Governor/Governor.js'
+import CanvasDrawer from '../src/restructure/CanvasDrawer.js'
 
 let loop_index
 
@@ -14,7 +14,9 @@ beforeEach(() => {
     }
     loop_index +=1
   })
-  Governor.render = jest.fn()
+  CanvasDrawer.drawField = jest.fn()
+  CanvasDrawer.drawPaths = jest.fn()
+  CanvasDrawer.drawPlayers = jest.fn()
 })
 
 describe('the finite GameLoop', () => {
@@ -39,6 +41,26 @@ describe('the finite GameLoop', () => {
     GameStore.state.status = GameStore.RUNNING
     GameLoop.run()
 
-    expect(Governor.render.mock.calls.length).toBe(10)
+    expect(CanvasDrawer.drawField.mock.calls.length).toBe(10)
+    expect(CanvasDrawer.drawPaths.mock.calls.length).toBe(10)
+    expect(CanvasDrawer.drawPlayers.mock.calls.length).toBe(10)
+  })
+
+  test('that the render functions are called in the correct order', () => {
+    GameStore.state.status = GameStore.RUNNING
+    GameLoop.run()
+
+    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(103)
+    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(104)
+    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(105)
+  })
+
+  test('that the 2d context object is passed to the canvas drawers render function', () => {
+    GameStore.state.status = GameStore.RUNNING
+    GameLoop.run()
+
+    expect(CanvasDrawer.drawField).toBeCalledWith(GameLoop.ctx)
+    expect(CanvasDrawer.drawPaths).toBeCalledWith(GameLoop.ctx)
+    expect(CanvasDrawer.drawPlayers).toBeCalledWith(GameLoop.ctx)
   })
 })

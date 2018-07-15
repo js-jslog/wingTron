@@ -72,33 +72,3 @@ describe('the governors game setup', () => {
     expect(GameStore.state).toEqual(valid_converted_game_state)
   })
 })
-
-describe('the governors rendering role', () => {
-
-  beforeEach(() => {
-    Governor.ctx = undefined
-    CanvasDrawer.drawField = jest.fn()
-    CanvasDrawer.drawPlayers = jest.fn()
-    CanvasDrawer.drawPaths = jest.fn()
-  })
-
-  test('that the render functions are called and in the correct order', () => {
-    Governor.render()
-
-    expect(CanvasDrawer.drawField.mock.calls.length).toBe(1)
-    expect(CanvasDrawer.drawPaths.mock.calls.length).toBe(1)
-    expect(CanvasDrawer.drawPlayers.mock.calls.length).toBe(1)
-
-    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(1)
-    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(2)
-    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(3)
-  })
-
-  test('that the governor passes a 2d context object to the canvas drawers render function', () => {
-    Governor.render()
-
-    expect(CanvasDrawer.drawField).toBeCalledWith(Governor.ctx)
-    expect(CanvasDrawer.drawPaths).toBeCalledWith(Governor.ctx)
-    expect(CanvasDrawer.drawPlayers).toBeCalledWith(Governor.ctx)
-  })
-})

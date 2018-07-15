@@ -5,8 +5,6 @@ import CanvasDrawer from '../CanvasDrawer.js'
 
 class Governor {
 
-  ctx = undefined // TODO: implement how the canvas is passed in and this context retrieved
-
   reset() {
     GameStore.state = {
       status: GameStore.NOT_STARTED && GameStore.NOT_STARTED,
@@ -20,12 +18,6 @@ class Governor {
       GameStore.setStateFromOptions(options)
       GameStore.state.status = GameStore.RUNNING
     }
-  }
-
-  render() {
-    CanvasDrawer.drawField(this.ctx)
-    CanvasDrawer.drawPaths(this.ctx)
-    CanvasDrawer.drawPlayers(this.ctx)
   }
 }
 
