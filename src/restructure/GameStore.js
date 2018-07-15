@@ -4,6 +4,7 @@ class GameStore {
 
   NOT_STARTED = 'NOT_STARTED'
   RUNNING = 'RUNNING'
+  ENDED = 'ENDED'
 
   DEFAULT_STATE = {
     status: this.NOT_STARTED
@@ -46,10 +47,6 @@ class GameStore {
       ))
     ))
     this.state.collision_matrix = collision_matrix
-  }
-
-  evaluateGameStatus() {
-    this.state.status = "ENDED"
   }
 }
 

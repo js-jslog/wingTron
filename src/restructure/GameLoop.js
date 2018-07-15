@@ -4,7 +4,7 @@ import Governor from './Governor/Governor.js'
 class GameLoop {
 
   run() {
-    if (GameStore.state.running) {
+    while (GameStore.state.status === GameStore.RUNNING) {
       GameStore.movePlayers()
       GameStore.calculateCollisionMatrix()
       Governor.render()
