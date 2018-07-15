@@ -1,4 +1,5 @@
 import CollisionDetection from './collisionDetection.js';
+import dispatcher from '../lib/dispatcher'
 
 class GameStore {
 
@@ -46,6 +47,10 @@ class GameStore {
         intersects(subject_path, object_path)
       ))
     ))
+    dispatcher.dispatch({
+      type: 'UPDATE_COLLISION_MATRIX',
+      collision_matrix: collision_matrix,
+    })
     this.state.collision_matrix = collision_matrix
   }
 }

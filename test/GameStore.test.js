@@ -1,13 +1,11 @@
 import GameStore from '../src/restructure/GameStore.js'
+import dispatcher from '../src/lib/dispatcher'
 
 const valid_state_template = {
   field_width: 200,
   field_height: 200,
   matches: 1,
-  collision_matrix: [
-    [ false, false ],
-    [ false, false ],
-  ],
+  collision_matrix: [],
   player_state: [
     {
       path: [
@@ -71,7 +69,6 @@ describe('the turn key mapping', () => {
     ])
   })
 })
-
 
 describe('the player position update logic', () => {
 
@@ -386,5 +383,19 @@ describe('the collision detection negative results', () => {
     GameStore.calculateCollisionMatrix()
 
     return expect(GameStore.state.collision_matrix).toEqual(expected_collision_matrix)
+  })
+})
+
+describe('the event emitting behaviour', () => {
+
+  test('that the collision matrix is emitted on the first update of the game', () => {
+
+    const valid_state = JSON.parse(JSON.stringify(valid_state_template))
+    dispatcher.dispatch = jest.fn()
+
+    GameStore.state = valid_state
+    GameStore.calculateCollisionMatrix()
+
+    expect(dispatcher.dispatch.mock.calls.length).toBe(1)
   })
 })
