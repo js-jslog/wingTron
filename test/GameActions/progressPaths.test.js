@@ -1,4 +1,4 @@
-import progressPaths from '../src/restructure/GameActions/progressPaths.js'
+import progressPaths from '../../src/restructure/GameActions/progressPaths.js'
 
 describe('the progressing of a collection of paths with directions', () => {
 

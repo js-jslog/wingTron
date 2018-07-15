@@ -1,8 +1,8 @@
-import { startNewGame, updatePlayerPaths } from '../src/restructure/GameActions'
-import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
-import OptionsStore from '../src/restructure/OptionsStore.js'
-import GameStore from '../src/restructure/GameStore.js'
-import dispatcher from '../src/lib/dispatcher.js'
+import { startNewGame, updatePlayerPaths } from '../../src/restructure/GameActions'
+import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
+import OptionsStore from '../../src/restructure/OptionsStore.js'
+import GameStore from '../../src/restructure/GameStore.js'
+import dispatcher from '../../src/lib/dispatcher.js'
 
 describe('the startNewGame action', () => {
 

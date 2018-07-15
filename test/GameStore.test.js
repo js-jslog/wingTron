@@ -183,7 +183,6 @@ describe('the player position update logic', () => {
 
     GameStore.state = valid_state
     updatePlayerPaths()
-    console.log(GameStore.state)
     GameStore.handleKeyPress(GameStore.state.player_state[0].turn_right_keycode)
     updatePlayerPaths()
     GameStore.handleKeyPress(GameStore.state.player_state[1].turn_right_keycode)

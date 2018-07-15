@@ -1,7 +1,7 @@
-import reducePlayerPaths from '../src/restructure/GameActions/reducePlayerPaths.js'
-import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
-import GameStore from '../src/restructure/GameStore.js'
-import OptionsStore from '../src/restructure/OptionsStore.js'
+import reducePlayerPaths from '../../src/restructure/GameActions/reducePlayerPaths.js'
+import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
+import GameStore from '../../src/restructure/GameStore.js'
+import OptionsStore from '../../src/restructure/OptionsStore.js'
 
 describe('the functionality to reduce a paths object from a complete GameStore state object', () => {
 
