@@ -1,4 +1,3 @@
-import CollisionDetection from './collisionDetection.js'
 import { EventEmitter } from 'events'
 import dispatcher from '../lib/dispatcher.js'
 
@@ -29,19 +28,6 @@ class GameStore extends EventEmitter {
     this.state = state
   }
 
-  calculateCollisionMatrix() {
-    const player_paths = getPathsFromGameState(this.state)
-    const collision_matrix = player_paths.map(subject_path => (
-      player_paths.map(object_path => (
-        intersects(subject_path, object_path)
-      ))
-    ))
-    if (JSON.stringify(this.state.collision_matrix) !== JSON.stringify(collision_matrix)) {
-      this.emit('collision_matrix_update')
-      this.state.collision_matrix = collision_matrix
-    }
-  }
-
   startNewGame(state) {
     this.state = state
   }
@@ -64,10 +50,6 @@ class GameStore extends EventEmitter {
 
 const getPathsFromGameState = (state) => {
   return state.player_state.map(ps => ps.path)
-}
-
-const intersects = (path1, path2) => {
-  return CollisionDetection.isPointWithinPath(path1[0], path2)
 }
 
 const addPathNode = (path) => {

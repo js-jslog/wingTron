@@ -27,3 +27,13 @@ export function updatePlayerPaths() {
     paths: further_reduced_paths
   })
 }
+
+export function updateCollisionMatrix() {
+  dispatcher.dispatch({
+    type: 'UPDATE_COLLISION_MATRIX',
+    matrix: [
+      [ false, false ],
+      [ false, false ],
+    ]
+  })
+}

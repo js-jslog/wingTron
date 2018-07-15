@@ -1,14 +1,14 @@
-import { startNewGame, updatePlayerPaths } from '../../src/restructure/GameActions'
+import { startNewGame, updatePlayerPaths, updateCollisionMatrix } from '../../src/restructure/GameActions'
 import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
 import OptionsStore from '../../src/restructure/OptionsStore.js'
 import GameStore from '../../src/restructure/GameStore.js'
 import dispatcher from '../../src/lib/dispatcher.js'
 
-describe('the startNewGame action', () => {
+beforeEach(() => {
+  dispatcher.dispatch = jest.fn()
+})
 
-  beforeEach(() => {
-    dispatcher.dispatch = jest.fn()
-  })
+describe('the startNewGame action', () => {
 
   test('that a payload is dispatched with an adaptation from the OptionsStore', () => {
     const expected_game_state = {
@@ -88,6 +88,32 @@ describe('the player position update logic', () => {
     GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
 
     updatePlayerPaths()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
+  })
+})
+
+describe('the updateCollisionMatrix action', () => {
+
+  test('that a payload is sent when updateCollisionMatrix is called', () => {
+
+    updateCollisionMatrix()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+  })
+
+  test('that a non-colliding GameStore player state will return the expected matrix', () => {
+    const expected_payload = {
+      type: 'UPDATE_COLLISION_MATRIX',
+      matrix: [
+        [ false, false ],
+        [ false, false ],
+      ]
+    }
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+
+    updateCollisionMatrix()
 
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
