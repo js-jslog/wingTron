@@ -1,5 +1,4 @@
 import GameStore from '../src/restructure/GameStore.js'
-import dispatcher from '../src/lib/dispatcher'
 
 const valid_state_template = {
   field_width: 200,
@@ -388,14 +387,29 @@ describe('the collision detection negative results', () => {
 
 describe('the event emitting behaviour', () => {
 
-  test('that the collision matrix is emitted on the first update of the game', () => {
-
+  test('that a collision_matrix_update event is only emitted when the collision matrix differs from the previous update', () => {
     const valid_state = JSON.parse(JSON.stringify(valid_state_template))
-    dispatcher.dispatch = jest.fn()
+    const self_collision_path = [
+      [ 90, 90 ],
+      [ 90, 100 ],
+      [ 100, 100 ],
+      [ 100, 0 ],
+      [ 0, 0 ],
+    ]
+    const mock = jest.fn()
+    GameStore.calculateCollisionMatrix = jest.fn(GameStore.calculateCollisionMatrix)
+    GameStore.on('collision_matrix_update', mock)
 
     GameStore.state = valid_state
     GameStore.calculateCollisionMatrix()
+    GameStore.calculateCollisionMatrix()
 
-    expect(dispatcher.dispatch.mock.calls.length).toBe(1)
+    expect(mock.mock.calls.length).toBe(1)
+
+    GameStore.state.player_state[0].path = self_collision_path
+    GameStore.calculateCollisionMatrix()
+
+    expect(mock.mock.calls.length).toBe(2)
+    expect(GameStore.calculateCollisionMatrix.mock.calls.length).toBe(3)
   })
 })

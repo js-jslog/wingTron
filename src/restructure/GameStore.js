@@ -1,7 +1,7 @@
 import CollisionDetection from './collisionDetection.js';
-import dispatcher from '../lib/dispatcher'
+import { EventEmitter } from 'events'
 
-class GameStore {
+class GameStore extends EventEmitter {
 
   NOT_STARTED = 'NOT_STARTED'
   RUNNING = 'RUNNING'
@@ -47,11 +47,10 @@ class GameStore {
         intersects(subject_path, object_path)
       ))
     ))
-    dispatcher.dispatch({
-      type: 'UPDATE_COLLISION_MATRIX',
-      collision_matrix: collision_matrix,
-    })
-    this.state.collision_matrix = collision_matrix
+    if (JSON.stringify(this.state.collision_matrix) !== JSON.stringify(collision_matrix)) {
+      this.emit('collision_matrix_update')
+      this.state.collision_matrix = collision_matrix
+    }
   }
 }
 
