@@ -1,7 +1,7 @@
 import OptionsStore from '../../src/restructure/OptionsStore.js'
 import calculateCollisionMatrix from '../../src/restructure/GameActions/calculateCollisionMatrix.js'
 import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
-import reducePlayerPaths from '../../src/restructure/GameActions/reducePlayerPaths.js'
+import { reducePlayerStates } from '../../src/restructure/GameActions/reducePlayerPaths.js'
 
 describe('the collision detection positive results', () => {
 
@@ -20,11 +20,9 @@ describe('the collision detection positive results', () => {
     self_collide_state.player_state.splice(1, 1)
     self_collide_state.player_state[0].path = self_collision_path
 
-    const paths = reducePlayerPaths(self_collide_state)
-    // TODO: add this further slimming to the reducePlayerPaths library
-    const further_reduced_paths = paths.map(obj => obj.path)
+    const paths = reducePlayerStates(self_collide_state.player_state, 'path')
 
-    expect(calculateCollisionMatrix(further_reduced_paths)).toEqual(expected_collision_matrix)
+    expect(calculateCollisionMatrix(paths)).toEqual(expected_collision_matrix)
   })
 
   test('that the collision flag is set for multiple players inside a single players area', () => {
@@ -72,11 +70,9 @@ describe('the collision detection positive results', () => {
     collided_state.player_state[4].path = collided_paths[4]
     collided_state.player_state[5].path = collided_paths[5]
 
-    const paths = reducePlayerPaths(collided_state)
-    // TODO: add this further slimming to the reducePlayerPaths library
-    const further_reduced_paths = paths.map(obj => obj.path)
+    const paths = reducePlayerStates(collided_state.player_state, 'path')
 
-    expect(calculateCollisionMatrix(further_reduced_paths)).toEqual(expected_collision_matrix)
+    expect(calculateCollisionMatrix(paths)).toEqual(expected_collision_matrix)
   })
 
   test('that the collision flag is set for a single player inside multiple players areas', () => {
@@ -136,11 +132,9 @@ describe('the collision detection positive results', () => {
     collided_state.player_state[4].path = collided_paths[4]
     collided_state.player_state[5].path = collided_paths[5]
 
-    const paths = reducePlayerPaths(collided_state)
-    // TODO: add this further slimming to the reducePlayerPaths library
-    const further_reduced_paths = paths.map(obj => obj.path)
+    const paths = reducePlayerStates(collided_state.player_state, 'path')
 
-    expect(calculateCollisionMatrix(further_reduced_paths)).toEqual(expected_collision_matrix)
+    expect(calculateCollisionMatrix(paths)).toEqual(expected_collision_matrix)
   })
 })
 
@@ -191,11 +185,9 @@ describe('the collision detection negative results', () => {
     non_collided_state.player_state[4].path = non_collided_paths[4]
     non_collided_state.player_state[5].path = non_collided_paths[5]
 
-    const paths = reducePlayerPaths(non_collided_state)
-    // TODO: add this further slimming to the reducePlayerPaths library
-    const further_reduced_paths = paths.map(obj => obj.path)
+    const paths = reducePlayerStates(non_collided_state.player_state, 'path')
 
-    expect(calculateCollisionMatrix(further_reduced_paths)).toEqual(expected_collision_matrix)
+    expect(calculateCollisionMatrix(paths)).toEqual(expected_collision_matrix)
   })
 
   test('that an individual previously inside an area is not recognised as collided if they are now outside', () => {
@@ -248,10 +240,8 @@ describe('the collision detection negative results', () => {
     non_collided_state.player_state[4].path = non_collided_paths[4]
     non_collided_state.player_state[5].path = non_collided_paths[5]
 
-    const paths = reducePlayerPaths(non_collided_state)
-    // TODO: add this further slimming to the reducePlayerPaths library
-    const further_reduced_paths = paths.map(obj => obj.path)
+    const paths = reducePlayerStates(non_collided_state.player_state, 'path')
 
-    expect(calculateCollisionMatrix(further_reduced_paths)).toEqual(expected_collision_matrix)
+    expect(calculateCollisionMatrix(paths)).toEqual(expected_collision_matrix)
   })
 })

@@ -4,7 +4,7 @@ import GameStore from '../../restructure/GameStore.js'
 import optionsToGameState from './optionsToGameState.js'
 import { validateOptions } from './validateOptions.js'
 import progressPaths from './progressPaths.js'
-import reducePlayerPaths from './reducePlayerPaths.js'
+import { reducePlayerStates } from './reducePlayerPaths.js'
 import calculateCollisionMatrix from './calculateCollisionMatrix.js'
 
 export function startNewGame() {
@@ -21,20 +21,21 @@ export function startNewGame() {
 }
 
 export function updatePlayerPaths() {
-  const reduced_player_paths = reducePlayerPaths(GameStore.state)
-  const progressed_paths = progressPaths(reduced_player_paths)
-  const further_reduced_paths = progressed_paths.map(path_obj => path_obj.path)
+  const paths_obj = {
+    paths: reducePlayerStates(GameStore.state.player_state, 'path'),
+    directions: reducePlayerStates(GameStore.state.player_state, 'direction'),
+  }
+  const progressed_paths = progressPaths(paths_obj)
 
   dispatcher.dispatch({
     type: 'UPDATE_PLAYER_PATHS',
-    paths: further_reduced_paths
+    paths: progressed_paths,
   })
 }
 
 export function updateCollisionMatrix() {
-  const reduced_player_paths = reducePlayerPaths(GameStore.state)
-  const further_reduced_paths = reduced_player_paths.map(path_obj => path_obj.path)
-  const collision_matrix = calculateCollisionMatrix(further_reduced_paths)
+  const player_paths = reducePlayerStates(GameStore.state.player_state, 'path')
+  const collision_matrix = calculateCollisionMatrix(player_paths)
 
   if (GameStore.state.collision_matrix && matricesMatch(collision_matrix, GameStore.state.collision_matrix)) {
     return
