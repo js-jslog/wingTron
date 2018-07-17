@@ -4,7 +4,7 @@ import GameStore from '../../restructure/GameStore.js'
 import optionsToGameState from './optionsToGameState.js'
 import { validateOptions } from './validateOptions.js'
 import progressPaths from './progressPaths.js'
-import { reducePlayerStates } from './reducePlayerPaths.js'
+import { reducePlayerStates } from './reduceGameStoreState.js'
 import calculateCollisionMatrix from './calculateCollisionMatrix.js'
 
 export function startNewGame() {
