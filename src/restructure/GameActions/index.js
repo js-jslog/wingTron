@@ -49,3 +49,34 @@ export function updateCollisionMatrix() {
 const matricesMatch = (matrix1, matrix2) => (
   (JSON.stringify(matrix1)) === JSON.stringify(matrix2)
 )
+
+export function handleKeyEvents(evt) {
+  const paths_obj = {
+    paths: reducePlayerStates(GameStore.state.player_state, 'path'),
+    turn_left_keycode: reducePlayerStates(GameStore.state.player_state, 'turn_left_keycode'),
+    turn_right_keycode: reducePlayerStates(GameStore.state.player_state, 'turn_right_keycode'),
+    directions: reducePlayerStates(GameStore.state.player_state, 'direction'),
+  }
+  paths_obj.turn_left_keycode.forEach((val, index) => {
+    if (evt.keyCode === val) {
+      paths_obj.paths[index].unshift([].slice.call(paths_obj.paths[index][0], 0))
+      paths_obj.directions[index] -= (Math.PI * 0.5)
+    }
+  })
+  paths_obj.turn_right_keycode.forEach((val, index) => {
+    if (evt.keyCode === val) {
+      paths_obj.paths[index].unshift([].slice.call(paths_obj.paths[index][0], 0))
+      paths_obj.directions[index] += (Math.PI * 0.5)
+    }
+  })
+
+  dispatcher.dispatch({
+    type: 'UPDATE_PLAYER_PATHS',
+    paths: paths_obj.paths,
+  })
+
+  dispatcher.dispatch({
+    type: 'UPDATE_PLAYER_DIRECTIONS',
+    directions: paths_obj.directions,
+  })
+}

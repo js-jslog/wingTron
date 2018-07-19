@@ -39,4 +39,28 @@ describe('the player state reducer', () => {
 
     expect(reducePlayerStates(game_state.player_state, 'direction')).toEqual(sample_directions)
   })
+
+  test('that the reducer doesnt effect the input object itself', () => {
+    const game_state = {
+      player_state: [],
+    }
+    const sample_paths = [
+      [
+        [ 1, 2 ],
+        [ 3, 4 ],
+      ],
+      [
+        [ 5, 6 ],
+        [ 7, 8 ],
+      ],
+    ]
+    game_state.player_state.push({},{})
+    game_state.player_state[0].path = sample_paths[0]
+    game_state.player_state[1].path = sample_paths[1]
+
+    const reducedPaths = reducePlayerStates(game_state.player_state, 'path')
+    reducedPaths[0].push([10, 11])
+
+    expect(reducedPaths).not.toEqual(reducePlayerStates(game_state.player_state, 'path'))
+  })
 })
