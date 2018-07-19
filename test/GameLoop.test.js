@@ -63,4 +63,18 @@ describe('the finite GameLoop', () => {
     expect(CanvasDrawer.drawPaths).toBeCalledWith(GameLoop.ctx)
     expect(CanvasDrawer.drawPlayers).toBeCalledWith(GameLoop.ctx)
   })
+
+  test.only('that the canvas object passed to the run function has a 2d context object retrieved and passed to the CanvasDrawer draw functions', () => {
+    const ctx = {}
+    const canvas = { getContext: jest.fn(params => ctx) }
+
+    GameStore.state.status = GameStore.RUNNING
+    GameLoop.run(canvas)
+
+    expect(canvas.getContext).toBeCalledWith('2d')
+
+    expect(CanvasDrawer.drawField).toBeCalledWith(ctx)
+    expect(CanvasDrawer.drawPaths).toBeCalledWith(ctx)
+    expect(CanvasDrawer.drawPlayers).toBeCalledWith(ctx)
+  })
 })

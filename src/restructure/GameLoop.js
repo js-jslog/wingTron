@@ -3,9 +3,11 @@ import CanvasDrawer from './CanvasDrawer.js'
 
 class GameLoop {
 
-  ctx = undefined // TODO: implement how the canvas is passed in and this context retrieved
+  ctx = undefined
 
-  run() {
+  run(canvas) {
+    this.ctx = canvas.getContext('2d')
+
     while (GameStore.state.status === GameStore.RUNNING) {
       GameStore.movePlayers()
       GameStore.calculateCollisionMatrix()
