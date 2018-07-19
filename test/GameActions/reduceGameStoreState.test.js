@@ -1,4 +1,3 @@
-import reducePlayerPaths from '../../src/restructure/GameActions/reducePlayerPaths.js'
 import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
 import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
 import GameStore from '../../src/restructure/GameStore.js'
