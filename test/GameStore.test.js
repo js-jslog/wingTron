@@ -36,42 +36,6 @@ beforeEach(() => {
   GameStore.state = undefined
 })
 
-describe('the turn key mapping', () => {
-
-  test('a keycode which relates to a players left turn produces the expected change in direction', () => {
-
-    const valid_state = JSON.parse(JSON.stringify(valid_state_template))
-
-    GameStore.state = valid_state
-    GameStore.handleKeyPress(GameStore.state.player_state[0].turn_left_keycode)
-
-    return expect(GameStore.state.player_state[0].direction).toEqual(-1 * Math.PI * 0.5)
-  })
-
-  test('a keycode which relates to a players right turn produces the expected change in direction', () => {
-
-    const valid_state = JSON.parse(JSON.stringify(valid_state_template))
-
-    GameStore.state = valid_state
-    GameStore.handleKeyPress(GameStore.state.player_state[0].turn_right_keycode)
-
-    return expect(GameStore.state.player_state[0].direction).toEqual(Math.PI * 0.5)
-  })
-
-  test('the path is updated when a turn is made', () => {
-    const valid_state = JSON.parse(JSON.stringify(valid_state_template))
-
-    GameStore.state = valid_state
-    GameStore.handleKeyPress(GameStore.state.player_state[0].turn_right_keycode)
-
-    return expect(GameStore.state.player_state[0].path).toEqual([
-      [ 150, 200 ],
-      [ 150, 200 ],
-      [ 150, 200 ],
-    ])
-  })
-})
-
 describe('the action dispatch handling', () => {
 
   const handleActionsOrig = GameStore.handleActions
@@ -208,11 +172,23 @@ describe('the functionality of the functions called by the action handler', () =
 
     expect(GameStore.state).toEqual(expected_state)
   })
+
+  test('that the updatePlayerDirections function updates the player directions in the GameStore', () => {
+    const new_directions = [ 1, 2 ]
+    const expected_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    expected_state.player_state[0].direction = new_directions[0]
+    expected_state.player_state[1].direction = new_directions[1]
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+
+    GameStore.updatePlayerDirections(new_directions)
+
+    expect(GameStore.state).toEqual(expected_state)
+  })
 })
 
 describe('the player position update logic', () => {
 
-  test('a pair of players with some turns', () => {
+  test.skip('a pair of players with some turns', () => {
 
     const valid_state = JSON.parse(JSON.stringify(valid_state_template))
 

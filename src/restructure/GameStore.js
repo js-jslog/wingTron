@@ -13,27 +13,16 @@ class GameStore extends EventEmitter {
 
   state = undefined
 
-  handleKeyPress(keycode) {
-    const state = JSON.parse(JSON.stringify(this.state))
-    state.player_state.forEach((ps, index) => {
-      if (ps.turn_left_keycode === keycode) {
-        addPathNode(state.player_state[index].path)
-        state.player_state[index].direction -= (Math.PI * 0.5)
-      }
-      if (ps.turn_right_keycode === keycode) {
-        addPathNode(state.player_state[index].path)
-        state.player_state[index].direction += (Math.PI * 0.5)
-      }
-    })
-    this.state = state
-  }
-
   startNewGame(state) {
     this.state = JSON.parse(JSON.stringify(state))
   }
 
   updatePlayerPaths(paths) {
     paths.forEach((path, index) => this.state.player_state[index].path = path)
+  }
+
+  updatePlayerDirections(directions) {
+    directions.forEach((direction, index) => this.state.player_state[index].direction = direction)
   }
 
   updateCollisionMatrix(matrix) {
