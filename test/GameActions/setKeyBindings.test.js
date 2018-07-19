@@ -7,6 +7,9 @@ describe('the behaviour relating to binding key presses to game manipulation', (
   document.removeEventListener = jest.fn()
   document.addEventListener = jest.fn()
 
+  test('that the handleKeyEvents function exists', () => {
+    expect(handleKeyEvents).toBeTruthy()
+  })
 
   test('that the function removes the handleKeyEvents function before adding them again', () => {
 
