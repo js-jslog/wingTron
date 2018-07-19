@@ -153,14 +153,22 @@ describe('the handleKeyEvent action', () => {
   test('an event with a keycode which relates to a players left turn produces a dispatch to update the players paths', () => {
 
     const valid_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.state = valid_state
+
     const paths = reducePlayerStates(valid_state.player_state, 'path')
-    const expected_payload = {
+    paths[0].push(JSON.parse(JSON.stringify(paths[0][0])))
+
+    const directions = reducePlayerStates(valid_state.player_state, 'direction')
+    directions[0] = (-1 * Math.PI * 0.5)
+
+    const expected_paths_payload = {
       type: 'UPDATE_PLAYER_PATHS',
       paths: paths
     }
-    
-    paths[0].push(JSON.parse(JSON.stringify(paths[0][0])))
-    GameStore.state = valid_state
+    const expected_directions_payload = {
+      type: 'UPDATE_PLAYER_DIRECTIONS',
+      directions: directions,
+    }
 
     const key_event = {
       keyCode: GameStore.state.player_state[0].turn_left_keycode,
@@ -169,20 +177,29 @@ describe('the handleKeyEvent action', () => {
     handleKeyEvents(key_event)
 
     expect(dispatcher.dispatch).toBeCalledTimes(2)
-    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_paths_payload)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_directions_payload)
   })
 
   test('an event with a keycode which relates to a players right turn produces a dispatch to update the players paths', () => {
 
     const valid_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.state = valid_state
+
     const paths = reducePlayerStates(valid_state.player_state, 'path')
     paths[1].push(JSON.parse(JSON.stringify(paths[1][0])))
-    const expected_payload = {
+
+    const directions = reducePlayerStates(valid_state.player_state, 'direction')
+    directions[1] = (Math.PI * 1.5)
+
+    const expected_paths_payload = {
       type: 'UPDATE_PLAYER_PATHS',
       paths: paths,
     }
-    
-    GameStore.state = valid_state
+    const expected_directions_payload = {
+      type: 'UPDATE_PLAYER_DIRECTIONS',
+      directions: directions,
+    }
 
     const key_event = {
       keyCode: GameStore.state.player_state[1].turn_right_keycode,
@@ -191,50 +208,7 @@ describe('the handleKeyEvent action', () => {
     handleKeyEvents(key_event)
 
     expect(dispatcher.dispatch).toBeCalledTimes(2)
-    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
-  })
-
-  test('that an event with a keycode which relates to a players left turn produces a dispatch to update the players direction', () => {
-
-    const valid_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
-    const directions = reducePlayerStates(valid_state.player_state, 'direction')
-    directions[0] = (-1 * Math.PI * 0.5)
-    const expected_payload = {
-      type: 'UPDATE_PLAYER_DIRECTIONS',
-      directions: directions,
-    }
-
-    GameStore.state = valid_state
-
-    const key_event = {
-      keyCode: GameStore.state.player_state[0].turn_left_keycode,
-    }
-
-    handleKeyEvents(key_event)
-
-    expect(dispatcher.dispatch).toBeCalledTimes(2)
-    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
-  })
-    
-  test('that an event with a keycode which relates to a players right turn produces a dispatch to update the players direction', () => {
-
-    const valid_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
-    const directions = reducePlayerStates(valid_state.player_state, 'direction')
-    directions[1] = (Math.PI * 1.5)
-    const expected_payload = {
-      type: 'UPDATE_PLAYER_DIRECTIONS',
-      directions: directions,
-    }
-
-    GameStore.state = valid_state
-
-    const key_event = {
-      keyCode: GameStore.state.player_state[1].turn_right_keycode,
-    }
-
-    handleKeyEvents(key_event)
-
-    expect(dispatcher.dispatch).toBeCalledTimes(2)
-    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_paths_payload)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_directions_payload)
   })
 })
