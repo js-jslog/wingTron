@@ -37,6 +37,9 @@ class GameStore extends EventEmitter {
       case 'UPDATE_PLAYER_PATHS':
         this.updatePlayerPaths(action.paths)
         break
+      case 'UPDATE_PLAYER_DIRECTIONS':
+        this.updatePlayerDirections(action.directions)
+        break
       case 'UPDATE_COLLISION_MATRIX':
         this.updateCollisionMatrix(action.matrix)
         break

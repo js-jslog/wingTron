@@ -1,7 +1,7 @@
 import GameStore from '../src/restructure/GameStore.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
 import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
-import { updatePlayerPaths } from '../src/restructure/GameActions'
+import { updatePlayerPaths, handleKeyEvents } from '../src/restructure/GameActions'
 import dispatcher from '../src/lib/dispatcher.js'
 
 const valid_state_template = {
@@ -41,18 +41,21 @@ describe('the action dispatch handling', () => {
   const handleActionsOrig = GameStore.handleActions
   const startNewGameOrig = GameStore.startNewGame
   const updatePlayerPathsOrig = GameStore.updatePlayerPaths
+  const handleKeyEventsOrig = GameStore.handleKeyEvents
   const updateCollisionMatrixOrig = GameStore.updateCollisionMatrix
 
   beforeEach(() => {
     GameStore.handleActions = jest.fn()
     GameStore.startNewGame = jest.fn()
     GameStore.updatePlayerPaths = jest.fn()
+    GameStore.handleKeyEvents = jest.fn()
     GameStore.updateCollisionMatrix = jest.fn()
   })
   afterAll(() => {
     GameStore.handleActions = handleActionsOrig
     GameStore.startNewGame = startNewGameOrig
     GameStore.updatePlayerPaths = updatePlayerPathsOrig
+    GameStore.handleKeyEvents = handleKeyEventsOrig
     GameStore.updateCollisionMatrix = updateCollisionMatrixOrig
   })
 
@@ -188,21 +191,34 @@ describe('the functionality of the functions called by the action handler', () =
 
 describe('the player position update logic', () => {
 
-  test.skip('a pair of players with some turns', () => {
+  test('a pair of players with some turns', () => {
 
     const valid_state = JSON.parse(JSON.stringify(valid_state_template))
-
     GameStore.state = valid_state
+
+    const player0_right_turn_key_event = {
+      keyCode: GameStore.state.player_state[0].turn_right_keycode,
+    }
+    const player0_left_turn_key_event = {
+      keyCode: GameStore.state.player_state[0].turn_left_keycode,
+    }
+    const player1_right_turn_key_event = {
+      keyCode: GameStore.state.player_state[1].turn_right_keycode,
+    }
+    const player1_left_turn_key_event = {
+      keyCode: GameStore.state.player_state[1].turn_left_keycode,
+    }
+
     updatePlayerPaths()
-    GameStore.handleKeyPress(GameStore.state.player_state[0].turn_right_keycode)
+    handleKeyEvents(player0_right_turn_key_event)
     updatePlayerPaths()
-    GameStore.handleKeyPress(GameStore.state.player_state[1].turn_right_keycode)
+    handleKeyEvents(player1_right_turn_key_event)
     updatePlayerPaths()
     updatePlayerPaths()
-    GameStore.handleKeyPress(GameStore.state.player_state[0].turn_left_keycode)
-    GameStore.handleKeyPress(GameStore.state.player_state[1].turn_left_keycode)
+    handleKeyEvents(player0_left_turn_key_event)
+    handleKeyEvents(player1_left_turn_key_event)
     updatePlayerPaths()
-    GameStore.handleKeyPress(GameStore.state.player_state[1].turn_left_keycode)
+    handleKeyEvents(player1_left_turn_key_event)
     updatePlayerPaths()
 
     const expected_both_paths = [

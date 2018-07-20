@@ -144,7 +144,7 @@ describe('the updateCollisionMatrix action', () => {
   })
 })
 
-describe('the handleKeyEvent action', () => {
+describe('the handleKeyEvents action', () => {
 
   test('that the handleKeyEvent function exists', () => {
     expect(handleKeyEvents).toBeTruthy()
