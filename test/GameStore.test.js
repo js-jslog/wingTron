@@ -41,21 +41,21 @@ describe('the action dispatch handling', () => {
   const handleActionsOrig = GameStore.handleActions
   const startNewGameOrig = GameStore.startNewGame
   const updatePlayerPathsOrig = GameStore.updatePlayerPaths
-  const handleKeyEventsOrig = GameStore.handleKeyEvents
+  const updatePlayerDirectionsOrig = GameStore.updatePlayerDirections
   const updateCollisionMatrixOrig = GameStore.updateCollisionMatrix
 
   beforeEach(() => {
     GameStore.handleActions = jest.fn()
     GameStore.startNewGame = jest.fn()
     GameStore.updatePlayerPaths = jest.fn()
-    GameStore.handleKeyEvents = jest.fn()
+    GameStore.updatePlayerDirections = jest.fn()
     GameStore.updateCollisionMatrix = jest.fn()
   })
   afterAll(() => {
     GameStore.handleActions = handleActionsOrig
     GameStore.startNewGame = startNewGameOrig
     GameStore.updatePlayerPaths = updatePlayerPathsOrig
-    GameStore.handleKeyEvents = handleKeyEventsOrig
+    GameStore.updatePlayerDirections = updatePlayerDirectionsOrig
     GameStore.updateCollisionMatrix = updateCollisionMatrixOrig
   })
 
@@ -84,6 +84,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.startNewGame).toBeCalledWith(payload.state)
     expect(GameStore.updatePlayerPaths).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
   })
 
   test('that the GameStore handles the UPDATE_PLAYER_PATHS payload by calling updatePlayerPaths with the appropriate paths array', () => {
@@ -106,6 +107,21 @@ describe('the action dispatch handling', () => {
     expect(GameStore.updatePlayerPaths).toBeCalledWith(payload.paths)
     expect(GameStore.startNewGame).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
+  })
+
+  test('that the GameStore handles the UPDATE_PLAYER_DIRECTIONS payload by calling updatePlayerDirections with the appropriate directions array', () => {
+    const payload = {
+      type: 'UPDATE_PLAYER_DIRECTIONS',
+      directions: [ 1, 2 ],
+    }
+    dispatcher.dispatch(payload)
+
+    expect(GameStore.updatePlayerDirections).toBeCalledTimes(1)
+    expect(GameStore.updatePlayerDirections).toBeCalledWith(payload.directions)
+    expect(GameStore.startNewGame).toBeCalledTimes(0)
+    expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerPaths).toBeCalledTimes(0)
   })
 
   test('that the GameStore handles the UPDATE_COLLISION_MATRIX payload by calling updateCollisionMatrix with the appropriate matrix array', () => {
@@ -122,6 +138,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.updateCollisionMatrix).toBeCalledWith(payload.matrix)
     expect(GameStore.startNewGame).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPaths).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
   })
 })
 
@@ -189,7 +206,7 @@ describe('the functionality of the functions called by the action handler', () =
   })
 })
 
-describe('the player position update logic', () => {
+describe('the player position update logic, controlled from the GameAction and manifesting in the GameStore.state', () => {
 
   test('a pair of players with some turns', () => {
 
