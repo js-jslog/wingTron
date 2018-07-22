@@ -1,3 +1,8 @@
+// outputs a canvas element to the page
+// hands off a document and the canvas element to be dealt with as follows:
+//  - document: simply to send straight have event handlers attached to it's keyup & down events
+//  - have the context taken from it and continuously updated by a game looper
+
 requirejs(['../src/fieldFactory'], function(fieldFactory) {
   var options;
   module('fieldFactory', {
