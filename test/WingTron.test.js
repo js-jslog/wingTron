@@ -1,5 +1,5 @@
 import setKeyBindings from '../src/restructure/setKeyBindings.js'
-import WingTron from '../src/restructure/WingTron.js'
+import WingTron from '../src/restructure/WingTron.jsx'
 // outputs a canvas element to the page
 // hands off a document and the canvas element to be dealt with as follows:
 //  - document: simply to send straight have event handlers attached to it's keyup & down events
