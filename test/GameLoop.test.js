@@ -1,4 +1,7 @@
 import GameLoop from '../src/restructure/GameLoop.js'
+import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
+import OptionsStore from '../src/restructure/OptionsStore.js'
+import { updatePlayerPaths, updateCollisionMatrix } from '../src/restructure/GameActions'
 import GameStore from '../src/restructure/GameStore.js'
 import CanvasDrawer from '../src/restructure/CanvasDrawer.js'
 
@@ -9,35 +12,32 @@ const canvas = { getContext: jest.fn(params => ctx) }
 
 beforeEach(() => {
   loop_index = 0
-  GameStore.state = {}
-  GameStore.movePlayers = jest.fn()
-  GameStore.calculateCollisionMatrix = jest.fn(() => {
+  GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+  GameStore.state.status = GameStore.RUNNING
+  CanvasDrawer.drawField = jest.fn(() => {
     if (loop_index === 9) {
       GameStore.state.status = GameStore.ENDED
     }
     loop_index +=1
   })
-  CanvasDrawer.drawField = jest.fn()
   CanvasDrawer.drawPaths = jest.fn()
   CanvasDrawer.drawPlayers = jest.fn()
 })
 
 describe('the finite GameLoop', () => {
 
-  test('that a non running game does update', () => {
+  test('that a non running game does not update', () => {
     GameStore.state.status = undefined
     GameLoop.run(canvas)
     
-    expect(GameStore.movePlayers.mock.calls.length).toBe(0)
-    expect(GameStore.calculateCollisionMatrix.mock.calls.length).toBe(0)
+    expect(CanvasDrawer.drawField.mock.calls.length).toBe(0)
   })
 
   test('that a running game is updated', () => {
     GameStore.state.status = GameStore.RUNNING
     GameLoop.run(canvas)
 
-    expect(GameStore.movePlayers.mock.calls.length).toBe(10)
-    expect(GameStore.calculateCollisionMatrix.mock.calls.length).toBe(10)
+    expect(CanvasDrawer.drawField.mock.calls.length).toBe(10)
   })
 
   test('that a running game is rendered', () => {
@@ -54,9 +54,9 @@ describe('the finite GameLoop', () => {
     GameStore.state.status = GameStore.RUNNING
     GameLoop.run(canvas)
 
-    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(107)
-    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(108)
-    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(109)
+    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(65)
+    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(66)
+    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(67)
   })
 
   test('that the 2d context object is passed to the canvas drawers render function', () => {
