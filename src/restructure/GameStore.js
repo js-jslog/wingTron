@@ -27,6 +27,7 @@ class GameStore extends EventEmitter {
 
   updateCollisionMatrix(matrix) {
     this.state.collision_matrix = JSON.parse(JSON.stringify(matrix))
+    this.emit('collision_matrix_updated')
   }
 
   handleActions(action) {

@@ -193,6 +193,20 @@ describe('the functionality of the functions called by the action handler', () =
     expect(GameStore.state).toEqual(expected_state)
   })
 
+  test('that the updateCollisionMatrix function emits a \'collision_matrix_updated\' event', () => {
+    const new_matrix = [
+      [ false, false ],
+      [ false, false ],
+    ]
+    const callback = jest.fn()
+    GameStore.on('collision_matrix_updated', callback)
+
+    GameStore.state = {}
+    GameStore.updateCollisionMatrix(new_matrix)
+
+    expect(callback).toBeCalledTimes(1)
+  })
+
   test('that the updatePlayerDirections function updates the player directions in the GameStore', () => {
     const new_directions = [ 1, 2 ]
     const expected_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
