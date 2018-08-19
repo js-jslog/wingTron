@@ -1,4 +1,4 @@
-import { startNewGame, updatePlayerPaths, updateCollisionMatrix, handleKeyEvents } from '../../src/restructure/GameActions'
+import { startNewGame, updatePlayerPaths, updateCollisionMatrix, updatePlayerDeaths, updateScores, handleKeyEvents } from '../../src/restructure/GameActions'
 import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
 import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
 import OptionsStore from '../../src/restructure/OptionsStore.js'
@@ -116,6 +116,27 @@ describe('the updateCollisionMatrix action', () => {
     updateCollisionMatrix()
 
     expect(dispatcher.dispatch).toBeCalledTimes(2)
+  })
+})
+
+describe('the updateDeaths action', () => {
+
+  test('that a payload is dispatched to upate the player deaths array', () => {
+    const collision_matrix = [
+      [ true, false ],
+      [ false, false ]
+    ]
+    const expected_payload = {
+      type: 'UPDATE_PLAYER_DEATHS',
+      deaths: [ true, false ]
+    }
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.state.collision_matrix = collision_matrix
+
+    updatePlayerDeaths()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
   })
 })
 

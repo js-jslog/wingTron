@@ -6,6 +6,7 @@ import { validateOptions } from './validateOptions.js'
 import progressPaths from './progressPaths.js'
 import { reducePlayerStates } from './reduceGameStoreState.js'
 import calculateCollisionMatrix from './calculateCollisionMatrix.js'
+import DEATH from './DEATH.js'
 
 export function startNewGame() {
   if (!OptionsStore.options || !validateOptions(OptionsStore.options)) {
@@ -49,6 +50,18 @@ export function updateCollisionMatrix() {
 const matricesMatch = (matrix1, matrix2) => (
   (JSON.stringify(matrix1)) === JSON.stringify(matrix2)
 )
+
+export function updatePlayerDeaths() {
+
+  const collision_matrix = GameStore.state.collision_matrix
+  const current_player_death_states = reducePlayerStates(GameStore.state.player_state, 'dead')
+  const deaths = DEATH(collision_matrix, current_player_death_states)
+
+  dispatcher.dispatch({
+    type: 'UPDATE_PLAYER_DEATHS',
+    deaths: deaths,
+  })
+}
 
 export function handleKeyEvents(evt) {
   const paths_obj = {

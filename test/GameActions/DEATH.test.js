@@ -14,8 +14,22 @@ describe('the simple judgements', () => {
       [ true, false, false, false, false, true, ],
       [ false, false, false, false, false, false, ],
     ]
+    const current_death_status_array = [ false, false, false, false, false, false ]
     const expected_death_array = [ true, true, true, true, true, false ]
-    const actual_death_array = DEATH(collision_matrix)
+    const actual_death_array = DEATH(collision_matrix, current_death_status_array)
+
+    expect(actual_death_array).toEqual(expected_death_array)
+  })
+
+  test('that an individual who is already dead stays dead even if they are no longer colliding', () => {
+
+    const collision_matrix = [
+      [ false, false ],
+      [ false, false ],
+    ]
+    const current_death_status_array = [ true, false ]
+    const expected_death_array = [ true, false ]
+    const actual_death_array = DEATH(collision_matrix, current_death_status_array)
 
     expect(actual_death_array).toEqual(expected_death_array)
   })
