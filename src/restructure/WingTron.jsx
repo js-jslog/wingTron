@@ -1,19 +1,20 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
+import setKeyBindings from './setKeyBindings.js'
+import GameLoop from './GameLoop.js'
+import OptionsStore from './OptionsStore.js'
+import { updateOptions } from './OptionsActions'
+import { startNewGame } from './GameActions'
 
 class WingTron extends Component {
 
   componentDidMount() {
-    setKeyBindings(document)
-    startGame()
-  }
-
-  startGame() {
     var canvas = this.refs.canvas
     canvas.width = OptionsStore.options.fieldWidth
     canvas.height = OptionsStore.options.fieldHeight
     canvas.style.width = '100%'
 
-    GameLoop.run(canvas)
+    setKeyBindings(document)
+    GameLoop.addCanvas(canvas)
   }
 
   render() {
@@ -24,3 +25,19 @@ class WingTron extends Component {
 }
 
 export default WingTron
+
+export function getOptions() {
+  return JSON.stringify(OptionsStore.options)
+}
+
+export function registerOptionsChangeCallback(callback) {
+  OptionsStore.on('change', callback)
+}
+
+export function updateGameOptions(options) {
+  updateOptions(JSON.parse(options))
+}
+
+export function startGame() {
+  startNewGame()
+}

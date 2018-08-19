@@ -1,22 +1,8 @@
 import { validateOptions, validatePlayerOptions } from '../../src/restructure/GameActions/validateOptions.js'
+import OptionsStore from '../../src/restructure/OptionsStore.js'
 
-const template_valid_player_options = {
-  start_coord_x: '200',
-  start_coord_y: '200',
-  direction: '0',
-  turn_left_keycode: '65',
-  turn_right_keycode: '68',
-  colour: "rgba(0,0,255, 0.5)",
-}
-
-const template_valid_options = {
-  field_width: '200',
-  field_height: '200',
-  matches: '10',
-  player_options: [
-    template_valid_player_options,
-  ],
-}
+const template_valid_options = JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS))
+const template_valid_player_options = JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS.player_options[0]))
 
 describe('validateOptions', () => {
 
@@ -24,6 +10,12 @@ describe('validateOptions', () => {
 
     test('that a valid options object is correctly evaluated', () => {
       expect(validateOptions(template_valid_options)).toBeTruthy()
+    })
+
+    test('that the input options object is not modified in any way', () => {
+      validateOptions(template_valid_options)
+      expect(typeof template_valid_options).toBe(typeof OptionsStore.DEFAULT_OPTIONS)
+      expect(template_valid_options).toEqual(OptionsStore.DEFAULT_OPTIONS)
     })
   })
 

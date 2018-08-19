@@ -1,4 +1,7 @@
-class OptionsStore {
+import { EventEmitter } from 'events'
+import dispatcher from '../lib/dispatcher.js'
+
+class OptionsStore extends EventEmitter {
   DEFAULT_OPTIONS = {
     field_width: '200',
     field_height: '200',
@@ -24,8 +27,23 @@ class OptionsStore {
   }
 
   options = undefined
+
+  updateOptions(options) {
+
+    this.options = JSON.parse(JSON.stringify(options))
+    this.emit('change')
+  }
+
+  handleActions(action) {
+    switch(action.type) {
+      case 'UPDATE_OPTIONS':
+        this.updateOptions(action.options)
+        break
+    }
+  }
 }
 
 const OptionsStoreInstance = new OptionsStore
+dispatcher.register(OptionsStoreInstance.handleActions.bind(OptionsStoreInstance))
 
 export default OptionsStoreInstance

@@ -12,34 +12,9 @@ beforeEach(() => {
 describe('the startNewGame action', () => {
 
   test('that a payload is dispatched with an adaptation from the OptionsStore', () => {
-    const expected_game_state = {
-      field_width: 200,
-      field_height: 200,
-      matches: 10,
-      player_state: [
-        {
-          path: [
-            [ 150, 100 ],
-            [ 150, 100 ],
-          ],
-          direction: 0,
-          turn_left_keycode: 37,
-          turn_right_keycode: 39,
-          colour: 'rgba(255,0,0, 0.5)',
-        },
-        {
-          path: [
-            [ 150, 100 ],
-            [ 150, 100 ],
-          ],
-          direction: Math.PI,
-          turn_left_keycode: 65,
-          turn_right_keycode: 68,
-          colour: 'rgba(0,0,255, 0.5)',
-        },
-      ],
-      status: GameStore.RUNNING,
-    }
+    const expected_game_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    expected_game_state.status = GameStore.RUNNING
+
     const expected_payload = {
       type: 'START_NEW_GAME',
       state: expected_game_state,
