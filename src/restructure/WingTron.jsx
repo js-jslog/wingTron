@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import setKeyBindings from './setKeyBindings.js'
 import GameLoop from './GameLoop.js'
 import OptionsStore from './OptionsStore.js'
-import { updateOptions } from './OptionsActions'
+import { updateOptionsAction } from './OptionsActions'
 import { startGameAction } from './GameActions'
 
 class WingTron extends Component {
@@ -35,7 +35,7 @@ export function registerOptionsChangeCallback(callback) {
 }
 
 export function updateGameOptions(options) {
-  updateOptions(JSON.parse(options))
+  updateOptionsAction(JSON.parse(options))
 }
 
 export function startGame() {

@@ -2,7 +2,7 @@ import dispatcher from '../../lib/dispatcher'
 import OptionsStore from '../../restructure/OptionsStore.js'
 import { validateOptions } from '../../restructure/GameActions/validateOptions.js'
 
-export function updateOptions(options) {
+export function updateOptionsAction(options) {
 
   if (validateOptions(options)) {
     dispatcher.dispatch({

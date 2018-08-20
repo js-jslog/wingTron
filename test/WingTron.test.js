@@ -50,7 +50,7 @@ describe('the interface for interacting with the optionsstore', () => {
 
     expect(callback).toBeCalledTimes(0)
 
-    OptionsStore.updateOptions(OptionsStore.DEFAULT_OPTIONS)
+    OptionsStore.updateOptionsHandler(OptionsStore.DEFAULT_OPTIONS)
 
     expect(callback).toBeCalledTimes(1)
   })

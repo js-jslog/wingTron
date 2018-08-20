@@ -8,15 +8,15 @@ beforeEach(() => {
 describe('the action dispatch handling', () => {
 
   const handleActionsOrig = OptionsStore.handleActions
-  const updateOptionsOrig = OptionsStore.updateOptions
+  const updateOptionsHandlerOrig = OptionsStore.updateOptionsHandler
 
   beforeEach(() => {
     OptionsStore.handleActions = jest.fn()
-    OptionsStore.updateOptions = jest.fn()
+    OptionsStore.updateOptionsHandler = jest.fn()
   })
   afterAll(() => {
     OptionsStore.handleActions = handleActionsOrig
-    OptionsStore.updateOptions = updateOptionsOrig
+    OptionsStore.updateOptionsHandler = updateOptionsHandlerOrig
   })
 
   // TODO: I can't see why this is failing at all - possibly something to do with the way 
@@ -31,7 +31,7 @@ describe('the action dispatch handling', () => {
     expect(OptionsStore.handleActions).toBeCalledWith(payload)
   })
 
-  test('that the OptionStore handles the UPDATE_OPTIONS payload by calling updateOptions function with the options object', () => {
+  test('that the OptionStore handles the UPDATE_OPTIONS payload by calling updateOptionsHandler function with the options object', () => {
     const payload = {
       type: 'UPDATE_OPTIONS',
       options: {
@@ -40,8 +40,8 @@ describe('the action dispatch handling', () => {
     }
     dispatcher.dispatch(payload)
 
-    expect(OptionsStore.updateOptions).toBeCalledTimes(1)
-    expect(OptionsStore.updateOptions).toBeCalledWith(payload.options)
+    expect(OptionsStore.updateOptionsHandler).toBeCalledTimes(1)
+    expect(OptionsStore.updateOptionsHandler).toBeCalledWith(payload.options)
   })
 })
 
@@ -52,7 +52,7 @@ describe('the event emission from the store', () => {
     const callback = jest.fn()
     OptionsStore.on('change', callback)
 
-    OptionsStore.updateOptions(OptionsStore.DEFAULT_OPTIONS)
+    OptionsStore.updateOptionsHandler(OptionsStore.DEFAULT_OPTIONS)
     expect(callback).toBeCalledTimes(1)
   })
 })
