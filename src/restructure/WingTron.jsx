@@ -31,7 +31,7 @@ export function getOptions() {
 }
 
 export function registerOptionsChangeCallback(callback) {
-  OptionsStore.on('change', callback)
+  OptionsStore.on('options_updated', callback)
 }
 
 export function updateGameOptions(options) {

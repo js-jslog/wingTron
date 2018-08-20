@@ -31,7 +31,7 @@ class OptionsStore extends EventEmitter {
   updateOptionsHandler(options) {
 
     this.options = JSON.parse(JSON.stringify(options))
-    this.emit('change')
+    this.emit('options_updated')
   }
 
   handleActions(action) {

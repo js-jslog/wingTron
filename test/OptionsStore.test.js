@@ -47,10 +47,10 @@ describe('the action dispatch handling', () => {
 
 describe('the event emission from the store', () => {
 
-  test('that a \'change\' event is emitted when the OptionStore options is updated', () => {
+  test('that an \'options_updated\' event is emitted when the OptionStore options is updated', () => {
 
     const callback = jest.fn()
-    OptionsStore.on('change', callback)
+    OptionsStore.on('options_updated', callback)
 
     OptionsStore.updateOptionsHandler(OptionsStore.DEFAULT_OPTIONS)
     expect(callback).toBeCalledTimes(1)
