@@ -1,8 +1,8 @@
-import { handleKeyEvents } from './GameActions'
+import { handleKeyEventsAction } from './GameActions'
 
 export default function setKeyBindings(document) {
-  document.removeEventListener('keydown', handleKeyEvents)
-  document.removeEventListener('keyup', handleKeyEvents)
-  document.addEventListener('keydown', handleKeyEvents)
-  document.addEventListener('keyup', handleKeyEvents)
+  document.removeEventListener('keydown', handleKeyEventsAction)
+  document.removeEventListener('keyup', handleKeyEventsAction)
+  document.addEventListener('keydown', handleKeyEventsAction)
+  document.addEventListener('keyup', handleKeyEventsAction)
 }

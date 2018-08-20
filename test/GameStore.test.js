@@ -1,7 +1,7 @@
 import GameStore from '../src/restructure/GameStore.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
 import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
-import { updatePlayerPathsAction, handleKeyEvents } from '../src/restructure/GameActions'
+import { updatePlayerPathsAction, handleKeyEventsAction } from '../src/restructure/GameActions'
 import dispatcher from '../src/lib/dispatcher.js'
 
 const valid_state_template = {
@@ -241,15 +241,15 @@ describe('the player position update logic, controlled from the GameAction and m
     }
 
     updatePlayerPathsAction()
-    handleKeyEvents(player0_right_turn_key_event)
+    handleKeyEventsAction(player0_right_turn_key_event)
     updatePlayerPathsAction()
-    handleKeyEvents(player1_right_turn_key_event)
+    handleKeyEventsAction(player1_right_turn_key_event)
     updatePlayerPathsAction()
     updatePlayerPathsAction()
-    handleKeyEvents(player0_left_turn_key_event)
-    handleKeyEvents(player1_left_turn_key_event)
+    handleKeyEventsAction(player0_left_turn_key_event)
+    handleKeyEventsAction(player1_left_turn_key_event)
     updatePlayerPathsAction()
-    handleKeyEvents(player1_left_turn_key_event)
+    handleKeyEventsAction(player1_left_turn_key_event)
     updatePlayerPathsAction()
 
     const expected_both_paths = [

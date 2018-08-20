@@ -63,7 +63,7 @@ export function updatePlayerDeathsAction() {
   })
 }
 
-export function handleKeyEvents(evt) {
+export function handleKeyEventsAction(evt) {
   const paths_obj = {
     paths: reducePlayerStates(GameStore.state.player_state, 'path'),
     turn_left_keycode: reducePlayerStates(GameStore.state.player_state, 'turn_left_keycode'),

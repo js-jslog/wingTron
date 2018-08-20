@@ -1,4 +1,4 @@
-import { startGameAction, updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction, updateScores, handleKeyEvents } from '../../src/restructure/GameActions'
+import { startGameAction, updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction, updateScores, handleKeyEventsAction } from '../../src/restructure/GameActions'
 import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
 import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
 import OptionsStore from '../../src/restructure/OptionsStore.js'
@@ -140,11 +140,7 @@ describe('the updateDeaths action', () => {
   })
 })
 
-describe('the handleKeyEvents action', () => {
-
-  test('that the handleKeyEvent function exists', () => {
-    expect(handleKeyEvents).toBeTruthy()
-  })
+describe('the handleKeyEventsAction action', () => {
 
   test('an event with a keycode which relates to a players left turn produces a dispatch to update the players paths', () => {
 
@@ -170,7 +166,7 @@ describe('the handleKeyEvents action', () => {
       keyCode: GameStore.state.player_state[0].turn_left_keycode,
     }
 
-    handleKeyEvents(key_event)
+    handleKeyEventsAction(key_event)
 
     expect(dispatcher.dispatch).toBeCalledTimes(2)
     expect(dispatcher.dispatch).toBeCalledWith(expected_paths_payload)
@@ -201,7 +197,7 @@ describe('the handleKeyEvents action', () => {
       keyCode: GameStore.state.player_state[1].turn_right_keycode,
     }
 
-    handleKeyEvents(key_event)
+    handleKeyEventsAction(key_event)
 
     expect(dispatcher.dispatch).toBeCalledTimes(2)
     expect(dispatcher.dispatch).toBeCalledWith(expected_paths_payload)
