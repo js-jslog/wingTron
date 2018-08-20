@@ -1,4 +1,4 @@
-import { updatePlayerPathsAction, updateCollisionMatrix } from './GameActions'
+import { updatePlayerPathsAction, updateCollisionMatrixAction } from './GameActions'
 import GameStore from './GameStore.js'
 import CanvasDrawer from './CanvasDrawer.js'
 
@@ -11,7 +11,7 @@ class GameLoop {
 
     while (GameStore.state.status === GameStore.RUNNING) {
       updatePlayerPathsAction()
-      updateCollisionMatrix()
+      updateCollisionMatrixAction()
       CanvasDrawer.drawField(this.ctx)
       CanvasDrawer.drawPaths(this.ctx)
       CanvasDrawer.drawPlayers(this.ctx)

@@ -34,7 +34,7 @@ export function updatePlayerPathsAction() {
   })
 }
 
-export function updateCollisionMatrix() {
+export function updateCollisionMatrixAction() {
   const player_paths = reducePlayerStates(GameStore.state.player_state, 'path')
   const collision_matrix = calculateCollisionMatrix(player_paths)
 

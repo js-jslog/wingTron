@@ -1,4 +1,4 @@
-import { startGameAction, updatePlayerPathsAction, updateCollisionMatrix, updatePlayerDeaths, updateScores, handleKeyEvents } from '../../src/restructure/GameActions'
+import { startGameAction, updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeaths, updateScores, handleKeyEvents } from '../../src/restructure/GameActions'
 import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
 import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
 import OptionsStore from '../../src/restructure/OptionsStore.js'
@@ -70,7 +70,7 @@ describe('the player position update logic', () => {
   })
 })
 
-describe('the updateCollisionMatrix action', () => {
+describe('the updateCollisionMatrixAction action', () => {
 
   test('that a payload is dispatched to upate the collision matrix', () => {
     const expected_payload = {
@@ -82,7 +82,7 @@ describe('the updateCollisionMatrix action', () => {
     }
     GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
 
-    updateCollisionMatrix()
+    updateCollisionMatrixAction()
 
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
@@ -102,18 +102,18 @@ describe('the updateCollisionMatrix action', () => {
     ]
     GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
 
-    updateCollisionMatrix()
+    updateCollisionMatrixAction()
     expect(dispatcher.dispatch).toBeCalledTimes(1)
 
     GameStore.state.collision_matrix = non_colliding_matrix
 
-    updateCollisionMatrix()
+    updateCollisionMatrixAction()
 
     expect(dispatcher.dispatch).toBeCalledTimes(1)
 
     GameStore.state.player_state[0].path = self_collision_path
 
-    updateCollisionMatrix()
+    updateCollisionMatrixAction()
 
     expect(dispatcher.dispatch).toBeCalledTimes(2)
   })

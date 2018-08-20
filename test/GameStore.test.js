@@ -42,21 +42,21 @@ describe('the action dispatch handling', () => {
   const startGameHandlerOrig = GameStore.startGameHandler
   const updatePlayerPathsHandlerOrig = GameStore.updatePlayerPathsHandler
   const updatePlayerDirectionsOrig = GameStore.updatePlayerDirections
-  const updateCollisionMatrixOrig = GameStore.updateCollisionMatrix
+  const updateCollisionMatrixHandlerOrig = GameStore.updateCollisionMatrixHandler
 
   beforeEach(() => {
     GameStore.handleActions = jest.fn()
     GameStore.startGameHandler = jest.fn()
     GameStore.updatePlayerPathsHandler = jest.fn()
     GameStore.updatePlayerDirections = jest.fn()
-    GameStore.updateCollisionMatrix = jest.fn()
+    GameStore.updateCollisionMatrixHandler = jest.fn()
   })
   afterAll(() => {
     GameStore.handleActions = handleActionsOrig
     GameStore.startGameHandler = startGameHandlerOrig
     GameStore.updatePlayerPathsHandler = updatePlayerPathsHandlerOrig
     GameStore.updatePlayerDirections = updatePlayerDirectionsOrig
-    GameStore.updateCollisionMatrix = updateCollisionMatrixOrig
+    GameStore.updateCollisionMatrixHandler = updateCollisionMatrixHandlerOrig
   })
 
   // TODO: I can't see why this is failing at all - possibly something to do with the way 
@@ -83,7 +83,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.startGameHandler).toBeCalledTimes(1)
     expect(GameStore.startGameHandler).toBeCalledWith(payload.state)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
-    expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
+    expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
   })
 
@@ -106,7 +106,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(1)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledWith(payload.paths)
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
-    expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
+    expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
   })
 
@@ -120,11 +120,11 @@ describe('the action dispatch handling', () => {
     expect(GameStore.updatePlayerDirections).toBeCalledTimes(1)
     expect(GameStore.updatePlayerDirections).toBeCalledWith(payload.directions)
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
-    expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
+    expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
   })
 
-  test('that the GameStore handles the UPDATE_COLLISION_MATRIX payload by calling updateCollisionMatrix with the appropriate matrix array', () => {
+  test('that the GameStore handles the UPDATE_COLLISION_MATRIX payload by calling updateCollisionMatrixHandler with the appropriate matrix array', () => {
     const payload = {
       type: 'UPDATE_COLLISION_MATRIX',
       matrix: [
@@ -134,8 +134,8 @@ describe('the action dispatch handling', () => {
     }
     dispatcher.dispatch(payload)
 
-    expect(GameStore.updateCollisionMatrix).toBeCalledTimes(1)
-    expect(GameStore.updateCollisionMatrix).toBeCalledWith(payload.matrix)
+    expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(1)
+    expect(GameStore.updateCollisionMatrixHandler).toBeCalledWith(payload.matrix)
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
@@ -179,7 +179,7 @@ describe('the functionality of the functions called by the action handler', () =
     expect(GameStore.state).toEqual(expected_state)
   })
 
-  test('that the updateCollisionMatrix function updates the collision_matrix of the GameStore', () => {
+  test('that the updateCollisionMatrixHandler function updates the collision_matrix of the GameStore', () => {
     const new_matrix = [
       [ false, false ],
       [ false, false ],
@@ -188,12 +188,12 @@ describe('the functionality of the functions called by the action handler', () =
     GameStore.state = {}
 
     expected_state.collision_matrix = new_matrix
-    GameStore.updateCollisionMatrix(new_matrix)
+    GameStore.updateCollisionMatrixHandler(new_matrix)
 
     expect(GameStore.state).toEqual(expected_state)
   })
 
-  test('that the updateCollisionMatrix function emits a \'collision_matrix_updated\' event', () => {
+  test('that the updateCollisionMatrixHandler function emits a \'collision_matrix_updated\' event', () => {
     const new_matrix = [
       [ false, false ],
       [ false, false ],
@@ -202,7 +202,7 @@ describe('the functionality of the functions called by the action handler', () =
     GameStore.on('collision_matrix_updated', callback)
 
     GameStore.state = {}
-    GameStore.updateCollisionMatrix(new_matrix)
+    GameStore.updateCollisionMatrixHandler(new_matrix)
 
     expect(callback).toBeCalledTimes(1)
   })

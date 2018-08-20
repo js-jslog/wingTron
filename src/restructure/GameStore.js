@@ -25,7 +25,7 @@ class GameStore extends EventEmitter {
     directions.forEach((direction, index) => this.state.player_state[index].direction = direction)
   }
 
-  updateCollisionMatrix(matrix) {
+  updateCollisionMatrixHandler(matrix) {
     this.state.collision_matrix = JSON.parse(JSON.stringify(matrix))
     this.emit('collision_matrix_updated')
   }
@@ -42,7 +42,7 @@ class GameStore extends EventEmitter {
         this.updatePlayerDirections(action.directions)
         break
       case 'UPDATE_COLLISION_MATRIX':
-        this.updateCollisionMatrix(action.matrix)
+        this.updateCollisionMatrixHandler(action.matrix)
         break
     }
   }
