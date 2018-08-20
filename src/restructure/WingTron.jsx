@@ -3,7 +3,7 @@ import setKeyBindings from './setKeyBindings.js'
 import GameLoop from './GameLoop.js'
 import OptionsStore from './OptionsStore.js'
 import { updateOptions } from './OptionsActions'
-import { startNewGame } from './GameActions'
+import { startGameAction } from './GameActions'
 
 class WingTron extends Component {
 
@@ -39,5 +39,5 @@ export function updateGameOptions(options) {
 }
 
 export function startGame() {
-  startNewGame()
+  startGameAction()
 }

@@ -39,21 +39,21 @@ beforeEach(() => {
 describe('the action dispatch handling', () => {
 
   const handleActionsOrig = GameStore.handleActions
-  const startNewGameOrig = GameStore.startNewGame
+  const startGameHandlerOrig = GameStore.startGameHandler
   const updatePlayerPathsOrig = GameStore.updatePlayerPaths
   const updatePlayerDirectionsOrig = GameStore.updatePlayerDirections
   const updateCollisionMatrixOrig = GameStore.updateCollisionMatrix
 
   beforeEach(() => {
     GameStore.handleActions = jest.fn()
-    GameStore.startNewGame = jest.fn()
+    GameStore.startGameHandler = jest.fn()
     GameStore.updatePlayerPaths = jest.fn()
     GameStore.updatePlayerDirections = jest.fn()
     GameStore.updateCollisionMatrix = jest.fn()
   })
   afterAll(() => {
     GameStore.handleActions = handleActionsOrig
-    GameStore.startNewGame = startNewGameOrig
+    GameStore.startGameHandler = startGameHandlerOrig
     GameStore.updatePlayerPaths = updatePlayerPathsOrig
     GameStore.updatePlayerDirections = updatePlayerDirectionsOrig
     GameStore.updateCollisionMatrix = updateCollisionMatrixOrig
@@ -71,7 +71,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.handleActions).toBeCalledWith(payload)
   })
 
-  test('that the GameStore handles the START_NEW_GAME payload by calling startNewGame with the state object', () => {
+  test('that the GameStore handles the START_NEW_GAME payload by calling startGameHandler with the state object', () => {
     const payload = {
       type: 'START_NEW_GAME',
       state: {
@@ -80,8 +80,8 @@ describe('the action dispatch handling', () => {
     }
     dispatcher.dispatch(payload)
 
-    expect(GameStore.startNewGame).toBeCalledTimes(1)
-    expect(GameStore.startNewGame).toBeCalledWith(payload.state)
+    expect(GameStore.startGameHandler).toBeCalledTimes(1)
+    expect(GameStore.startGameHandler).toBeCalledWith(payload.state)
     expect(GameStore.updatePlayerPaths).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
@@ -105,7 +105,7 @@ describe('the action dispatch handling', () => {
 
     expect(GameStore.updatePlayerPaths).toBeCalledTimes(1)
     expect(GameStore.updatePlayerPaths).toBeCalledWith(payload.paths)
-    expect(GameStore.startNewGame).toBeCalledTimes(0)
+    expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
   })
@@ -119,7 +119,7 @@ describe('the action dispatch handling', () => {
 
     expect(GameStore.updatePlayerDirections).toBeCalledTimes(1)
     expect(GameStore.updatePlayerDirections).toBeCalledWith(payload.directions)
-    expect(GameStore.startNewGame).toBeCalledTimes(0)
+    expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrix).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPaths).toBeCalledTimes(0)
   })
@@ -136,7 +136,7 @@ describe('the action dispatch handling', () => {
 
     expect(GameStore.updateCollisionMatrix).toBeCalledTimes(1)
     expect(GameStore.updateCollisionMatrix).toBeCalledWith(payload.matrix)
-    expect(GameStore.startNewGame).toBeCalledTimes(0)
+    expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPaths).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
   })
@@ -144,7 +144,7 @@ describe('the action dispatch handling', () => {
 
 describe('the functionality of the functions called by the action handler', () => {
 
-  test('that the startNewGame function updates the state of the GameStore', () => {
+  test('that the startGameHandler function updates the state of the GameStore', () => {
     const new_state = {
       some: 'new state',
     }
@@ -152,7 +152,7 @@ describe('the functionality of the functions called by the action handler', () =
       some_other: 'old state'
     }
 
-    GameStore.startNewGame(new_state)
+    GameStore.startGameHandler(new_state)
 
     expect(GameStore.state).toEqual(new_state)
   })

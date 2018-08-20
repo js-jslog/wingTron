@@ -8,7 +8,7 @@ import { reducePlayerStates } from './reduceGameStoreState.js'
 import calculateCollisionMatrix from './calculateCollisionMatrix.js'
 import DEATH from './DEATH.js'
 
-export function startNewGame() {
+export function startGameAction() {
   if (!OptionsStore.options || !validateOptions(OptionsStore.options)) {
     return
   }

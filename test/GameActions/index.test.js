@@ -1,4 +1,4 @@
-import { startNewGame, updatePlayerPaths, updateCollisionMatrix, updatePlayerDeaths, updateScores, handleKeyEvents } from '../../src/restructure/GameActions'
+import { startGameAction, updatePlayerPaths, updateCollisionMatrix, updatePlayerDeaths, updateScores, handleKeyEvents } from '../../src/restructure/GameActions'
 import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
 import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
 import OptionsStore from '../../src/restructure/OptionsStore.js'
@@ -9,7 +9,7 @@ beforeEach(() => {
   dispatcher.dispatch = jest.fn()
 })
 
-describe('the startNewGame action', () => {
+describe('the startGameAction action', () => {
 
   test('that a payload is dispatched with an adaptation from the OptionsStore', () => {
     const expected_game_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
@@ -21,7 +21,7 @@ describe('the startNewGame action', () => {
     }
     OptionsStore.options = OptionsStore.DEFAULT_OPTIONS
 
-    startNewGame()
+    startGameAction()
 
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
@@ -30,7 +30,7 @@ describe('the startNewGame action', () => {
   test('that empty options will not trigger a dispatch', () => {
     OptionsStore.options = undefined
 
-    startNewGame()
+    startGameAction()
 
     expect(dispatcher.dispatch).toBeCalledTimes(0)
   }) 
@@ -39,7 +39,7 @@ describe('the startNewGame action', () => {
     OptionsStore.options = OptionsStore.DEFAULT_OPTIONS
     delete OptionsStore.options.field_width
 
-    startNewGame()
+    startGameAction()
 
     expect(dispatcher.dispatch).toBeCalledTimes(0)
   }) 

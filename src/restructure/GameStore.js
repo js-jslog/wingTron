@@ -13,7 +13,7 @@ class GameStore extends EventEmitter {
 
   state = undefined
 
-  startNewGame(state) {
+  startGameHandler(state) {
     this.state = JSON.parse(JSON.stringify(state))
   }
 
@@ -33,7 +33,7 @@ class GameStore extends EventEmitter {
   handleActions(action) {
     switch(action.type) {
       case 'START_NEW_GAME':
-        this.startNewGame(action.state)
+        this.startGameHandler(action.state)
         break
       case 'UPDATE_PLAYER_PATHS':
         this.updatePlayerPaths(action.paths)
