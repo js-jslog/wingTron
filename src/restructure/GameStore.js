@@ -30,6 +30,13 @@ class GameStore extends EventEmitter {
     this.emit('collision_matrix_updated')
   }
 
+  updatePlayerDeathsHandler(deaths) {
+    deaths.forEach((dead, index) => {
+      this.state.player_state[index].dead = dead
+    })
+    this.emit('player_deaths_updated')
+  }
+
   handleActions(action) {
     switch(action.type) {
       case 'START_NEW_GAME':
@@ -43,6 +50,9 @@ class GameStore extends EventEmitter {
         break
       case 'UPDATE_COLLISION_MATRIX':
         this.updateCollisionMatrixHandler(action.matrix)
+        break
+      case 'UPDATE_PLAYER_DEATHS':
+        this.updatePlayerDeathsHandler(action.deaths)
         break
     }
   }

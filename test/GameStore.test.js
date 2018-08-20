@@ -1,7 +1,7 @@
 import GameStore from '../src/restructure/GameStore.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
 import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
-import { updatePlayerPathsAction, handleKeyEventsAction } from '../src/restructure/GameActions'
+import { updatePlayerPathsAction, updatePlayerDeathsAction, handleKeyEventsAction } from '../src/restructure/GameActions'
 import dispatcher from '../src/lib/dispatcher.js'
 
 const valid_state_template = {
@@ -43,6 +43,7 @@ describe('the action dispatch handling', () => {
   const updatePlayerPathsHandlerOrig = GameStore.updatePlayerPathsHandler
   const updatePlayerDirectionsHandlerOrig = GameStore.updatePlayerDirectionsHandler
   const updateCollisionMatrixHandlerOrig = GameStore.updateCollisionMatrixHandler
+  const updatePlayerDeathsHandlerOrig = GameStore.updatePlayerDeathsHandler
 
   beforeEach(() => {
     GameStore.handleActions = jest.fn()
@@ -50,6 +51,7 @@ describe('the action dispatch handling', () => {
     GameStore.updatePlayerPathsHandler = jest.fn()
     GameStore.updatePlayerDirectionsHandler = jest.fn()
     GameStore.updateCollisionMatrixHandler = jest.fn()
+    GameStore.updatePlayerDeathsHandler = jest.fn()
   })
   afterAll(() => {
     GameStore.handleActions = handleActionsOrig
@@ -57,6 +59,7 @@ describe('the action dispatch handling', () => {
     GameStore.updatePlayerPathsHandler = updatePlayerPathsHandlerOrig
     GameStore.updatePlayerDirectionsHandler = updatePlayerDirectionsHandlerOrig
     GameStore.updateCollisionMatrixHandler = updateCollisionMatrixHandlerOrig
+    GameStore.updatePlayerDeathsHandler = updatePlayerDeathsHandlerOrig
   })
 
   // TODO: I can't see why this is failing at all - possibly something to do with the way 
@@ -85,6 +88,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirectionsHandler).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDeathsHandler).toBeCalledTimes(0)
   })
 
   test('that the GameStore handles the UPDATE_PLAYER_PATHS payload by calling updatePlayerPathsHandler with the appropriate paths array', () => {
@@ -108,6 +112,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirectionsHandler).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDeathsHandler).toBeCalledTimes(0)
   })
 
   test('that the GameStore handles the UPDATE_PLAYER_DIRECTIONS payload by calling updatePlayerDirectionsHandler with the appropriate directions array', () => {
@@ -122,6 +127,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDeathsHandler).toBeCalledTimes(0)
   })
 
   test('that the GameStore handles the UPDATE_COLLISION_MATRIX payload by calling updateCollisionMatrixHandler with the appropriate matrix array', () => {
@@ -136,6 +142,22 @@ describe('the action dispatch handling', () => {
 
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(1)
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledWith(payload.matrix)
+    expect(GameStore.startGameHandler).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDirectionsHandler).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDeathsHandler).toBeCalledTimes(0)
+  })
+
+  test('that the GameStore handles the UPDATE_PLAYER_DEATHS payload by calling updatePlayerDeathsHandler with the appropriate death array', () => {
+    const payload = {
+      type: 'UPDATE_PLAYER_DEATHS',
+      deaths: [ true, false ]
+    }
+    dispatcher.dispatch(payload)
+
+    expect(GameStore.updatePlayerDeathsHandler).toBeCalledTimes(1)
+    expect(GameStore.updatePlayerDeathsHandler).toBeCalledWith(payload.deaths)
+    expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerDirectionsHandler).toBeCalledTimes(0)
@@ -179,6 +201,18 @@ describe('the functionality of the functions called by the action handler', () =
     expect(GameStore.state).toEqual(expected_state)
   })
 
+  test('that the updatePlayerDirectionsHandler function updates the player directions in the GameStore', () => {
+    const new_directions = [ 1, 2 ]
+    const expected_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    expected_state.player_state[0].direction = new_directions[0]
+    expected_state.player_state[1].direction = new_directions[1]
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+
+    GameStore.updatePlayerDirectionsHandler(new_directions)
+
+    expect(GameStore.state).toEqual(expected_state)
+  })
+
   test('that the updateCollisionMatrixHandler function updates the collision_matrix of the GameStore', () => {
     const new_matrix = [
       [ false, false ],
@@ -207,16 +241,26 @@ describe('the functionality of the functions called by the action handler', () =
     expect(callback).toBeCalledTimes(1)
   })
 
-  test('that the updatePlayerDirectionsHandler function updates the player directions in the GameStore', () => {
-    const new_directions = [ 1, 2 ]
+  test('that the updatePlayerDeathsHandler function updates the dead property of each of the the GameStore\'s player objects', () => {
+    const death_array = [ true, false ]
     const expected_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
-    expected_state.player_state[0].direction = new_directions[0]
-    expected_state.player_state[1].direction = new_directions[1]
+
     GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.updatePlayerDeathsHandler(death_array)
 
-    GameStore.updatePlayerDirectionsHandler(new_directions)
+    expect(GameStore.state.player_state[0].dead).toBeTruthy()
+    expect(GameStore.state.player_state[1].dead).toBeFalsy()
+  })
 
-    expect(GameStore.state).toEqual(expected_state)
+  test('that the updatePlayerDeathsHandler function emits a \'player_deaths_updated\' event', () => {
+    const death_array = [ true, false ]
+    const callback = jest.fn()
+    GameStore.on('player_deaths_updated', callback)
+
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.updatePlayerDeathsHandler(death_array)
+
+    expect(callback).toBeCalledTimes(1)
   })
 })
 

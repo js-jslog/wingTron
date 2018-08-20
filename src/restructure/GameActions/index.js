@@ -57,6 +57,10 @@ export function updatePlayerDeathsAction() {
   const current_player_death_states = reducePlayerStates(GameStore.state.player_state, 'dead')
   const deaths = DEATH(collision_matrix, current_player_death_states)
 
+  if (JSON.stringify(current_player_death_states) === JSON.stringify(deaths)) {
+    return
+  }
+
   dispatcher.dispatch({
     type: 'UPDATE_PLAYER_DEATHS',
     deaths: deaths,

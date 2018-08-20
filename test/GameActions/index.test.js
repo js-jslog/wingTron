@@ -138,6 +138,25 @@ describe('the updateDeaths action', () => {
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
   })
+
+  test('that a payload is not dispatched to upate the player deaths array if the deaths have not changed', () => {
+    const collision_matrix = [
+      [ true, false ],
+      [ false, false ]
+    ]
+    const expected_payload = {
+      type: 'UPDATE_PLAYER_DEATHS',
+      deaths: [ true, false ]
+    }
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.state.collision_matrix = collision_matrix
+    GameStore.state.player_state[0].dead = true
+    GameStore.state.player_state[1].dead = false
+
+    updatePlayerDeathsAction()
+
+    expect(dispatcher.dispatch).toBeCalledTimes(0)
+  })
 })
 
 describe('the handleKeyEventsAction action', () => {
