@@ -51,7 +51,7 @@ const matricesMatch = (matrix1, matrix2) => (
   (JSON.stringify(matrix1)) === JSON.stringify(matrix2)
 )
 
-export function updatePlayerDeaths() {
+export function updatePlayerDeathsAction() {
 
   const collision_matrix = GameStore.state.collision_matrix
   const current_player_death_states = reducePlayerStates(GameStore.state.player_state, 'dead')
