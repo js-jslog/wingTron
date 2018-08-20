@@ -119,9 +119,9 @@ describe('the updateCollisionMatrixAction action', () => {
   })
 })
 
-describe('the updateDeaths action', () => {
+describe('the updatePlayerDeathsAction action', () => {
 
-  test('that a payload is dispatched to upate the player deaths array', () => {
+  test('that a payload is dispatched to upate the player deaths', () => {
     const collision_matrix = [
       [ true, false ],
       [ false, false ]
@@ -130,16 +130,14 @@ describe('the updateDeaths action', () => {
       type: 'UPDATE_PLAYER_DEATHS',
       deaths: [ true, false ]
     }
-    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
-    GameStore.state.collision_matrix = collision_matrix
 
-    updatePlayerDeathsAction()
+    updatePlayerDeathsAction(collision_matrix)
 
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
   })
 
-  test('that a payload is not dispatched to upate the player deaths array if the deaths have not changed', () => {
+  test('that a payload is not dispatched to upate the player death properties if the deaths have not changed', () => {
     const collision_matrix = [
       [ true, false ],
       [ false, false ]
@@ -149,11 +147,10 @@ describe('the updateDeaths action', () => {
       deaths: [ true, false ]
     }
     GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
-    GameStore.state.collision_matrix = collision_matrix
     GameStore.state.player_state[0].dead = true
     GameStore.state.player_state[1].dead = false
 
-    updatePlayerDeathsAction()
+    updatePlayerDeathsAction(collision_matrix)
 
     expect(dispatcher.dispatch).toBeCalledTimes(0)
   })

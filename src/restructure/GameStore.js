@@ -26,8 +26,9 @@ class GameStore extends EventEmitter {
   }
 
   updateCollisionMatrixHandler(matrix) {
-    this.state.collision_matrix = JSON.parse(JSON.stringify(matrix))
-    this.emit('collision_matrix_updated')
+    const new_collision_matrix = JSON.parse(JSON.stringify(matrix))
+    this.state.collision_matrix = new_collision_matrix
+    this.emit('collision_matrix_updated', new_collision_matrix)
   }
 
   updatePlayerDeathsHandler(deaths) {
@@ -35,6 +36,13 @@ class GameStore extends EventEmitter {
       this.state.player_state[index].dead = dead
     })
     this.emit('player_deaths_updated')
+  }
+
+  updatePlayerScoresHandler(scores) {
+    scores.forEach((score, index) => {
+      this.state.player_state[index].score = score
+    })
+    this.emit('player_scores_updated')
   }
 
   handleActions(action) {

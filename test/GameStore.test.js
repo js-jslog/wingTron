@@ -241,6 +241,21 @@ describe('the functionality of the functions called by the action handler', () =
     expect(callback).toBeCalledTimes(1)
   })
 
+  test('that the updateCollisionMatrixHandler function passes the modified collision matrix to the callbacks registered to it\'s emitted event', () => {
+    const new_matrix = [
+      [ false, false ],
+      [ false, false ],
+    ]
+    const callback = jest.fn()
+    GameStore.on('collision_matrix_updated', callback)
+
+    GameStore.state = {}
+    GameStore.updateCollisionMatrixHandler(new_matrix)
+
+    expect(callback).toBeCalledTimes(1)
+    expect(callback).toBeCalledWith(new_matrix)
+  })
+
   test('that the updatePlayerDeathsHandler function updates the dead property of each of the the GameStore\'s player objects', () => {
     const death_array = [ true, false ]
     const expected_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
@@ -259,6 +274,28 @@ describe('the functionality of the functions called by the action handler', () =
 
     GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
     GameStore.updatePlayerDeathsHandler(death_array)
+
+    expect(callback).toBeCalledTimes(1)
+  })
+
+  test('that the updatePlayerScoresHandler function updates the score property of each of the GameStore\'s player objects', () => {
+    const score_array = [ 0, 0 ]
+    const expected_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.updatePlayerScoresHandler(score_array)
+
+    expect(GameStore.state.player_state[0].score).toBe(0)
+    expect(GameStore.state.player_state[1].score).toBe(0)
+  })
+
+  test('that the updatePlayerScoresHandler function emits a \'player_scores_updated\' event', () => {
+    const score_array = [ 0, 0 ]
+    const callback = jest.fn()
+    GameStore.on('player_scores_updated', callback)
+
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.updatePlayerScoresHandler(score_array)
 
     expect(callback).toBeCalledTimes(1)
   })
