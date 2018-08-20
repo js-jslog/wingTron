@@ -17,7 +17,7 @@ class GameStore extends EventEmitter {
     this.state = JSON.parse(JSON.stringify(state))
   }
 
-  updatePlayerPaths(paths) {
+  updatePlayerPathsHandler(paths) {
     paths.forEach((path, index) => this.state.player_state[index].path = path)
   }
 
@@ -36,7 +36,7 @@ class GameStore extends EventEmitter {
         this.startGameHandler(action.state)
         break
       case 'UPDATE_PLAYER_PATHS':
-        this.updatePlayerPaths(action.paths)
+        this.updatePlayerPathsHandler(action.paths)
         break
       case 'UPDATE_PLAYER_DIRECTIONS':
         this.updatePlayerDirections(action.directions)

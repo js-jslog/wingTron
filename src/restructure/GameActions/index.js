@@ -21,7 +21,7 @@ export function startGameAction() {
   })
 }
 
-export function updatePlayerPaths() {
+export function updatePlayerPathsAction() {
   const paths_obj = {
     paths: reducePlayerStates(GameStore.state.player_state, 'path'),
     directions: reducePlayerStates(GameStore.state.player_state, 'direction'),

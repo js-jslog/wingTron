@@ -1,7 +1,6 @@
 import GameLoop from '../src/restructure/GameLoop.js'
 import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
-import { updatePlayerPaths, updateCollisionMatrix } from '../src/restructure/GameActions'
 import GameStore from '../src/restructure/GameStore.js'
 import CanvasDrawer from '../src/restructure/CanvasDrawer.js'
 

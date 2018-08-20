@@ -1,4 +1,4 @@
-import { startGameAction, updatePlayerPaths, updateCollisionMatrix, updatePlayerDeaths, updateScores, handleKeyEvents } from '../../src/restructure/GameActions'
+import { startGameAction, updatePlayerPathsAction, updateCollisionMatrix, updatePlayerDeaths, updateScores, handleKeyEvents } from '../../src/restructure/GameActions'
 import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
 import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
 import OptionsStore from '../../src/restructure/OptionsStore.js'
@@ -63,7 +63,7 @@ describe('the player position update logic', () => {
     }
     GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
 
-    updatePlayerPaths()
+    updatePlayerPathsAction()
 
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
