@@ -21,7 +21,7 @@ class GameStore extends EventEmitter {
     paths.forEach((path, index) => this.state.player_state[index].path = path)
   }
 
-  updatePlayerDirections(directions) {
+  updatePlayerDirectionsHandler(directions) {
     directions.forEach((direction, index) => this.state.player_state[index].direction = direction)
   }
 
@@ -39,7 +39,7 @@ class GameStore extends EventEmitter {
         this.updatePlayerPathsHandler(action.paths)
         break
       case 'UPDATE_PLAYER_DIRECTIONS':
-        this.updatePlayerDirections(action.directions)
+        this.updatePlayerDirectionsHandler(action.directions)
         break
       case 'UPDATE_COLLISION_MATRIX':
         this.updateCollisionMatrixHandler(action.matrix)

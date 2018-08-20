@@ -41,21 +41,21 @@ describe('the action dispatch handling', () => {
   const handleActionsOrig = GameStore.handleActions
   const startGameHandlerOrig = GameStore.startGameHandler
   const updatePlayerPathsHandlerOrig = GameStore.updatePlayerPathsHandler
-  const updatePlayerDirectionsOrig = GameStore.updatePlayerDirections
+  const updatePlayerDirectionsHandlerOrig = GameStore.updatePlayerDirectionsHandler
   const updateCollisionMatrixHandlerOrig = GameStore.updateCollisionMatrixHandler
 
   beforeEach(() => {
     GameStore.handleActions = jest.fn()
     GameStore.startGameHandler = jest.fn()
     GameStore.updatePlayerPathsHandler = jest.fn()
-    GameStore.updatePlayerDirections = jest.fn()
+    GameStore.updatePlayerDirectionsHandler = jest.fn()
     GameStore.updateCollisionMatrixHandler = jest.fn()
   })
   afterAll(() => {
     GameStore.handleActions = handleActionsOrig
     GameStore.startGameHandler = startGameHandlerOrig
     GameStore.updatePlayerPathsHandler = updatePlayerPathsHandlerOrig
-    GameStore.updatePlayerDirections = updatePlayerDirectionsOrig
+    GameStore.updatePlayerDirectionsHandler = updatePlayerDirectionsHandlerOrig
     GameStore.updateCollisionMatrixHandler = updateCollisionMatrixHandlerOrig
   })
 
@@ -84,7 +84,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.startGameHandler).toBeCalledWith(payload.state)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
-    expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDirectionsHandler).toBeCalledTimes(0)
   })
 
   test('that the GameStore handles the UPDATE_PLAYER_PATHS payload by calling updatePlayerPathsHandler with the appropriate paths array', () => {
@@ -107,18 +107,18 @@ describe('the action dispatch handling', () => {
     expect(GameStore.updatePlayerPathsHandler).toBeCalledWith(payload.paths)
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
-    expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDirectionsHandler).toBeCalledTimes(0)
   })
 
-  test('that the GameStore handles the UPDATE_PLAYER_DIRECTIONS payload by calling updatePlayerDirections with the appropriate directions array', () => {
+  test('that the GameStore handles the UPDATE_PLAYER_DIRECTIONS payload by calling updatePlayerDirectionsHandler with the appropriate directions array', () => {
     const payload = {
       type: 'UPDATE_PLAYER_DIRECTIONS',
       directions: [ 1, 2 ],
     }
     dispatcher.dispatch(payload)
 
-    expect(GameStore.updatePlayerDirections).toBeCalledTimes(1)
-    expect(GameStore.updatePlayerDirections).toBeCalledWith(payload.directions)
+    expect(GameStore.updatePlayerDirectionsHandler).toBeCalledTimes(1)
+    expect(GameStore.updatePlayerDirectionsHandler).toBeCalledWith(payload.directions)
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
@@ -138,7 +138,7 @@ describe('the action dispatch handling', () => {
     expect(GameStore.updateCollisionMatrixHandler).toBeCalledWith(payload.matrix)
     expect(GameStore.startGameHandler).toBeCalledTimes(0)
     expect(GameStore.updatePlayerPathsHandler).toBeCalledTimes(0)
-    expect(GameStore.updatePlayerDirections).toBeCalledTimes(0)
+    expect(GameStore.updatePlayerDirectionsHandler).toBeCalledTimes(0)
   })
 })
 
@@ -207,14 +207,14 @@ describe('the functionality of the functions called by the action handler', () =
     expect(callback).toBeCalledTimes(1)
   })
 
-  test('that the updatePlayerDirections function updates the player directions in the GameStore', () => {
+  test('that the updatePlayerDirectionsHandler function updates the player directions in the GameStore', () => {
     const new_directions = [ 1, 2 ]
     const expected_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
     expected_state.player_state[0].direction = new_directions[0]
     expected_state.player_state[1].direction = new_directions[1]
     GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
 
-    GameStore.updatePlayerDirections(new_directions)
+    GameStore.updatePlayerDirectionsHandler(new_directions)
 
     expect(GameStore.state).toEqual(expected_state)
   })
