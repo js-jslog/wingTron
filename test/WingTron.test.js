@@ -1,5 +1,5 @@
 import WingTron from '../src/restructure/WingTron.jsx'
-import { getOptions, registerOptionsChangeCallback, updateGameOptions, startGame } from '../src/restructure/WingTron.jsx'
+import { getOptions, registerOptionsChangeCallback, registerDeathChangeCallback, updateGameOptions, startGame } from '../src/restructure/WingTron.jsx'
 import GameLoop from '../src/restructure/GameLoop.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
 import GameStore from '../src/restructure/GameStore.js'
@@ -66,6 +66,9 @@ describe('the interface for interacting with the optionsstore', () => {
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
   })
+})
+
+describe('the interface offered for interacting with the GameStore', () => {
 
   test('that a game can be started', () => {
     const expected_game_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
@@ -83,14 +86,20 @@ describe('the interface for interacting with the optionsstore', () => {
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
   })
-})
 
-describe('the interface offered for interacting with the GameStore', () => {
+  test('that a callback can be registered with the WingTron component which is passes a json representation of the death state of the players whenever it is change', () => {
+    const callback = jest.fn()
+    const death_array = [ true, false ]
+    registerDeathChangeCallback(callback)
 
-  test('that a callback can be registered with the WingTron component which is passed a json representation of the gamestore\'s score whenever the score itself is changed', () => {
-    expect(true).toBeTruthy()
+    expect(callback).toBeCalledTimes(0)
+
+    GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.state.player_state[0].dead = false
+    GameStore.state.player_state[1].dead = false
+    GameStore.updatePlayerDeathsHandler(death_array)
+
+    expect(callback).toBeCalledTimes(1)
+    expect(callback).toBeCalledWith(death_array)
   })
 })
-
-
-

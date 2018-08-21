@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import setKeyBindings from './setKeyBindings.js'
 import GameLoop from './GameLoop.js'
 import OptionsStore from './OptionsStore.js'
+import GameStore from './GameStore.js'
 import { updateOptionsAction } from './OptionsActions'
 import { startGameAction } from './GameActions'
 
@@ -40,4 +41,8 @@ export function updateGameOptions(options) {
 
 export function startGame() {
   startGameAction()
+}
+
+export function registerDeathChangeCallback(callback) {
+  GameStore.on('player_deaths_updated', callback) 
 }

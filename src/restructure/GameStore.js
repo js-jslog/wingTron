@@ -35,7 +35,7 @@ class GameStore extends EventEmitter {
     deaths.forEach((dead, index) => {
       this.state.player_state[index].dead = dead
     })
-    this.emit('player_deaths_updated')
+    this.emit('player_deaths_updated', deaths)
   }
 
   updatePlayerScoresHandler(scores) {
