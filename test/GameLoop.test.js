@@ -1,4 +1,5 @@
 import GameLoop from '../src/restructure/GameLoop.js'
+import dispatcher from '../src/lib/dispatcher.js'
 import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
 import GameStore from '../src/restructure/GameStore.js'
@@ -39,6 +40,27 @@ describe('the finite GameLoop', () => {
     expect(CanvasDrawer.drawField.mock.calls.length).toBe(10)
   })
 
+  test('that a running game calls the actions to update the player paths and collision matrix at every loop', () => {
+    const dispatcherOrig = dispatcher.dispatch
+    const payload_map = {}
+    dispatcher.dispatch = jest.fn((payload) => {
+      if (payload_map[payload.type]) {
+        payload_map[payload.type] += 1
+      } else {
+        payload_map[payload.type] = 1
+      }
+    })
+
+    GameStore.state.status = GameStore.RUNNING
+    GameLoop.run(canvas)
+
+    expect(dispatcher.dispatch).toBeCalledTimes(20)
+    expect(payload_map.UPDATE_PLAYER_PATHS).toBe(10)
+    expect(payload_map.UPDATE_COLLISION_MATRIX).toBe(10)
+
+    dispatcher.dispatch = dispatcherOrig
+  })
+
   test('that a running game is rendered', () => {
     GameStore.state.status = GameStore.RUNNING
     GameLoop.run(canvas)
@@ -53,9 +75,9 @@ describe('the finite GameLoop', () => {
     GameStore.state.status = GameStore.RUNNING
     GameLoop.run(canvas)
 
-    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(65)
-    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(66)
-    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(67)
+    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(116)
+    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(117)
+    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(118)
   })
 
   test('that the 2d context object is passed to the canvas drawers render function', () => {
