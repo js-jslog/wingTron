@@ -1,5 +1,5 @@
 import WingTron from '../src/restructure/WingTron.jsx'
-import { getOptions, registerOptionsChangeCallback, registerDeathChangeCallback, updateGameOptions, startGame } from '../src/restructure/WingTron.jsx'
+import { getOptions, addPlayer, registerOptionsChangeCallback, registerDeathChangeCallback, updateGameOptions, startGame } from '../src/restructure/WingTron.jsx'
 import GameLoop from '../src/restructure/GameLoop.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
 import GameStore from '../src/restructure/GameStore.js'
@@ -41,6 +41,34 @@ describe('the interface for interacting with the optionsstore', () => {
 
     const returned_options = getOptions()
     expect(returned_options).toBe(JSON.stringify(OptionsStore.DEFAULT_OPTIONS))
+  })
+
+  // TODO: rather than observing the contents of the options store directly, this test should probably just check the return value of getOptions, update the options and check again
+  test('that if the OptionsStore options are not set at the point that getOptions is called, WingTron will set the OptionsStore to it\'s default options', () => {
+    OptionsStore.options = undefined
+
+    const expected_options = JSON.stringify(OptionsStore.DEFAULT_OPTIONS)
+    const returned_options = getOptions()
+
+    expect(returned_options).toEqual(expected_options)
+  })
+
+  // TODO: perhaps all of the actions should have a callback parameter so that I can use
+  // that instead of leaning on the registerOptionsChangeCallback function
+  test('that a player add dispatch can be generated from the WingTron interface', () => {
+
+    const player_added_options = JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS))
+    player_added_options.player_options.push(JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS.player_options[0])))
+    const expected_payload = {
+      type: 'UPDATE_OPTIONS',
+      options: player_added_options,
+    }
+
+    OptionsStore.options = OptionsStore.DEFAULT_OPTIONS
+    addPlayer()
+    
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
   })
 
   test('that a callback can be registered with the WingTron component which is called each time the OptionsStore it is changed', () => {

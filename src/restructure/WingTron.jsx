@@ -3,7 +3,7 @@ import setKeyBindings from './setKeyBindings.js'
 import GameLoop from './GameLoop.js'
 import OptionsStore from './OptionsStore.js'
 import GameStore from './GameStore.js'
-import { updateOptionsAction } from './OptionsActions'
+import { updateOptionsAction, addPlayerAction } from './OptionsActions'
 import { startGameAction } from './GameActions'
 
 class WingTron extends Component {
@@ -15,7 +15,6 @@ class WingTron extends Component {
     canvas.style.width = '100%'
 
     setKeyBindings(document)
-    GameLoop.addCanvas(canvas)
   }
 
   render() {
@@ -27,8 +26,18 @@ class WingTron extends Component {
 
 export default WingTron
 
+// TODO: this needs to be promisafied so that we can actually return the options current value, rather than just the value we have set it to
 export function getOptions() {
+  if (OptionsStore.options === undefined) {
+    updateOptionsAction(OptionsStore.DEFAULT_OPTIONS)
+    return JSON.stringify(OptionsStore.DEFAULT_OPTIONS)
+  }
+    
   return JSON.stringify(OptionsStore.options)
+}
+
+export function addPlayer() {
+  addPlayerAction()
 }
 
 export function registerOptionsChangeCallback(callback) {

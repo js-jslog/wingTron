@@ -11,3 +11,14 @@ export function updateOptionsAction(options) {
     })
   }
 }
+
+export function addPlayerAction() {
+  const options = JSON.parse(JSON.stringify(OptionsStore.options))
+  const new_player = JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS.player_options[0]))
+  options.player_options.push(new_player)
+
+  dispatcher.dispatch({
+    type: 'UPDATE_OPTIONS',
+    options: options,
+  })
+}
