@@ -15,6 +15,7 @@ class GameStore extends EventEmitter {
 
   startGameHandler(state) {
     this.state = JSON.parse(JSON.stringify(state))
+    this.emit('new_game_started')
   }
 
   updatePlayerPathsHandler(paths) {

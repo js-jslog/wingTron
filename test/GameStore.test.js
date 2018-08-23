@@ -213,6 +213,16 @@ describe('the functionality of the functions called by the action handler', () =
     expect(GameStore.state).toEqual(expected_state)
   })
 
+  test('that the startGameHandler function emits a \'new_game_started\' event', () => {
+    const callback = jest.fn()
+    GameStore.on('new_game_started', callback)
+
+    GameStore.state = {}
+    GameStore.startGameHandler({})
+
+    expect(callback).toBeCalledTimes(1)
+  })
+
   test('that the updateCollisionMatrixHandler function updates the collision_matrix of the GameStore', () => {
     const new_matrix = [
       [ false, false ],

@@ -8,18 +8,40 @@ import { startGameAction } from './GameActions'
 
 class WingTron extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      field_width: undefined,
+      field_height: undefined,
+    }
+  }
+
   componentDidMount() {
-    var canvas = this.refs.canvas
-    canvas.width = OptionsStore.options.fieldWidth
-    canvas.height = OptionsStore.options.fieldHeight
+    const canvas = this.refs.canvas
     canvas.style.width = '100%'
 
     setKeyBindings(document)
+
+    const gameLoop = new GameLoop
+    gameLoop.addCanvas(canvas)
+    // TODO: this is a hacky way of avoiding sending a dispatch during a dispatch
+    // Apparently I can use a flux `waitFor` on the dispatch in order to prevent this
+    GameStore.on('new_game_started', () => setTimeout(() => {
+      this.setState({
+        field_width: GameStore.state.field_width,
+        field_height: GameStore.state.field_height,
+      })
+      gameLoop.run()
+    }, 0))
   }
 
   render() {
+
     return (
-      <canvas ref="canvas" />
+      <canvas 
+        width={ this.state.field_width } 
+        height={ this.state.field_height }
+        ref="canvas" />
     )
   }
 }

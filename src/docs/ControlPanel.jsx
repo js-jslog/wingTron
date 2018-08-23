@@ -50,7 +50,9 @@ class ControlPanel extends Component {
     removePlayer(index)
   }
 
-  startGame() {}
+  startGame() {
+    startGame()
+  }
 
   translateKeyCode(evt)
   {

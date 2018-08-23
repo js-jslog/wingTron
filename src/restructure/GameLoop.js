@@ -6,19 +6,22 @@ class GameLoop {
 
   ctx = undefined
 
-  run(canvas) {
+  addCanvas(canvas) {
     this.ctx = canvas.getContext('2d')
+  }
 
-    while (GameStore.state.status === GameStore.RUNNING) {
+  run() {
+
+    if (GameStore.state.status === GameStore.RUNNING) {
       updatePlayerPathsAction()
       updateCollisionMatrixAction(updatePlayerDeathsAction)
       CanvasDrawer.drawField(this.ctx)
       CanvasDrawer.drawPaths(this.ctx)
       CanvasDrawer.drawPlayers(this.ctx)
+
+      setTimeout(this.run.bind(this), 20)
     }
   }
 }
 
-const GameLoopInstance = new GameLoop
-
-export default GameLoopInstance
+export default GameLoop
