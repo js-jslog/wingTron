@@ -22,3 +22,13 @@ export function addPlayerAction() {
     options: options,
   })
 }
+
+export function removePlayerAction(index) {
+  const options = JSON.parse(JSON.stringify(OptionsStore.options))
+  options.player_options.splice(index, 1)
+
+  dispatcher.dispatch({
+    type: 'UPDATE_OPTIONS',
+    options: options,
+  })
+}

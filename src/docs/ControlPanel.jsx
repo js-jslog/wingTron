@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { getOptions, updateGameOptions, startGame, registerOptionsChangeCallback, addPlayer } from '../../src/restructure/WingTron.jsx'
+import { getOptions, updateGameOptions, startGame, registerOptionsChangeCallback, addPlayer, removePlayer } from '../../src/restructure/WingTron.jsx'
 
 class ControlPanel extends Component {
   constructor(props) {
@@ -18,13 +18,10 @@ class ControlPanel extends Component {
 
   updateOptions() {
     var options = {
-      game_options: {
-        field_width: this.refs.field_width.value,
-        field_height: this.refs.field_height.value,
-        matches: this.refs.matches.value,
-      },
+      field_width: this.refs.field_width.value,
+      field_height: this.refs.field_height.value,
+      matches: this.refs.matches.value,
       player_options: [],
-      environmentOptions: {},
     }
     for (var i=0; i<this.refs.player_sections.children.length; i++) {
       var start_coord_x = this.refs['p' + i + '_start_coord_x'].value;
@@ -34,17 +31,15 @@ class ControlPanel extends Component {
       var turn_right_keycode = this.refs['p' + i + '_turn_right_keycode'].value;
       var colour = this.refs['p' + i + '_colour'].value;
       options.player_options.push({
-        startCoord: [start_coord_x, start_coord_y],
+        start_coord_x: start_coord_x, 
+        start_coord_y: start_coord_y,
         direction: direction,
-        keyCodes: {
-          turn_left_keycode: turn_left_keycode,
-          turn_right_keycode: turn_right_keycode,
-        },
+        turn_left_keycode: turn_left_keycode,
+        turn_right_keycode: turn_right_keycode,
         colour: colour,
       });
     }
     updateGameOptions(JSON.stringify(options));
-    startGame()
   }
 
   addPlayer() {
@@ -52,8 +47,10 @@ class ControlPanel extends Component {
   }
   
   removePlayer(index) {
-    //OptionsActions.removePlayer(index)
+    removePlayer(index)
   }
+
+  startGame() {}
 
   translateKeyCode(evt)
   {
@@ -71,45 +68,48 @@ class ControlPanel extends Component {
         <h3>Player{ index }</h3>
         <div>
           <span>Start coords: (x)</span>
-          <input ref={ 'p' + index + '_start_coord_x' } defaultValue={ option_set.start_coord_x } />
+          <input ref={ 'p' + index + '_start_coord_x' } value={ option_set.start_coord_x } onChange={this.updateOptions.bind(this)} />
           <span> (&amp; y)</span>
-          <input ref={ 'p' + index + '_start_coord_y' } defaultValue={ option_set.start_coord_y } />
+          <input ref={ 'p' + index + '_start_coord_y' } value={ option_set.start_coord_y } onChange={this.updateOptions.bind(this)} />
         </div>
         <div>
           <span>Direction</span>
-          <input ref={ 'p' + index + '_direction' } defaultValue={ option_set.direction } />
+          <input ref={ 'p' + index + '_direction' } value={ option_set.direction } onChange={this.updateOptions.bind(this)} />
         </div>
         <div>
           <span>Left key</span>
-          <input ref={ 'p' + index + '_turn_left_keycode' } defaultValue={ option_set.turn_left_keycode } onKeyDown={ this.translateKeyCode.bind(this) } />
+          <input ref={ 'p' + index + '_turn_left_keycode' } value={ option_set.turn_left_keycode } onChange={this.updateOptions.bind(this)} onKeyDown={ this.translateKeyCode.bind(this) } />
           <span>Right key</span>
-          <input ref={ 'p' + index + '_turn_right_keycode' } defaultValue={ option_set.turn_right_keycode } onKeyDown={ this.translateKeyCode.bind(this) } />
+          <input ref={ 'p' + index + '_turn_right_keycode' } value={ option_set.turn_right_keycode } onChange={this.updateOptions.bind(this)} onKeyDown={ this.translateKeyCode.bind(this) } />
         </div>
         <div>
           <span>Colour</span>
-          <input ref={ 'p' + index + '_colour' } defaultValue={ option_set.colour } />
+          <input ref={ 'p' + index + '_colour' } value={ option_set.colour } onChange={this.updateOptions.bind(this)} />
+        </div>
+        <div>
+          <button onClick={this.removePlayer.bind(this, index)}>Remove this player</button>
         </div>
       </div>
     );
     return (
       <div>
         <div>
-          <input ref='field_width' defaultValue={ options.field_width } />
+          <input ref='field_width' value={ options.field_width } onChange={this.updateOptions.bind(this)} />
           <span>Field width</span>
         </div>
         <div>
-          <input ref='field_height' defaultValue={ options.field_height } />
+          <input ref='field_height' value={ options.field_height } onChange={this.updateOptions.bind(this)} />
           <span>Field height</span>
         </div>
         <div>
-          <input ref='matches' defaultValue={ options.matches } />
+          <input ref='matches' value={ options.matches } onChange={this.updateOptions.bind(this)} />
           <span>Matches</span>
         </div>
         <h2>Players:</h2>
         <div ref='player_sections'>
           { player_sections }
         </div>
-        <button onClick={this.updateOptions.bind(this)}>Start Game!</button>
+        <button onClick={this.startGame.bind(this)}>Start Game!</button>
         <button onClick={this.addPlayer.bind(this)}>Add player</button>
       </div>
     );

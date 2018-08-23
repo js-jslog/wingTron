@@ -1,4 +1,4 @@
-import { updateOptionsAction, addPlayerAction } from '../../src/restructure/OptionsActions'
+import { updateOptionsAction, addPlayerAction, removePlayerAction } from '../../src/restructure/OptionsActions'
 import OptionsStore from '../../src/restructure/OptionsStore.js'
 import dispatcher from '../../src/lib/dispatcher.js'
 
@@ -54,6 +54,25 @@ describe('the updateOptionsAction action', () => {
 
     options.field_width = field_width
     updateOptionsAction(options)
+
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
+  })
+})
+
+describe('the removePlayerAction action', () => {
+
+  test('that a payload is dispatched to update the OptionsStore', () => {
+    const options_with_remove_player = JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS))
+    options_with_remove_player.player_options.splice(1,1)
+
+    OptionsStore.options = OptionsStore.DEFAULT_OPTIONS
+
+    const expected_payload = {
+      type: 'UPDATE_OPTIONS',
+      options: options_with_remove_player,
+    }
+    removePlayerAction(1)
 
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)

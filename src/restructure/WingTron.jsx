@@ -3,7 +3,7 @@ import setKeyBindings from './setKeyBindings.js'
 import GameLoop from './GameLoop.js'
 import OptionsStore from './OptionsStore.js'
 import GameStore from './GameStore.js'
-import { updateOptionsAction, addPlayerAction } from './OptionsActions'
+import { updateOptionsAction, addPlayerAction, removePlayerAction } from './OptionsActions'
 import { startGameAction } from './GameActions'
 
 class WingTron extends Component {
@@ -38,6 +38,10 @@ export function getOptions() {
 
 export function addPlayer() {
   addPlayerAction()
+}
+
+export function removePlayer(index) {
+  removePlayerAction(index)
 }
 
 export function registerOptionsChangeCallback(callback) {

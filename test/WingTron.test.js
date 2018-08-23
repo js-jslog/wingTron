@@ -1,5 +1,5 @@
 import WingTron from '../src/restructure/WingTron.jsx'
-import { getOptions, addPlayer, registerOptionsChangeCallback, registerDeathChangeCallback, updateGameOptions, startGame } from '../src/restructure/WingTron.jsx'
+import { getOptions, addPlayer, removePlayer, registerOptionsChangeCallback, registerDeathChangeCallback, updateGameOptions, startGame } from '../src/restructure/WingTron.jsx'
 import GameLoop from '../src/restructure/GameLoop.js'
 import OptionsStore from '../src/restructure/OptionsStore.js'
 import GameStore from '../src/restructure/GameStore.js'
@@ -66,6 +66,22 @@ describe('the interface for interacting with the optionsstore', () => {
 
     OptionsStore.options = OptionsStore.DEFAULT_OPTIONS
     addPlayer()
+    
+    expect(dispatcher.dispatch).toBeCalledTimes(1)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
+  })
+
+  test('that a player remove dispatch can be generated from the WingTron interface', () => {
+
+    const player_removed_options = JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS))
+    player_removed_options.player_options.splice(0, 1)
+    const expected_payload = {
+      type: 'UPDATE_OPTIONS',
+      options: player_removed_options,
+    }
+
+    OptionsStore.options = OptionsStore.DEFAULT_OPTIONS
+    removePlayer(0)
     
     expect(dispatcher.dispatch).toBeCalledTimes(1)
     expect(dispatcher.dispatch).toBeCalledWith(expected_payload)
