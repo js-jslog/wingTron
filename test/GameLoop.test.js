@@ -43,13 +43,15 @@ describe('the finite GameLoop', () => {
     const gameLoop = new GameLoop
     const dispatcherOrig = dispatcher.dispatch
     const payload_map = {}
+    const iteration_timestamp = new Date().getTime()
+    gameLoop.last_frame_time = iteration_timestamp - gameLoop.update_interval
     dispatcher.dispatch = jest.fn((payload) => {
       payload_map[payload.type] = true
     })
 
     GameStore.state.status = GameStore.RUNNING
     gameLoop.addCanvas(canvas)
-    gameLoop.run()
+    gameLoop.run(iteration_timestamp)
 
     expect(dispatcher.dispatch).toBeCalledTimes(2)
     expect(payload_map.UPDATE_PLAYER_PATHS).toBe(true)
