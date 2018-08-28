@@ -14,12 +14,7 @@ beforeEach(() => {
   loop_index = 0
   GameStore.state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
   GameStore.state.status = GameStore.RUNNING
-  CanvasDrawer.drawField = jest.fn(() => {
-    if (loop_index === 9) {
-      GameStore.state.status = GameStore.ENDED
-    }
-    loop_index +=1
-  })
+  CanvasDrawer.drawField = jest.fn()
   CanvasDrawer.drawPaths = jest.fn()
   CanvasDrawer.drawPlayers = jest.fn()
 })
@@ -41,7 +36,7 @@ describe('the finite GameLoop', () => {
     gameLoop.addCanvas(canvas)
     gameLoop.run()
 
-    expect(CanvasDrawer.drawField.mock.calls.length).toBe(10)
+    expect(CanvasDrawer.drawField).toBeCalledTimes(1)
   })
 
   test('that a running game calls the actions to update the player paths and collision matrix at every loop', () => {
@@ -49,20 +44,16 @@ describe('the finite GameLoop', () => {
     const dispatcherOrig = dispatcher.dispatch
     const payload_map = {}
     dispatcher.dispatch = jest.fn((payload) => {
-      if (payload_map[payload.type]) {
-        payload_map[payload.type] += 1
-      } else {
-        payload_map[payload.type] = 1
-      }
+      payload_map[payload.type] = true
     })
 
     GameStore.state.status = GameStore.RUNNING
     gameLoop.addCanvas(canvas)
     gameLoop.run()
 
-    expect(dispatcher.dispatch).toBeCalledTimes(20)
-    expect(payload_map.UPDATE_PLAYER_PATHS).toBe(10)
-    expect(payload_map.UPDATE_COLLISION_MATRIX).toBe(10)
+    expect(dispatcher.dispatch).toBeCalledTimes(2)
+    expect(payload_map.UPDATE_PLAYER_PATHS).toBe(true)
+    expect(payload_map.UPDATE_COLLISION_MATRIX).toBe(true)
 
     dispatcher.dispatch = dispatcherOrig
   })
@@ -73,9 +64,9 @@ describe('the finite GameLoop', () => {
     gameLoop.addCanvas(canvas)
     gameLoop.run()
 
-    expect(CanvasDrawer.drawField.mock.calls.length).toBe(10)
-    expect(CanvasDrawer.drawPaths.mock.calls.length).toBe(10)
-    expect(CanvasDrawer.drawPlayers.mock.calls.length).toBe(10)
+    expect(CanvasDrawer.drawField.mock.calls.length).toBe(1)
+    expect(CanvasDrawer.drawPaths.mock.calls.length).toBe(1)
+    expect(CanvasDrawer.drawPlayers.mock.calls.length).toBe(1)
   })
 
   // TODO: figure out how to reset the invocationCallOrder before this test
@@ -85,9 +76,9 @@ describe('the finite GameLoop', () => {
     gameLoop.addCanvas(canvas)
     gameLoop.run()
 
-    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(116)
-    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(117)
-    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(118)
+    expect(CanvasDrawer.drawField.mock.invocationCallOrder[0]).toBe(17)
+    expect(CanvasDrawer.drawPaths.mock.invocationCallOrder[0]).toBe(18)
+    expect(CanvasDrawer.drawPlayers.mock.invocationCallOrder[0]).toBe(19)
   })
 
   test('that the 2d context object is passed to the canvas drawers render function', () => {
