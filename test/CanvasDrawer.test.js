@@ -65,8 +65,8 @@ describe('the field drawing logic', () => {
     expect(ctx_mock.fillRect.mock.calls[0][2]).toBe(200)
     expect(ctx_mock.fillRect.mock.calls[0][3]).toBe(100)
 
-    expect(colour_record.fillStyle[0]).toBe("#444")
-    expect(colour_record.strokeStyle[0]).toBe("#444")
+    expect(colour_record.fillStyle[0]).toBe("#000")
+    expect(colour_record.strokeStyle[0]).toBe("#000")
   })
 })
 
