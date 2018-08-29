@@ -1,6 +1,6 @@
 import { updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction } from './GameActions'
 import GameStore from './GameStore.js'
-import CanvasDrawer from './CanvasDrawer.js'
+import { drawField, drawPaths, drawPlayers } from './CanvasDrawer.js'
 
 class GameLoop {
 
@@ -61,9 +61,9 @@ class GameLoop {
 
   draw() {
 
-    CanvasDrawer.drawField(this.ctx)
-    CanvasDrawer.drawPaths(this.ctx)
-    CanvasDrawer.drawPlayers(this.ctx)
+    drawField(this.ctx)
+    drawPaths(this.ctx)
+    drawPlayers(this.ctx)
   }
 
   panic() {

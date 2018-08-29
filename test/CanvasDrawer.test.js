@@ -1,4 +1,4 @@
-import CanvasDrawer from '../src/restructure/CanvasDrawer.js'
+import { drawField, drawPaths, drawPlayers } from '../src/restructure/CanvasDrawer.js'
 import GameStore from '../src/restructure/GameStore.js'
 
 const ctx_mock = {}
@@ -52,13 +52,13 @@ describe('the field drawing logic', () => {
 
   test('a call on the 2d context was made', () => {
 
-    CanvasDrawer.drawField(ctx_mock)
+    drawField(ctx_mock)
 
     expect(ctx_mock.fillRect.mock.calls.length).toBe(1)
   })
 
   test('a field of the correct size is drawn on a 2d context', () => {
-    CanvasDrawer.drawField(ctx_mock)
+    drawField(ctx_mock)
 
     expect(ctx_mock.fillRect.mock.calls[0][0]).toBe(0)
     expect(ctx_mock.fillRect.mock.calls[0][1]).toBe(0)
@@ -73,7 +73,7 @@ describe('the field drawing logic', () => {
 describe('the player drawing logic', () => {
 
   test('that a square is rendered once per player', () => {
-    CanvasDrawer.drawPlayers(ctx_mock)
+    drawPlayers(ctx_mock)
 
     expect(ctx_mock.fillRect.mock.calls.length).toBe(2)
   })
@@ -82,7 +82,7 @@ describe('the player drawing logic', () => {
     const presumed_size = 3
     const offset = (presumed_size -1) /2
 
-    CanvasDrawer.drawPlayers(ctx_mock)
+    drawPlayers(ctx_mock)
 
     expect(ctx_mock.fillRect.mock.calls[0][0]).toBe(100 - offset)
     expect(ctx_mock.fillRect.mock.calls[0][1]).toBe(150 - offset)
@@ -105,7 +105,7 @@ describe('the path drawing logic', () => {
 
   test('that a polygon is rendered once per player', () => {
 
-    CanvasDrawer.drawPaths(ctx_mock)
+    drawPaths(ctx_mock)
 
     expect(ctx_mock.fill.mock.calls.length).toBe(2)
 
