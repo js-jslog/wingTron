@@ -1,7 +1,7 @@
-import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
-import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
-import GameStore from '../../src/restructure/GameStore.js'
-import OptionsStore from '../../src/restructure/OptionsStore.js'
+import { reducePlayerStates } from '../../src/lib/GameActions/reduceGameStoreState.js'
+import optionsToGameState from '../../src/lib/GameActions/optionsToGameState.js'
+import GameStore from '../../src/lib/GameStore.js'
+import OptionsStore from '../../src/lib/OptionsStore.js'
 
 describe('the player state reducer', () => {
 

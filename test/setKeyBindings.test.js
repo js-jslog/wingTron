@@ -1,5 +1,5 @@
-import setKeyBindings from '../src/restructure/setKeyBindings.js'
-import { handleKeyEventsAction } from '../src/restructure/GameActions'
+import setKeyBindings from '../src/lib/setKeyBindings.js'
+import { handleKeyEventsAction } from '../src/lib/GameActions'
 
 describe('the behaviour relating to binding key presses to game manipulation', () => {
 

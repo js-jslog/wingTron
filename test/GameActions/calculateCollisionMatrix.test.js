@@ -1,7 +1,7 @@
-import OptionsStore from '../../src/restructure/OptionsStore.js'
-import calculateCollisionMatrix from '../../src/restructure/GameActions/calculateCollisionMatrix.js'
-import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
-import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
+import OptionsStore from '../../src/lib/OptionsStore.js'
+import calculateCollisionMatrix from '../../src/lib/GameActions/calculateCollisionMatrix.js'
+import optionsToGameState from '../../src/lib/GameActions/optionsToGameState.js'
+import { reducePlayerStates } from '../../src/lib/GameActions/reduceGameStoreState.js'
 
 describe('the collision detection positive results', () => {
 

@@ -1,5 +1,5 @@
-import { drawField, drawPaths, drawPlayers } from '../src/restructure/CanvasDrawer.js'
-import GameStore from '../src/restructure/GameStore.js'
+import { drawField, drawPaths, drawPlayers } from '../src/lib/CanvasDrawer.js'
+import GameStore from '../src/lib/GameStore.js'
 
 const ctx_mock = {}
 const colour_record = {

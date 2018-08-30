@@ -1,5 +1,5 @@
-import { updateOptionsAction, addPlayerAction, removePlayerAction } from '../../src/restructure/OptionsActions'
-import OptionsStore from '../../src/restructure/OptionsStore.js'
+import { updateOptionsAction, addPlayerAction, removePlayerAction } from '../../src/lib/OptionsActions'
+import OptionsStore from '../../src/lib/OptionsStore.js'
 import dispatcher from '../../src/lib/dispatcher.js'
 
 beforeEach(() => {

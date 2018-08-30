@@ -1,6 +1,6 @@
 // the DEATH function will determine from the collision matrix, who is now dead
 // it will also determine who should die if the situation does not change soon. this will be more advanced functionality, and could work through promises back to the caller, or by putting a death timestamp on the players state..
-import DEATH from '../../src/restructure/GameActions/DEATH.js'
+import DEATH from '../../src/lib/GameActions/DEATH.js'
 
 describe('the simple judgements', () => {
 

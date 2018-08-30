@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { getOptions, updateGameOptions, startGame, registerOptionsChangeCallback, addPlayer, removePlayer } from '../../src/restructure/WingTron.jsx'
+import { getOptions, updateGameOptions, startGame, registerOptionsChangeCallback, addPlayer, removePlayer } from '../../src/lib/WingTron.jsx'
 
 class ControlPanel extends Component {
   constructor(props) {

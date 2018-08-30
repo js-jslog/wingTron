@@ -1,7 +1,7 @@
-import GameStore from '../src/restructure/GameStore.js'
-import OptionsStore from '../src/restructure/OptionsStore.js'
-import optionsToGameState from '../src/restructure/GameActions/optionsToGameState.js'
-import { updatePlayerPathsAction, updatePlayerDeathsAction, handleKeyEventsAction } from '../src/restructure/GameActions'
+import GameStore from '../src/lib/GameStore.js'
+import OptionsStore from '../src/lib/OptionsStore.js'
+import optionsToGameState from '../src/lib/GameActions/optionsToGameState.js'
+import { updatePlayerPathsAction, updatePlayerDeathsAction, handleKeyEventsAction } from '../src/lib/GameActions'
 import dispatcher from '../src/lib/dispatcher.js'
 
 const valid_state_template = {

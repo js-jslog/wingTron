@@ -1,5 +1,5 @@
-import { validateOptions, validatePlayerOptions } from '../../src/restructure/GameActions/validateOptions.js'
-import OptionsStore from '../../src/restructure/OptionsStore.js'
+import { validateOptions, validatePlayerOptions } from '../../src/lib/GameActions/validateOptions.js'
+import OptionsStore from '../../src/lib/OptionsStore.js'
 
 const template_valid_options = JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS))
 const template_valid_player_options = JSON.parse(JSON.stringify(OptionsStore.DEFAULT_OPTIONS.player_options[0]))

@@ -1,6 +1,6 @@
-import dispatcher from '../../lib/dispatcher'
-import OptionsStore from '../../restructure/OptionsStore.js'
-import { validateOptions } from '../../restructure/GameActions/validateOptions.js'
+import dispatcher from '../dispatcher'
+import OptionsStore from '../OptionsStore.js'
+import { validateOptions } from '../GameActions/validateOptions.js'
 
 export function updateOptionsAction(options) {
 

@@ -1,8 +1,8 @@
-import { startGameAction, updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction, updateScores, handleKeyEventsAction } from '../../src/restructure/GameActions'
-import optionsToGameState from '../../src/restructure/GameActions/optionsToGameState.js'
-import { reducePlayerStates } from '../../src/restructure/GameActions/reduceGameStoreState.js'
-import OptionsStore from '../../src/restructure/OptionsStore.js'
-import GameStore from '../../src/restructure/GameStore.js'
+import { startGameAction, updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction, updateScores, handleKeyEventsAction } from '../../src/lib/GameActions'
+import optionsToGameState from '../../src/lib/GameActions/optionsToGameState.js'
+import { reducePlayerStates } from '../../src/lib/GameActions/reduceGameStoreState.js'
+import OptionsStore from '../../src/lib/OptionsStore.js'
+import GameStore from '../../src/lib/GameStore.js'
 import dispatcher from '../../src/lib/dispatcher.js'
 
 beforeEach(() => {

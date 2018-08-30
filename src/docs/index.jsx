@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import WingTron from "../../src/restructure/WingTron.jsx";
+import WingTron from "../../src/lib/WingTron.jsx";
 import ControlPanel from "./ControlPanel.jsx";
 import "./styles.css";
 
