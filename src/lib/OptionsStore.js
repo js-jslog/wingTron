@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import dispatcher from '../lib/dispatcher.js'
+import dispatcher from '~/dispatcher.js'
 
 class OptionsStore extends EventEmitter {
   DEFAULT_OPTIONS = {

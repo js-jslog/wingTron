@@ -1,6 +1,7 @@
-import dispatcher from '../dispatcher'
-import OptionsStore from '../OptionsStore.js'
-import { validateOptions } from '../GameActions/validateOptions.js'
+import dispatcher from '~/dispatcher'
+import OptionsStore from '~/OptionsStore.js'
+import { validateOptions } from '~/GameActions/validateOptions.js'
+// TODO: should validateOptions exist in a generic helper folder rather than in GameActions if it is used elsewhere
 
 export function updateOptionsAction(options) {
 

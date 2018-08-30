@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import setKeyBindings from './setKeyBindings.js'
-import GameLoop from './GameLoop.js'
-import OptionsStore from './OptionsStore.js'
-import GameStore from './GameStore.js'
-import { updateOptionsAction, addPlayerAction, removePlayerAction } from './OptionsActions'
-import { startGameAction } from './GameActions'
+import setKeyBindings from '~/setKeyBindings.js'
+import GameLoop from '~/GameLoop.js'
+import OptionsStore from '~/OptionsStore.js'
+import GameStore from '~/GameStore.js'
+import { updateOptionsAction, addPlayerAction, removePlayerAction } from '~/OptionsActions'
+import { startGameAction } from '~/GameActions'
 
 class WingTron extends Component {
 

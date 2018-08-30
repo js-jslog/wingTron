@@ -1,9 +1,9 @@
-import GameLoop from '../src/lib/GameLoop.js'
-import dispatcher from '../src/lib/dispatcher.js'
-import optionsToGameState from '../src/lib/GameActions/optionsToGameState.js'
-import OptionsStore from '../src/lib/OptionsStore.js'
-import GameStore from '../src/lib/GameStore.js'
-import * as CanvasDrawer from '../src/lib/CanvasDrawer.js'
+import GameLoop from '~/GameLoop.js'
+import dispatcher from '~/dispatcher.js'
+import optionsToGameState from '~/GameActions/optionsToGameState.js'
+import OptionsStore from '~/OptionsStore.js'
+import GameStore from '~/GameStore.js'
+import * as CanvasDrawer from '~/CanvasDrawer.js'
 
 const ctx = {}
 const canvas = { getContext: jest.fn(params => ctx) }

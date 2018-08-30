@@ -1,5 +1,5 @@
-import dispatcher from '../src/lib/dispatcher.js'
-import OptionsStore from '../src/lib/OptionsStore.js'
+import dispatcher from '~/dispatcher.js'
+import OptionsStore from '~/OptionsStore.js'
 
 beforeEach(() => {
   OptionsStore.options = undefined

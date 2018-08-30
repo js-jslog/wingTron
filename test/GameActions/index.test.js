@@ -1,9 +1,9 @@
-import { startGameAction, updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction, updateScores, handleKeyEventsAction } from '../../src/lib/GameActions'
-import optionsToGameState from '../../src/lib/GameActions/optionsToGameState.js'
-import { reducePlayerStates } from '../../src/lib/GameActions/reduceGameStoreState.js'
-import OptionsStore from '../../src/lib/OptionsStore.js'
-import GameStore from '../../src/lib/GameStore.js'
-import dispatcher from '../../src/lib/dispatcher.js'
+import { startGameAction, updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction, updateScores, handleKeyEventsAction } from '~/GameActions'
+import optionsToGameState from '~/GameActions/optionsToGameState.js'
+import { reducePlayerStates } from '~/GameActions/reduceGameStoreState.js'
+import OptionsStore from '~/OptionsStore.js'
+import GameStore from '~/GameStore.js'
+import dispatcher from '~/dispatcher.js'
 
 beforeEach(() => {
   dispatcher.dispatch = jest.fn()

@@ -1,4 +1,5 @@
-import CollisionDetection from '../collisionDetection.js'
+import CollisionDetection from '~/collisionDetection.js'
+// TODO: should collision detection be a dependency inside this folder
 
 export default function calculateCollisionMatrix(paths_obj_in) {
 

@@ -1,4 +1,4 @@
-import GameStore from './GameStore.js'
+import GameStore from '~/GameStore.js'
 
 export function drawField(ctx) {
   ctx.fillStyle = "#000";

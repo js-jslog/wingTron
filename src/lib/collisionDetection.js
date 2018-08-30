@@ -1,4 +1,4 @@
-import PolygonIntersect from './polygonIntersect.js';
+import PolygonIntersect from '~/polygonIntersect.js';
 
 var boundaryHit = function boundaryHit (playerCoords, fieldBounds) {
   var px = playerCoords[0];

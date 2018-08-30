@@ -1,10 +1,10 @@
-import WingTron from '../src/lib/WingTron.jsx'
-import { getOptions, addPlayer, removePlayer, registerOptionsChangeCallback, registerDeathChangeCallback, updateGameOptions, startGame } from '../src/lib/WingTron.jsx'
-import GameLoop from '../src/lib/GameLoop.js'
-import OptionsStore from '../src/lib/OptionsStore.js'
-import GameStore from '../src/lib/GameStore.js'
-import optionsToGameState from '../src/lib/GameActions/optionsToGameState.js'
-import dispatcher from '../src/lib/dispatcher.js'
+import WingTron from '~/WingTron.jsx'
+import { getOptions, addPlayer, removePlayer, registerOptionsChangeCallback, registerDeathChangeCallback, updateGameOptions, startGame } from '~/WingTron.jsx'
+import GameLoop from '~/GameLoop.js'
+import OptionsStore from '~/OptionsStore.js'
+import GameStore from '~/GameStore.js'
+import optionsToGameState from '~/GameActions/optionsToGameState.js'
+import dispatcher from '~/dispatcher.js'
 
 beforeEach(() => {
   OptionsStore.options = undefined

@@ -1,6 +1,6 @@
-import { updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction } from './GameActions'
-import GameStore from './GameStore.js'
-import { drawField, drawPaths, drawPlayers } from './CanvasDrawer.js'
+import { updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction } from '~/GameActions'
+import GameStore from '~/GameStore.js'
+import { drawField, drawPaths, drawPlayers } from '~/CanvasDrawer.js'
 
 class GameLoop {
 

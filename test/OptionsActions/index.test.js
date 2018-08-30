@@ -1,6 +1,6 @@
-import { updateOptionsAction, addPlayerAction, removePlayerAction } from '../../src/lib/OptionsActions'
-import OptionsStore from '../../src/lib/OptionsStore.js'
-import dispatcher from '../../src/lib/dispatcher.js'
+import { updateOptionsAction, addPlayerAction, removePlayerAction } from '~/OptionsActions'
+import OptionsStore from '~/OptionsStore.js'
+import dispatcher from '~/dispatcher.js'
 
 beforeEach(() => {
   dispatcher.dispatch = jest.fn()
