@@ -1,9 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
-import WingTron from "../../src/lib/WingTron.jsx";
+import WingTron from "~/WingTron.jsx";
 import ControlPanel from "./ControlPanel.jsx";
 import "./styles.css";
-// TODO: why is wingtron imported from src rather than the built lib
 
 function Demo() {
   return (

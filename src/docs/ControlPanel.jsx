@@ -1,6 +1,5 @@
 import React, { Component } from "react"
-import { getOptions, updateGameOptions, startGame, registerOptionsChangeCallback, addPlayer, removePlayer } from '../../src/lib/WingTron.jsx'
-// TODO: why is this imported from the src folder rather than the built lib
+import { getOptions, updateGameOptions, startGame, registerOptionsChangeCallback, addPlayer, removePlayer } from '~/WingTron.jsx'
 
 class ControlPanel extends Component {
   constructor(props) {

@@ -34,7 +34,7 @@ export function updatePlayerPathsAction() {
   })
 }
 
-export function updateCollisionMatrixAction() {
+export function updateCollisionMatrixAction(callback) {
   const player_paths = reducePlayerStates(GameStore.state.player_state, 'path')
   const collision_matrix = calculateCollisionMatrix(player_paths)
 
@@ -45,6 +45,8 @@ export function updateCollisionMatrixAction() {
     type: 'UPDATE_COLLISION_MATRIX',
     matrix: collision_matrix,
   })
+
+  callback(collision_matrix)
 }
 
 const matricesMatch = (matrix1, matrix2) => (
