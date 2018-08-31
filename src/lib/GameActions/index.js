@@ -46,7 +46,7 @@ export function updateCollisionMatrixAction(callback) {
     matrix: collision_matrix,
   })
 
-  callback(collision_matrix)
+  //callback(collision_matrix)
 }
 
 const matricesMatch = (matrix1, matrix2) => (
