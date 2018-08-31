@@ -320,15 +320,19 @@ describe('the player position update logic, controlled from the GameAction and m
 
     const player0_right_turn_key_event = {
       keyCode: GameStore.state.player_state[0].turn_right_keycode,
+      type: 'keydown',
     }
     const player0_left_turn_key_event = {
       keyCode: GameStore.state.player_state[0].turn_left_keycode,
+      type: 'keydown',
     }
     const player1_right_turn_key_event = {
       keyCode: GameStore.state.player_state[1].turn_right_keycode,
+      type: 'keydown',
     }
     const player1_left_turn_key_event = {
       keyCode: GameStore.state.player_state[1].turn_left_keycode,
+      type: 'keydown',
     }
 
     updatePlayerPathsAction()

@@ -180,6 +180,7 @@ describe('the handleKeyEventsAction action', () => {
 
     const key_event = {
       keyCode: GameStore.state.player_state[0].turn_left_keycode,
+      type: 'keydown',
     }
 
     handleKeyEventsAction(key_event)
@@ -211,6 +212,7 @@ describe('the handleKeyEventsAction action', () => {
 
     const key_event = {
       keyCode: GameStore.state.player_state[1].turn_right_keycode,
+      type: 'keydown',
     }
 
     handleKeyEventsAction(key_event)
@@ -218,5 +220,43 @@ describe('the handleKeyEventsAction action', () => {
     expect(dispatcher.dispatch).toBeCalledTimes(2)
     expect(dispatcher.dispatch).toBeCalledWith(expected_paths_payload)
     expect(dispatcher.dispatch).toBeCalledWith(expected_directions_payload)
+  })
+
+  test('an event with a keycode which relates to a players right turn produces a dispatch to update the players paths on keydown but not key up', () => {
+
+    const valid_state = optionsToGameState(OptionsStore.DEFAULT_OPTIONS)
+    GameStore.state = valid_state
+
+    const paths = reducePlayerStates(valid_state.player_state, 'path')
+    paths[1].push(JSON.parse(JSON.stringify(paths[1][0])))
+
+    const directions = reducePlayerStates(valid_state.player_state, 'direction')
+    directions[1] = (Math.PI * 1.5)
+
+    const expected_paths_payload = {
+      type: 'UPDATE_PLAYER_PATHS',
+      paths: paths,
+    }
+    const expected_directions_payload = {
+      type: 'UPDATE_PLAYER_DIRECTIONS',
+      directions: directions,
+    }
+
+    const key_event = {
+      keyCode: GameStore.state.player_state[1].turn_right_keycode,
+      type: 'keydown'
+    }
+
+    handleKeyEventsAction(key_event)
+
+    expect(dispatcher.dispatch).toBeCalledTimes(2)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_paths_payload)
+    expect(dispatcher.dispatch).toBeCalledWith(expected_directions_payload)
+
+    key_event.type = 'keyup'
+
+    handleKeyEventsAction(key_event)
+
+    expect(dispatcher.dispatch).toBeCalledTimes(2)
   })
 })

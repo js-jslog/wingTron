@@ -73,6 +73,9 @@ export function handleKeyEventsAction(evt) {
     turn_right_keycode: reducePlayerStates(GameStore.state.player_state, 'turn_right_keycode'),
     directions: reducePlayerStates(GameStore.state.player_state, 'direction'),
   }
+  if (evt.type !== 'keydown') {
+    return
+  }
   paths_obj.turn_left_keycode.forEach((val, index) => {
     if (evt.keyCode === val) {
       paths_obj.paths[index].unshift([].slice.call(paths_obj.paths[index][0], 0))
