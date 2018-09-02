@@ -24,7 +24,7 @@ const INITIAL_STATE = {
   ]
 }
 
-export const reducer = (state_in=INITIAL_STATE, action) => {
+export const optionsReducer = (state_in=INITIAL_STATE, action) => {
   switch(action.type) {
 
     case ActionTypes.UPDATE_OPTIONS: {

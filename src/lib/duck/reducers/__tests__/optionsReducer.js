@@ -1,13 +1,13 @@
 import * as ActionTypes from '~/duck/types/'
-import { reducer } from '../'
+import { optionsReducer } from '../optionsReducer.js'
 
-describe('the reducer', () => {
+describe('the optionsReducer', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
     const input_state = { existing: 'state' }
     const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
-    const state_out = reducer(input_state, unknown_action)
+    const state_out = optionsReducer(input_state, unknown_action)
 
     expect(state_out).toBe(input_state)
   })
@@ -15,15 +15,7 @@ describe('the reducer', () => {
   test('that the reducer defines an initial state', () => {
 
     const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
-    const state_out = reducer(undefined, unknown_action)
-
-    expect(state_out).toBeTruthy()
-  })
-
-  test('that the reducer defines an initial state with 2 players', () => {
-
-    const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
-    const state_out = reducer(undefined, unknown_action)
+    const state_out = optionsReducer(undefined, unknown_action)
     const expected_state_out = {
       field_width: '200',
       field_height: '200',
@@ -61,7 +53,7 @@ describe('the reducer', () => {
       type: ActionTypes.UPDATE_OPTIONS,
       options: input_options,
     }
-    const state_out = reducer(undefined, action)
+    const state_out = optionsReducer(undefined, action)
 
     expect(state_out).toEqual(input_options)
   })
@@ -76,7 +68,7 @@ describe('the reducer', () => {
       type: ActionTypes.UPDATE_OPTIONS,
       options: input_options,
     }
-    const state_out = reducer(undefined, action)
+    const state_out = optionsReducer(undefined, action)
 
     expect(state_out).not.toBe(input_options)
   })
@@ -88,7 +80,7 @@ describe('the reducer', () => {
       type: ActionTypes.UPDATE_OPTIONS,
       options: {}
     }
-    const state_out = reducer(state_in, action)
+    const state_out = optionsReducer(state_in, action)
 
     expect(state_out).not.toBe(state_in)
   })
@@ -101,7 +93,7 @@ describe('the reducer', () => {
     const action = {
       type: ActionTypes.ADD_PLAYER_TO_OPTIONS,
     }
-    const state_out = reducer(state_in, action)
+    const state_out = optionsReducer(state_in, action)
 
     expect(state_out.players.length).toBe(1)
   })
@@ -114,7 +106,7 @@ describe('the reducer', () => {
     const action = {
       type: ActionTypes.ADD_PLAYER_TO_OPTIONS
     }
-    reducer(state_in, action)
+    optionsReducer(state_in, action)
 
     expect(state_in.players.length).toBe(0)
   })
@@ -127,7 +119,7 @@ describe('the reducer', () => {
     const action = {
       type: ActionTypes.ADD_PLAYER_TO_OPTIONS
     }
-    const state_out = reducer(state_in, action)
+    const state_out = optionsReducer(state_in, action)
 
     expect(state_in).not.toBe(state_out)
   })
@@ -145,7 +137,7 @@ describe('the reducer', () => {
       type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
       index: removal_index
     }
-    const state_out = reducer(state_in, action)
+    const state_out = optionsReducer(state_in, action)
 
     expect(state_out).toEqual(expected_state)
   })
@@ -160,7 +152,7 @@ describe('the reducer', () => {
       type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
       index: removal_index
     }
-    const state_out = reducer(state_in, action)
+    const state_out = optionsReducer(state_in, action)
 
     expect(state_in.players).toEqual([ 0, 1, 2, 3, 4 ])
     expect(state_out.players).toEqual([ 0, 1, 2, 4 ])
@@ -176,7 +168,7 @@ describe('the reducer', () => {
       type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
       index: removal_index
     }
-    const state_out = reducer(state_in, action)
+    const state_out = optionsReducer(state_in, action)
 
     expect(state_out).not.toBe(state_in)
   })
