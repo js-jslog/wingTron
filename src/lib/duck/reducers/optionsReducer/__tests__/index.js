@@ -1,7 +1,7 @@
 import * as ActionTypes from '~/duck/types/'
 import { optionsReducer } from '../index.js'
 
-describe('the optionsReducer', () => {
+describe('the exceptional cases', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
@@ -42,7 +42,9 @@ describe('the optionsReducer', () => {
 
     expect(state_out).toEqual(expected_state_out)
   })
+})
 
+describe('the handling of the update options action', () => {
   test('that the update options reducer returns the input options', () => {
 
     const input_options = {
