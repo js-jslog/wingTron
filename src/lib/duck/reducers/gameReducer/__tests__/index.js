@@ -1,4 +1,4 @@
-import { gameReducer } from '../gameReducer.js'
+import { gameReducer } from '../index.js'
 
 describe('the gameReducer', () => {
 

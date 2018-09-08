@@ -1,5 +1,5 @@
 import * as ActionTypes from '~/duck/types/'
-import { optionsReducer } from '../optionsReducer.js'
+import { optionsReducer } from '../index.js'
 
 describe('the optionsReducer', () => {
 
