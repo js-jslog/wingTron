@@ -5,11 +5,11 @@ describe('the optionsReducer', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
-    const input_state = { existing: 'state' }
+    const state_in = { existing: 'state' }
     const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
-    const state_out = optionsReducer(input_state, unknown_action)
+    const state_out = optionsReducer(state_in, unknown_action)
 
-    expect(state_out).toBe(input_state)
+    expect(state_out).toBe(state_in)
   })
 
   test('that the reducer defines an initial state', () => {
@@ -79,94 +79,6 @@ describe('the optionsReducer', () => {
     const action = {
       type: ActionTypes.UPDATE_OPTIONS,
       options: {}
-    }
-    const state_out = optionsReducer(state_in, action)
-
-    expect(state_out).not.toBe(state_in)
-  })
-
-  test('that the add player reducer returns the existing state with an additional player', () => {
-
-    const state_in = {
-      players: []
-    }
-    const action = {
-      type: ActionTypes.ADD_PLAYER_TO_OPTIONS,
-    }
-    const state_out = optionsReducer(state_in, action)
-
-    expect(state_out.players.length).toBe(1)
-  })
-
-  test('that the add player reducer operates without modifying the players array in the original state tree', () => {
-
-    const state_in = {
-      players: []
-    }
-    const action = {
-      type: ActionTypes.ADD_PLAYER_TO_OPTIONS
-    }
-    optionsReducer(state_in, action)
-
-    expect(state_in.players.length).toBe(0)
-  })
-
-  test('that the add player reducer returns a new root object', () => {
-
-    const state_in = {
-      players: []
-    }
-    const action = {
-      type: ActionTypes.ADD_PLAYER_TO_OPTIONS
-    }
-    const state_out = optionsReducer(state_in, action)
-
-    expect(state_in).not.toBe(state_out)
-  })
-
-  test('that the remove player reducer returns the existing state minus the player at the appropriate index', () => {
-
-    const state_in = {
-      players: [ 0, 1, 2, 3, 4 ]
-    }
-    const expected_state = {
-      players: [ 0, 1, 3, 4 ]
-    }
-    const removal_index = 2
-    const action = {
-      type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
-      index: removal_index
-    }
-    const state_out = optionsReducer(state_in, action)
-
-    expect(state_out).toEqual(expected_state)
-  })
-
-  test('that the remove player reducer does not modify the input state object\'s players property', () => {
-
-    const state_in = {
-      players: [ 0, 1, 2, 3, 4 ]
-    }
-    const removal_index = 3
-    const action = {
-      type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
-      index: removal_index
-    }
-    const state_out = optionsReducer(state_in, action)
-
-    expect(state_in.players).toEqual([ 0, 1, 2, 3, 4 ])
-    expect(state_out.players).toEqual([ 0, 1, 2, 4 ])
-  })
-
-  test('that the remove player reducer returns a new root object', () => {
-
-    const state_in = {
-      players: [ 0, 1, 2, 3, 4 ]
-    }
-    const removal_index = 2
-    const action = {
-      type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
-      index: removal_index
     }
     const state_out = optionsReducer(state_in, action)
 
