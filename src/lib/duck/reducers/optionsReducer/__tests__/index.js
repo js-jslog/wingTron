@@ -3,23 +3,26 @@ import { optionsReducer } from '../index.js'
 
 describe('the exceptional cases', () => {
 
-  test('that the reducer returns the input state if no matching action types are found', () => {
+  test('that the reducer returns a similar state object to it\'s parameter when no matching action type is found', () => {
 
-    const state_in = { existing: 'state' }
+    const state_in = {
+      match: 'something',
+      players: 'something else'
+    }
     const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
     const state_out = optionsReducer(state_in, unknown_action)
 
-    expect(state_out).toBe(state_in)
+    expect(state_out).toEqual(state_in)
   })
 
-  test('that the reducer defines an initial state', () => {
+  test('that the reducer returns an initial state when no input state is provided', () => {
 
-    const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
-    const state_out = optionsReducer(undefined, unknown_action)
-    const expected_state_out = {
-      field_width: '200',
-      field_height: '200',
-      matches: '10',
+    const expected_state = {
+      match: {
+        field_width: '200',
+        field_height: '200',
+        matches: '10'
+      },
       players: [
         {
           start_coord_x: '150',
@@ -36,54 +39,12 @@ describe('the exceptional cases', () => {
           turn_left_keycode: '65',
           turn_right_keycode: '68',
           colour: 'rgba(0,0,255, 0.5)',
-        },
+        }
       ]
     }
+    const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
+    const state_out = optionsReducer(undefined, unknown_action)
 
-    expect(state_out).toEqual(expected_state_out)
-  })
-})
-
-describe('the handling of the update options action', () => {
-  test('that the update options reducer returns the input options', () => {
-
-    const input_options = {
-      some: 'options',
-      somemore: 'options',
-    }
-    const action = {
-      type: ActionTypes.UPDATE_OPTIONS,
-      options: input_options,
-    }
-    const state_out = optionsReducer(undefined, action)
-
-    expect(state_out).toEqual(input_options)
-  })
-
-  test('that the update options reducer returns a non associative copy of the input options', () => {
-
-    const input_options = {
-      some: 'options',
-      somemore: 'options',
-    }
-    const action = {
-      type: ActionTypes.UPDATE_OPTIONS,
-      options: input_options,
-    }
-    const state_out = optionsReducer(undefined, action)
-
-    expect(state_out).not.toBe(input_options)
-  })
-
-  test('that the update options reducer returns a new root state object', () => {
-
-    const state_in = {}
-    const action = {
-      type: ActionTypes.UPDATE_OPTIONS,
-      options: {}
-    }
-    const state_out = optionsReducer(state_in, action)
-
-    expect(state_out).not.toBe(state_in)
+    expect(state_out).toEqual(expected_state)
   })
 })
