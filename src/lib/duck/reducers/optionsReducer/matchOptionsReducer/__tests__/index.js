@@ -1,4 +1,5 @@
 import * as ActionTypes from '~/duck/types/'
+import { INITIAL_STATE } from '../constants'
 import { matchOptionsReducer } from '../'
 
 describe('the exceptional cases', () => {
@@ -16,13 +17,8 @@ describe('the exceptional cases', () => {
 
     const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
     const state_out = matchOptionsReducer(undefined, unknown_action)
-    const expected_state_out = {
-      field_width: '200',
-      field_height: '200',
-      matches: '10'
-    }
 
-    expect(state_out).toEqual(expected_state_out)
+    expect(state_out).toEqual(INITIAL_STATE)
   })
 })
 
