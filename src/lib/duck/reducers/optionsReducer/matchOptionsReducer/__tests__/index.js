@@ -1,5 +1,5 @@
 import * as ActionTypes from '~/duck/types/'
-import { matchOptionsReducer } from '../index.js'
+import { matchOptionsReducer } from '../'
 
 describe('the exceptional cases', () => {
 

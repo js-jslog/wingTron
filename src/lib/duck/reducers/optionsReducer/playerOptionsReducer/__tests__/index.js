@@ -1,5 +1,5 @@
 import * as ActionTypes from '~/duck/types/'
-import { playerOptionsReducer } from '../index.js'
+import { playerOptionsReducer } from '../'
 
 describe('the exceptional cases', () => {
   test('that the reducer returns the input state if no matching action types are found', () => {
