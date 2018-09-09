@@ -5,5 +5,13 @@ const INITIAL_STATE = {
 }
 
 export const gameReducer = (state_in=INITIAL_STATE, action) => {
-  return state_in
+  switch(action.type) {
+
+    case ActionTypes.START_GAME_FROM_OPTIONS: {
+
+      return { ...action.options }
+    }
+
+    default: return state_in
+  }
 }

@@ -13,4 +13,8 @@ describe('the available action types', () => {
   it('contains a remove player type', () => {
     expect(ActionTypes.REMOVE_PLAYER_FROM_OPTIONS).toBe('REMOVE_PLAYER_FROM_OPTIONS')
   })
+
+  it('contains a start game type', () => {
+    expect(ActionTypes.START_GAME_FROM_OPTIONS).toBe('START_GAME_FROM_OPTIONS')
+  })
 })

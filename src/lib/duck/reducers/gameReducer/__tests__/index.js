@@ -1,3 +1,4 @@
+import * as ActionTypes from '~/duck/types/'
 import { gameReducer } from '../index.js'
 
 describe('the gameReducer', () => {
@@ -25,5 +26,22 @@ describe('the gameReducer', () => {
     }
 
     expect(state_out).toEqual(expected_state_out)
+  })
+})
+
+describe('the reducers response to the start game action', () => {
+
+  it('should produce a state which is a copy of the options attached to the action', () => {
+
+    const options = {
+      new: 'options'
+    }
+    const action = {
+      type: ActionTypes.START_GAME_FROM_OPTIONS,
+      options: options
+    }
+    const state_out = gameReducer(undefined, action)
+
+    expect(state_out).toEqual(options)
   })
 })
