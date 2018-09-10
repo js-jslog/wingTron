@@ -1,13 +1,5 @@
 // @flow
-
-type PlayerOptions = {
-  start_coord_x: string,
-  start_coord_y: string,
-  direction: string,
-  turn_left_keycode: string,
-  turn_right_keycode: string,
-  colour: string
-}
+import { PlayerOptions } from '~/common/flow-types/'
 
 export const optionsConverter = (options: PlayerOptions) => {
   const state = { ...options }
