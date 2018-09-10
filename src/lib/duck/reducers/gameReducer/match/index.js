@@ -1,7 +1,10 @@
+// @flow
+
+import type { GameMatch } from '~/common/flow-types'
 import * as ActionTypes from '~/duck/types/'
 import { matchOptionsToState } from './matchOptionsToState'
 
-export const match = (state_in, action) => {
+export const match = (state_in: ?GameMatch, action: any): ?GameMatch => {
 
   switch(action.type) {
 

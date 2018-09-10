@@ -1,7 +1,11 @@
-// TODO: this should be making use of the optionsConverter module one folder down from here
-export const playerOptionsToState = (player_options) => {
+// @flow
 
-  const state = player_options.map(player => ({ ...player }))
+import type { GamePlayer, PlayerOptions } from '~/common/flow-types'
+import { optionsConverter } from './optionsConverter'
+
+export const playerOptionsToState = (player_options: Array<PlayerOptions>): Array<GamePlayer> => {
+
+  const state = player_options.map(optionsConverter)
 
   return state
 }
