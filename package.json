@@ -11,7 +11,8 @@
     "docs:prod": "webpack --mode production",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "flow": "flow"
+    "flow": "flow",
+    "flow-typed": "flow-typed"
   },
   "keywords": [],
   "license": "MIT",
