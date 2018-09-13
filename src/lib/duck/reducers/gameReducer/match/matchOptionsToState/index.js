@@ -1,12 +1,13 @@
-export const matchOptionsToState = (options) => {
-  const state = { ...options }
-  Object.keys(state).forEach(key => {
-    state[key] = transformOption(key, state[key])
-  })
+// @flow
 
-  return state
-}
+import type { MatchOptions, GameMatch } from '~/common/flow-types'
 
-const transformOption = (key, option) => {
-  return parseInt(option)
+export const matchOptionsToState = (options: MatchOptions): GameMatch => {
+  const gameMatch = {
+    field_width: parseInt(options.field_width),
+    field_height: parseInt(options.field_height),
+    matches: parseInt(options.matches)
+  }
+
+  return gameMatch
 }

@@ -1,3 +1,7 @@
+// @flow
+
+import type { MatchOptions } from '~/common/flow-types'
+import { EXAMPLE_MATCH_OPTIONS } from '~/common/constants'
 import * as ActionTypes from '~/duck/types/'
 import { INITIAL_STATE } from '../constants'
 import { matchOptionsReducer } from '../'
@@ -6,7 +10,7 @@ describe('the exceptional cases', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
-    const state_in = { existing: 'state' }
+    const state_in = { ...EXAMPLE_MATCH_OPTIONS }
     const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
     const state_out = matchOptionsReducer(state_in, unknown_action)
 
@@ -25,10 +29,7 @@ describe('the exceptional cases', () => {
 describe('the handling of the update options action', () => {
   test('that the update options reducer returns the input options', () => {
 
-    const input_options = {
-      some: 'options',
-      somemore: 'options',
-    }
+    const input_options = { ...EXAMPLE_MATCH_OPTIONS }
     const action = {
       type: ActionTypes.UPDATE_OPTIONS,
       options: input_options,
@@ -40,10 +41,7 @@ describe('the handling of the update options action', () => {
 
   test('that the update options reducer returns a non associative copy of the input options', () => {
 
-    const input_options = {
-      some: 'options',
-      somemore: 'options',
-    }
+    const input_options = { ...EXAMPLE_MATCH_OPTIONS }
     const action = {
       type: ActionTypes.UPDATE_OPTIONS,
       options: input_options,
@@ -52,17 +50,4 @@ describe('the handling of the update options action', () => {
 
     expect(state_out).not.toBe(input_options)
   })
-
-  test('that the update options reducer returns a new root state object', () => {
-
-    const state_in = {}
-    const action = {
-      type: ActionTypes.UPDATE_OPTIONS,
-      options: {}
-    }
-    const state_out = matchOptionsReducer(state_in, action)
-
-    expect(state_out).not.toBe(state_in)
-  })
 })
-
