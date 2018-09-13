@@ -4,11 +4,11 @@ import { combineReducers } from 'redux'
 import { matchOptionsReducer } from './matchOptionsReducer'
 import { playerOptionsReducer } from './playerOptionsReducer'
 
-const reducersDef = {
+const reducerDefinition = {
   match: matchOptionsReducer,
   players: playerOptionsReducer
 }
 
-export type OptionsReducer = typeof reducersDef
+export type OptionsReducer = typeof reducerDefinition
 
-export const optionsReducer = combineReducers(reducersDef)
+export const optionsReducer = combineReducers(reducerDefinition)

@@ -5,6 +5,8 @@ describe('the action creators', () => {
 
   test('the updateOptions action creator', () => {
 
+    // ADDING AN 'OPTIONS' FLOW TYPE TO THIS WILL RESULT IN AN ERROR
+    // PROVING THAT THE METHOD OF DERIVING THE OPTIONS TYPE WORKS
     const options = {
       some: 'options',
       somemore: 'options',
