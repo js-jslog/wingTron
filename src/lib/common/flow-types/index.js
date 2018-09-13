@@ -1,5 +1,19 @@
 // @flow
 
+import type { OptionsReducer } from '~/duck/reducers/optionsReducer'
+import type { GameMatch as GameMatchImport } from '~/duck/reducers/gameReducer/match/types'
+import type { GamePlayer as GamePlayerImport } from '~/duck/reducers/gameReducer/players/types'
+import type { GamePlayerSet as GamePlayerSetImport } from '~/duck/reducers/gameReducer/players/types'
+
+export type { PlayerOptions } from '~/duck/reducers/optionsReducer/playerOptionsReducer/types'
+export type { MatchOptions } from '~/duck/reducers/optionsReducer/matchOptionsReducer/types'
+export type GameMatch = GameMatchImport
+export type GamePlayer = GamePlayerImport
+export type GamePlayerSet = GamePlayerSetImport
+
+type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V
+export type Options = $ObjMap<OptionsReducer, $ExtractFunctionReturn>
+
 export type State = {|
   game: ?Game,
   options: Options
@@ -7,40 +21,5 @@ export type State = {|
 
 export type Game = {|
   match: ?GameMatch,
-  players: ?Array<GamePlayer>
-|}
-
-export type Options = {|
-  match: MatchOptions,
-  players: Array<PlayerOptions>
-|}
-
-export type GameMatch = {|
-  field_width: number,
-  field_height: number,
-  matches: number
-|}
-
-export type GamePlayer = {|
-  start_coord_x: number,
-  start_coord_y: number,
-  direction: number,
-  turn_left_keycode: number,
-  turn_right_keycode: number,
-  colour: string
-|}
-
-export type MatchOptions = {|
-  field_width: string,
-  field_height: string,
-  matches: string
-|}
-
-export type PlayerOptions = {|
-  start_coord_x: string,
-  start_coord_y: string,
-  direction: string,
-  turn_left_keycode: string,
-  turn_right_keycode: string,
-  colour: string
+  players: ?GamePlayerSet
 |}

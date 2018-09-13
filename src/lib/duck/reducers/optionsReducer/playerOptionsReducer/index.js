@@ -1,10 +1,10 @@
 // @flow
 
-import type { PlayerOptions } from '~/common/flow-types/'
-import * as ActionTypes from '~/duck/types/'
+import * as ActionTypes from '~/duck/types'
 import { INITIAL_STATE } from './constants'
+import type { PlayerOptionsSet } from './types'
 
-export const playerOptionsReducer = (state_in: ?Array<PlayerOptions>=INITIAL_STATE, action: any): Array<PlayerOptions> => {
+export const playerOptionsReducer = (state_in: ?PlayerOptionsSet=INITIAL_STATE, action: any): PlayerOptionsSet => {
 
   // this will never actually modify state_in and is only here
   // because flow can't see the defaulting assignment above

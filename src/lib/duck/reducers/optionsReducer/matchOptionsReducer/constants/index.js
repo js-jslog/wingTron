@@ -1,6 +1,9 @@
 // @flow
 
-import type { MatchOptions } from '~/common/flow-types'
-import { EXAMPLE_MATCH_OPTIONS } from '~/common/constants'
+import type { MatchOptions } from '../types'
 
-export const INITIAL_STATE: MatchOptions = { ...EXAMPLE_MATCH_OPTIONS }
+export const INITIAL_STATE: MatchOptions = {
+  field_width: '200',
+  field_height: '200',
+  matches: '10'
+}

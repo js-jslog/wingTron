@@ -1,8 +1,8 @@
 // @flow
 
-import * as ActionTypes from '~/duck/types/'
-import type { MatchOptions } from '~/common/flow-types/'
+import type { MatchOptions } from './types'
 import { INITIAL_STATE } from './constants'
+import * as ActionTypes from '~/duck/types'
 
 export const matchOptionsReducer = (state_in: ?MatchOptions=INITIAL_STATE, action: any): MatchOptions => {
 

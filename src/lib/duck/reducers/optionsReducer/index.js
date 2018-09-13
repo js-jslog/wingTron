@@ -1,10 +1,14 @@
 // @flow
 
-import type { Options, MatchOptions, PlayerOptions } from '~/common/flow-types/'
+import { combineReducers } from 'redux'
 import { matchOptionsReducer } from './matchOptionsReducer'
 import { playerOptionsReducer } from './playerOptionsReducer'
 
-export const optionsReducer = (state_in: ?Options, action: any) => ({
-  match: matchOptionsReducer(state_in && state_in.match, action),
-  players: playerOptionsReducer(state_in && state_in.players, action)
-})
+const reducersDef = {
+  match: matchOptionsReducer,
+  players: playerOptionsReducer
+}
+
+export type OptionsReducer = typeof reducersDef
+
+export const optionsReducer = combineReducers(reducersDef)
