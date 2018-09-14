@@ -1,5 +1,4 @@
 import { players } from '../'
-import * as ActionTypes from '~/duck/types/'
 
 describe('the exceptional usage', () => {
 
@@ -41,7 +40,7 @@ describe('the reducers response to the start game action', () => {
     }
 
     const action = {
-      type: ActionTypes.START_GAME_FROM_OPTIONS,
+      type: 'START_GAME_FROM_OPTIONS',
       options: options
     }
     const state_out = players(state_in, action)

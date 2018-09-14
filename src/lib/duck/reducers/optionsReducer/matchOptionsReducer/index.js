@@ -2,7 +2,6 @@
 
 import type { MatchOptions } from './types'
 import { INITIAL_STATE } from './constants'
-import * as ActionTypes from '~/duck/types'
 
 export const matchOptionsReducer = (state_in: ?MatchOptions=INITIAL_STATE, action: any): MatchOptions => {
 
@@ -12,7 +11,7 @@ export const matchOptionsReducer = (state_in: ?MatchOptions=INITIAL_STATE, actio
 
   switch(action.type) {
 
-    case ActionTypes.UPDATE_OPTIONS: {
+    case 'UPDATE_OPTIONS': {
 
       const { options } = action
       const state_out = {

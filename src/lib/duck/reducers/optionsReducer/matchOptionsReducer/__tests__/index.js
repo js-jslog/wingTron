@@ -2,7 +2,6 @@
 
 import type { MatchOptions } from '~/common/flow-types'
 import { EXAMPLE_MATCH_OPTIONS } from '~/common/constants'
-import * as ActionTypes from '~/duck/types/'
 import { INITIAL_STATE } from '../constants'
 import { matchOptionsReducer } from '../'
 
@@ -31,7 +30,7 @@ describe('the handling of the update options action', () => {
 
     const input_options = { ...EXAMPLE_MATCH_OPTIONS }
     const action = {
-      type: ActionTypes.UPDATE_OPTIONS,
+      type: 'UPDATE_OPTIONS',
       options: input_options,
     }
     const state_out = matchOptionsReducer(undefined, action)
@@ -43,7 +42,7 @@ describe('the handling of the update options action', () => {
 
     const input_options = { ...EXAMPLE_MATCH_OPTIONS }
     const action = {
-      type: ActionTypes.UPDATE_OPTIONS,
+      type: 'UPDATE_OPTIONS',
       options: input_options,
     }
     const state_out = matchOptionsReducer(undefined, action)

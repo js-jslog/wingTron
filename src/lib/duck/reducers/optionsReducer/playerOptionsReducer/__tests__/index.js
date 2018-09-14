@@ -1,4 +1,3 @@
-import * as ActionTypes from '~/duck/types/'
 import { playerOptionsReducer } from '../'
 
 describe('the exceptional cases', () => {
@@ -43,7 +42,7 @@ describe('the add player logic', () => {
 
     const state_in = []
     const action = {
-      type: ActionTypes.ADD_PLAYER_TO_OPTIONS,
+      type: 'ADD_PLAYER_TO_OPTIONS',
     }
     const state_out = playerOptionsReducer(state_in, action)
 
@@ -54,7 +53,7 @@ describe('the add player logic', () => {
 
     const state_in = []
     const action = {
-      type: ActionTypes.ADD_PLAYER_TO_OPTIONS
+      type: 'ADD_PLAYER_TO_OPTIONS'
     }
     playerOptionsReducer(state_in, action)
 
@@ -65,7 +64,7 @@ describe('the add player logic', () => {
 
     const state_in = []
     const action = {
-      type: ActionTypes.ADD_PLAYER_TO_OPTIONS
+      type: 'ADD_PLAYER_TO_OPTIONS'
     }
     const state_out = playerOptionsReducer(state_in, action)
 
@@ -80,7 +79,7 @@ describe('the remove player logic', () => {
     const expected_state = [ 0, 1, 3, 4 ]
     const removal_index = 2
     const action = {
-      type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
+      type: 'REMOVE_PLAYER_FROM_OPTIONS',
       index: removal_index
     }
     const state_out = playerOptionsReducer(state_in, action)
@@ -93,7 +92,7 @@ describe('the remove player logic', () => {
     const state_in = [ 0, 1, 2, 3, 4 ]
     const removal_index = 3
     const action = {
-      type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
+      type: 'REMOVE_PLAYER_FROM_OPTIONS',
       index: removal_index
     }
     const state_out = playerOptionsReducer(state_in, action)
@@ -107,7 +106,7 @@ describe('the remove player logic', () => {
     const state_in = [ 0, 1, 2, 3, 4 ]
     const removal_index = 2
     const action = {
-      type: ActionTypes.REMOVE_PLAYER_FROM_OPTIONS,
+      type: 'REMOVE_PLAYER_FROM_OPTIONS',
       index: removal_index
     }
     const state_out = playerOptionsReducer(state_in, action)

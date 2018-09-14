@@ -1,7 +1,6 @@
 // @flow
 
 import type { PlayerOptions } from '~/common/flow-types'
-import * as ActionTypes from '~/duck/types/'
 import { optionsReducer } from '../'
 
 describe('the exceptional cases', () => {

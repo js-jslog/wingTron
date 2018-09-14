@@ -9,6 +9,9 @@ const reducerDefinition = {
   players: playerOptionsReducer
 }
 
+type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V
+
+export type Options = $ObjMap<OptionsReducer, $ExtractFunctionReturn>
 export type OptionsReducer = typeof reducerDefinition
 
 export const optionsReducer = combineReducers(reducerDefinition)

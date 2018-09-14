@@ -1,6 +1,5 @@
 // @flow
 
-import * as ActionTypes from '~/duck/types'
 import { INITIAL_STATE } from './constants'
 import type { PlayerOptionsSet } from './types'
 
@@ -12,18 +11,18 @@ export const playerOptionsReducer = (state_in: ?PlayerOptionsSet=INITIAL_STATE, 
 
   switch(action.type) {
 
-    case ActionTypes.UPDATE_OPTIONS: {
+    case 'UPDATE_OPTIONS': {
 
       return [ ...action.options ]
     }
 
-    case ActionTypes.ADD_PLAYER_TO_OPTIONS: {
+    case 'ADD_PLAYER_TO_OPTIONS': {
 
       const additional_player_options = INITIAL_STATE[1]
       return [ ...state_in, additional_player_options ]
     }
 
-    case ActionTypes.REMOVE_PLAYER_FROM_OPTIONS: {
+    case 'REMOVE_PLAYER_FROM_OPTIONS': {
       const { index } = action
       const players = [ ...state_in ]
 

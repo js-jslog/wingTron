@@ -2,7 +2,6 @@
 
 import { match } from '../'
 import { EXAMPLE_GAME_MATCH, EXAMPLE_MATCH_OPTIONS } from '~/common/constants'
-import * as ActionTypes from '~/duck/types/'
 
 describe('the exceptional usage', () => {
 
@@ -35,7 +34,7 @@ describe('the reducers response to the start game action', () => {
     const options = { ...EXAMPLE_MATCH_OPTIONS }
     const expected_state = { ...EXAMPLE_GAME_MATCH }
     const action = {
-      type: ActionTypes.START_GAME_FROM_OPTIONS,
+      type: 'START_GAME_FROM_OPTIONS',
       options: options
     }
     const state_out = match(state_in, action)
