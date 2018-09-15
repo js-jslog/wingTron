@@ -19,3 +19,8 @@ export const removePlayerFromOptions = (index: number): RemovePlayerFromOptionsA
   type: 'REMOVE_PLAYER_FROM_OPTIONS',
   index
 })
+
+export const startGameFromOptions = (options: Options): StartGameFromOptionsAction => ({
+  type: 'START_GAME_FROM_OPTIONS',
+  options
+})

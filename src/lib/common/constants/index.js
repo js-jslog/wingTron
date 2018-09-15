@@ -2,9 +2,21 @@
 
 import type { GameMatch, GamePlayer } from '~/common/flow-types'
 
-export { INITIAL_PLAYER1_OPTIONS as EXAMPLE_PLAYER1_OPTIONS } from '~/duck/reducers/optionsReducer/playerOptionsReducer/constants'
-export { INITIAL_PLAYER2_OPTIONS as EXAMPLE_PLAYER2_OPTIONS } from '~/duck/reducers/optionsReducer/playerOptionsReducer/constants'
-export { INITIAL_STATE as EXAMPLE_MATCH_OPTIONS } from '~/duck/reducers/optionsReducer/matchOptionsReducer/constants'
+import { INITIAL_STATE as EXAMPLE_MATCH_OPTIONS_IMPORT } from '~/duck/reducers/optionsReducer/matchOptionsReducer/constants'
+import { INITIAL_PLAYER1_OPTIONS as EXAMPLE_PLAYER1_OPTIONS_IMPORT } from '~/duck/reducers/optionsReducer/playerOptionsReducer/constants'
+import { INITIAL_PLAYER2_OPTIONS as EXAMPLE_PLAYER2_OPTIONS_IMPORT } from '~/duck/reducers/optionsReducer/playerOptionsReducer/constants'
+
+export const EXAMPLE_MATCH_OPTIONS = EXAMPLE_MATCH_OPTIONS_IMPORT
+export const EXAMPLE_PLAYER1_OPTIONS = EXAMPLE_PLAYER1_OPTIONS_IMPORT
+export const EXAMPLE_PLAYER2_OPTIONS = EXAMPLE_PLAYER2_OPTIONS_IMPORT
+
+export const EXAMPLE_OPTIONS = {
+  match: { ...EXAMPLE_MATCH_OPTIONS },
+  players: [
+    { ...EXAMPLE_PLAYER1_OPTIONS },
+    { ...EXAMPLE_PLAYER2_OPTIONS }
+  ]
+}
 
 export const EXAMPLE_GAME_MATCH: GameMatch = {
   field_width: 200,
@@ -28,5 +40,13 @@ export const EXAMPLE_GAME_PLAYER2: GamePlayer = {
   turn_left_keycode: 65,
   turn_right_keycode: 68,
   colour: 'rgba(0,0,255, 0.5)',
+}
+
+export const EXAMPLE_GAME = {
+  match: { ...EXAMPLE_GAME_MATCH },
+  players: [
+    { ...EXAMPLE_GAME_PLAYER1 },
+    { ...EXAMPLE_GAME_PLAYER2 }
+  ]
 }
 

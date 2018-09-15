@@ -18,6 +18,7 @@ export type RemovePlayerFromOptionsAction = {|
 
 export type StartGameFromOptionsAction = {|
   +type: 'START_GAME_FROM_OPTIONS',
+  +options: Options
 |}
 
 export type Action =

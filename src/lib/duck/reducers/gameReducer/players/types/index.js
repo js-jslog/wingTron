@@ -1,5 +1,6 @@
 // @flow
 
+// TODO: replace the coord properties with path properties
 export type GamePlayer = {|
   start_coord_x: number,
   start_coord_y: number,

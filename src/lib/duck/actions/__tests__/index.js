@@ -4,6 +4,7 @@ import * as ActionCreators from '../'
 import type { UpdateOptionsAction } from '../types'
 import type { AddPlayerToOptionsAction } from '../types'
 import type { RemovePlayerFromOptionsAction } from '../types'
+import type { StartGameFromOptionsAction } from '../types'
 import { EXAMPLE_MATCH_OPTIONS } from '~/common/constants'
 import { EXAMPLE_PLAYER1_OPTIONS } from '~/common/constants'
 import { EXAMPLE_PLAYER2_OPTIONS } from '~/common/constants'
@@ -39,5 +40,18 @@ describe('the action creators', () => {
     expect(actual.index).toEqual(removal_index)
   })
 
+  test('that start game action contains the parameterised options', () => {
+
+    const options = {
+      match: EXAMPLE_MATCH_OPTIONS,
+      players: [
+        EXAMPLE_PLAYER1_OPTIONS,
+        EXAMPLE_PLAYER2_OPTIONS
+      ]
+    }
+    const actual: StartGameFromOptionsAction = ActionCreators.startGameFromOptions(options)
+
+    expect(actual.options).toEqual(options)
+  })
 })
 
