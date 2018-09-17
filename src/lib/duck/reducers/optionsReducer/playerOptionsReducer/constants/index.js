@@ -1,6 +1,6 @@
 // @flow
 
-import type { PlayerOptions, PlayerOptionsSet} from '../types'
+import type { PlayerOptions, PlayerOptionsSet } from '../types'
 
 export const INITIAL_PLAYER1_OPTIONS: PlayerOptions = {
   start_coord_x: '150',
