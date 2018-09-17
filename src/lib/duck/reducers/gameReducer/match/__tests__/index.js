@@ -1,23 +1,24 @@
 // @flow
 
 import { match } from '../'
-import { EXAMPLE_GAME_MATCH, EXAMPLE_MATCH_OPTIONS } from '~/common/constants'
+import { EXAMPLE_GAME_MATCH, EXAMPLE_OPTIONS } from '~/common/constants'
+import * as MatchOptionsToState from '../matchOptionsToState'
 
 describe('the exceptional usage', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
     const state_in = { ...EXAMPLE_GAME_MATCH }
-    const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
-    const state_out = match(state_in, unknown_action)
+    const unused_action = { type: 'ADD_PLAYER_TO_OPTIONS' }
+    const state_out = match(state_in, unused_action)
 
     expect(state_out).toBe(state_in)
   })
 
   test('that the reducer defines no initial state', () => {
 
-    const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
-    const state_out = match(undefined, unknown_action)
+    const unused_action = { type: 'ADD_PLAYER_TO_OPTIONS' }
+    const state_out = match(undefined, unused_action)
 
     expect(state_out).toBeFalsy()
   })
@@ -25,21 +26,17 @@ describe('the exceptional usage', () => {
 
 describe('the reducers response to the start game action', () => {
 
-  test('that the output state is a non-associative copy of the input options with the values parsed to integers', () => {
+  test('that the reducer passes the matches property to the matchOptionsToState function and uses it\'s response as the new state', () => {
 
-    const state_in = { ...EXAMPLE_GAME_MATCH }
-    state_in.field_width = 0
-    state_in.field_height = 0
-    state_in.matches = 0
-    const options = { ...EXAMPLE_MATCH_OPTIONS }
-    const expected_state = { ...EXAMPLE_GAME_MATCH }
     const action = {
       type: 'START_GAME_FROM_OPTIONS',
-      options: options
+      options: EXAMPLE_OPTIONS
     }
-    const state_out = match(state_in, action)
+    const spy = jest.spyOn(MatchOptionsToState, 'matchOptionsToState')
+    const state_out = match(undefined, action)
 
-    expect(state_out).toEqual(expected_state)
-    expect(state_out).not.toBe(options)
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(action.options.match)
+    expect(spy).toHaveReturnedWith(state_out)
   })
 })

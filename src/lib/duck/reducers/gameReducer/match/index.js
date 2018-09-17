@@ -1,15 +1,16 @@
 // @flow
 
 import type { GameMatch } from '~/common/flow-types'
+import type { Action } from '~/common/flow-types'
 import { matchOptionsToState } from './matchOptionsToState'
 
-export const match = (state_in: ?GameMatch, action: any): ?GameMatch => {
+export const match = (state_in: ?GameMatch, action: Action): ?GameMatch => {
 
   switch(action.type) {
 
     case 'START_GAME_FROM_OPTIONS': {
 
-      return matchOptionsToState(action.options)
+      return matchOptionsToState(action.options.match)
     }
 
     default: return state_in

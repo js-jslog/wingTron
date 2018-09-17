@@ -3,6 +3,7 @@
 import type { PlayerOptions } from '~/common/flow-types'
 import { optionsReducer } from '../'
 
+// TODO: review how to make the typing work with the combineReducer function
 describe('the exceptional cases', () => {
 
   test('that the reducer returns a similar state object to it\'s parameter when no matching action type is found', () => {
