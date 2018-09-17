@@ -1,24 +1,22 @@
 // @flow
 
-import { EXAMPLE_PLAYER1_OPTIONS, EXAMPLE_PLAYER2_OPTIONS, EXAMPLE_GAME_PLAYER1, EXAMPLE_GAME_PLAYER2 } from '~/common/constants'
+import { EXAMPLE_PLAYER1_OPTIONS } from '~/common/constants'
+import { EXAMPLE_PLAYER2_OPTIONS } from '~/common/constants'
 import { playerOptionsToState } from '../'
+import * as OptionsConverter from '../optionsConverter'
 
-// TODO: this test shouldn't really get specific about the values coming back
-// That test is already covered by the function this itself calls
-// We really only need to test that the utility function is called
+// TODO: add more tests
 describe('the player options to game state transformation', () => {
 
-  it('should return a non-associative array with non-associative contents', () => {
+  it('should call the optionsConverter once for each player', () => {
 
-    const player1 = { ...EXAMPLE_PLAYER1_OPTIONS }
-    const player2 = { ...EXAMPLE_PLAYER2_OPTIONS }
-    const options_in = [ player1, player2 ]
-    const expected_state = [ { ...EXAMPLE_GAME_PLAYER1 }, { ...EXAMPLE_GAME_PLAYER2 } ]
+    const options_in = [
+      EXAMPLE_PLAYER1_OPTIONS,
+      EXAMPLE_PLAYER2_OPTIONS
+    ]
+    const spy = jest.spyOn(OptionsConverter, 'optionsConverter')
     const state_out = playerOptionsToState(options_in)
 
-    expect(state_out).toEqual(expected_state)
-    expect(state_out).not.toBe(expected_state)
-    expect(state_out[0]).not.toBe(player1)
-    expect(state_out[1]).not.toBe(player2)
+    expect(spy).toHaveBeenCalledTimes(2)
   })
 })

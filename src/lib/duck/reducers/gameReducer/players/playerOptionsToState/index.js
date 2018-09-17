@@ -1,11 +1,21 @@
 // @flow
 
-import type { GamePlayer, PlayerOptions } from '~/common/flow-types'
+import type { Players, PlayerOptions } from '~/common/flow-types'
 import { optionsConverter } from './optionsConverter'
 
-export const playerOptionsToState = (player_options: Array<PlayerOptions>): Array<GamePlayer> => {
+export const playerOptionsToState = (player_options: Array<PlayerOptions>): Players => {
 
-  const state = player_options.map(optionsConverter)
+  const playersById = {}
+  const playerList = []
+  player_options.forEach((player_option, index) => {
+    playerList.push('' + index)
+    playersById[index] = optionsConverter(player_option, index)
+  })
 
-  return state
+  const players = {
+    byId: playersById,
+    allIds: playerList
+  }
+
+  return players
 }

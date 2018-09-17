@@ -2,18 +2,14 @@
 
 import { players } from '../'
 import { EXAMPLE_OPTIONS } from '~/common/constants'
-import { EXAMPLE_GAME_PLAYER1 } from '~/common/constants'
-import { EXAMPLE_GAME_PLAYER2 } from '~/common/constants'
+import { EXAMPLE_PLAYERS } from '../constants'
 import * as PlayerOptionsToState from '../playerOptionsToState'
 
 describe('the exceptional usage', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
-    const state_in = [
-      { ...EXAMPLE_GAME_PLAYER1 },
-      { ...EXAMPLE_GAME_PLAYER2 }
-    ]
+    const state_in = EXAMPLE_PLAYERS
     const unrelated_action = {
       type: 'UPDATE_OPTIONS',
       options: { ...EXAMPLE_OPTIONS }
@@ -41,7 +37,7 @@ describe('the reducers response to the start game action', () => {
 
     const spy = jest.spyOn(PlayerOptionsToState, 'playerOptionsToState')
 
-    const state_in = [{ ...EXAMPLE_GAME_PLAYER1 }]
+    const state_in = EXAMPLE_PLAYERS
  
     const options =  { ...EXAMPLE_OPTIONS }
 
