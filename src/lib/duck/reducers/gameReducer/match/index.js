@@ -4,7 +4,7 @@ import type { Match } from '~/common/flow-types'
 import type { Action } from '~/common/flow-types'
 import { matchOptionsToState } from './matchOptionsToState'
 
-export const match = (state_in: ?Match, action: Action): ?Match => {
+export const match = (state_in: ?Match=null, action: Action): ?Match => {
 
   switch(action.type) {
 

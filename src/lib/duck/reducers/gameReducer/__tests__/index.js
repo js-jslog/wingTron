@@ -1,12 +1,15 @@
+// @flow
+
 import { gameReducer } from '../'
 
-// TODO: are these the tests that we need here? Do we also want integration tests
+// TODO: are these the tests that we need here? Do we also want tests that the appropriate functions are called
 describe('the gameReducer', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
     const state_in = {
       match: {},
+      paths: {},
       players: [ 1, 2, 3, 4 ]
     }
     const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
@@ -21,8 +24,9 @@ describe('the gameReducer', () => {
 
     const unknown_action = { type: 'UNDEFINED_ACTION_TYPE' }
     const expected_state = {
-      match: undefined,
-      players: undefined
+      match: null,
+      paths: null,
+      players: null
     }
     const state_out = gameReducer(undefined, unknown_action)
 

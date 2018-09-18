@@ -1,13 +1,19 @@
 // @flow
 
-import type { Game } from '~/common/flow-types'
-import type { Action } from '~/common/flow-types'
+import { combineReducers } from 'redux'
 import { match } from './match'
 import { players } from './players'
 import { paths } from './paths'
 
-export const gameReducer = (state_in: ?Game, action: Action): Game => ({
-  match: match(state_in && state_in.match, action),
-  players: players(state_in && state_in.players, action),
-  paths: paths(state_in && state_in.paths, action)
-})
+const reducerDefinition = {
+  match,
+  players,
+  paths
+}
+
+type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V
+type GameReducer = typeof reducerDefinition
+
+export type Game = $ObjMap<GameReducer, $ExtractFunctionReturn>
+
+export const gameReducer = combineReducers(reducerDefinition)
