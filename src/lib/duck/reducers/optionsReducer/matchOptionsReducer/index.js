@@ -8,7 +8,7 @@ export const matchOptionsReducer = (state_in: ?MatchOptions=INITIAL_STATE, actio
 
   // this will never actually modify state_in and is only here
   // because flow can't see the defaulting assignment above
-  state_in = state_in || { ...INITIAL_STATE }
+  state_in = state_in || INITIAL_STATE
 
   switch(action.type) {
 

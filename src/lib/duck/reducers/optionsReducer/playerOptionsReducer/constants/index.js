@@ -2,7 +2,7 @@
 
 import type { PlayerOptions, PlayerOptionsSet } from '../types'
 
-export const INITIAL_PLAYER1_OPTIONS: PlayerOptions = {
+const INITIAL_PLAYER1_OPTIONS: PlayerOptions = {
   start_coord_x: '150',
   start_coord_y: '100',
   direction: '0',
@@ -11,7 +11,7 @@ export const INITIAL_PLAYER1_OPTIONS: PlayerOptions = {
   colour: 'rgba(255,0,0, 0.5)',
 }
 
-export const INITIAL_PLAYER2_OPTIONS: PlayerOptions = {
+const INITIAL_PLAYER2_OPTIONS: PlayerOptions = {
   start_coord_x: '150',
   start_coord_y: '100',
   direction: '' + Math.PI,

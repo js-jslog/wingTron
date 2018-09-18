@@ -9,4 +9,4 @@ export type PlayerOptions = {|
   +colour: string
 |}
 
-export type PlayerOptionsSet = Array<PlayerOptions>
+export type PlayerOptionsSet = $ReadOnlyArray<PlayerOptions>

@@ -1,6 +1,5 @@
 // @flow
 
-import type { OptionsReducer } from '~/duck/reducers/optionsReducer'
 import type { Options as OptionsImport } from '~/duck/reducers/optionsReducer'
 
 import type { GameMatch as GameMatchImport } from '~/duck/reducers/gameReducer/match/types'
@@ -19,6 +18,7 @@ export type { StartGameFromOptionsAction } from '~/duck/actions/types'
 export type { Action } from '~/duck/actions/types'
 
 export type { PlayerOptions } from '~/duck/reducers/optionsReducer/playerOptionsReducer/types'
+export type { PlayerOptionsSet } from '~/duck/reducers/optionsReducer/playerOptionsReducer/types'
 export type { MatchOptions } from '~/duck/reducers/optionsReducer/matchOptionsReducer/types'
 export type Options = OptionsImport
 

@@ -1,8 +1,6 @@
 // @flow
 
-import type { MatchOptions } from '~/common/flow-types'
 import { EXAMPLE_OPTIONS } from '~/common/constants'
-import { EXAMPLE_MATCH_OPTIONS } from '~/common/constants'
 import { INITIAL_STATE } from '../constants'
 import { matchOptionsReducer } from '../'
 
@@ -10,7 +8,7 @@ describe('the exceptional cases', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
-    const state_in = { ...EXAMPLE_MATCH_OPTIONS }
+    const state_in = INITIAL_STATE
     const unused_action = {
       type: 'START_GAME_FROM_OPTIONS',
       options: EXAMPLE_OPTIONS
@@ -35,7 +33,7 @@ describe('the exceptional cases', () => {
 describe('the handling of the update options action', () => {
   test('that the update options reducer returns the input options', () => {
 
-    const input_options = { ...EXAMPLE_OPTIONS }
+    const input_options = EXAMPLE_OPTIONS
     const action = {
       type: 'UPDATE_OPTIONS',
       options: input_options,

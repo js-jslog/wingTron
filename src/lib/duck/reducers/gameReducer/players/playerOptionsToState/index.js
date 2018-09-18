@@ -1,9 +1,9 @@
 // @flow
 
-import type { Players, PlayerOptions } from '~/common/flow-types'
+import type { Players, PlayerOptions, PlayerOptionsSet} from '~/common/flow-types'
 import { optionsConverter } from './optionsConverter'
 
-export const playerOptionsToState = (player_options: Array<PlayerOptions>): Players => {
+export const playerOptionsToState = (player_options: PlayerOptionsSet): Players => {
 
   const playersById = {}
   const playerList = []

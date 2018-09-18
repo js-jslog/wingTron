@@ -1,14 +1,14 @@
 // @flow
 
 import { match } from '../'
-import { EXAMPLE_GAME_MATCH, EXAMPLE_OPTIONS } from '~/common/constants'
+import { EXAMPLE_MATCH, EXAMPLE_OPTIONS } from '~/common/constants'
 import * as MatchOptionsToState from '../matchOptionsToState'
 
 describe('the exceptional usage', () => {
 
   test('that the reducer returns the input state if no matching action types are found', () => {
 
-    const state_in = { ...EXAMPLE_GAME_MATCH }
+    const state_in = EXAMPLE_MATCH
     const unused_action = { type: 'ADD_PLAYER_TO_OPTIONS' }
     const state_out = match(state_in, unused_action)
 

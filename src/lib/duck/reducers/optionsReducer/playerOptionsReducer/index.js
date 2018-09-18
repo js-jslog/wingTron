@@ -1,7 +1,6 @@
 // @flow
 
 import { INITIAL_STATE } from './constants'
-import { INITIAL_PLAYER1_OPTIONS } from './constants'
 import type { PlayerOptionsSet } from './types'
 import type { Action } from '~/common/flow-types'
 
@@ -9,7 +8,7 @@ export const playerOptionsReducer = (state_in: ?PlayerOptionsSet=INITIAL_STATE, 
 
   // this will never actually modify state_in and is only here
   // because flow can't see the defaulting assignment above
-  state_in = state_in || [ ...INITIAL_STATE ]
+  state_in = state_in || INITIAL_STATE
 
   switch(action.type) {
 
@@ -20,7 +19,7 @@ export const playerOptionsReducer = (state_in: ?PlayerOptionsSet=INITIAL_STATE, 
 
     case 'ADD_PLAYER_TO_OPTIONS': {
 
-      const additional_player_options = { ...INITIAL_PLAYER1_OPTIONS }
+      const additional_player_options = { ...INITIAL_STATE[0] }
       return [ ...state_in, additional_player_options ]
     }
 
