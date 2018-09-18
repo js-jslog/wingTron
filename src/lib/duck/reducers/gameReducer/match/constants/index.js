@@ -1,6 +1,6 @@
 // @flow
 
-import type { GameMatch } from '../types'
+import type { Match } from '../types'
 
 export const EXAMPLE_MATCH = {
   field_width: 200,
