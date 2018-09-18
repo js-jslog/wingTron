@@ -1,10 +1,10 @@
 // @flow
 
-import * as ActionCreators from '../'
-import type { UpdateOptionsAction } from '../types'
-import type { AddPlayerToOptionsAction } from '../types'
-import type { RemovePlayerFromOptionsAction } from '../types'
-import type { StartGameFromOptionsAction } from '../types'
+import * as ActionCreators from './'
+import type { UpdateOptionsAction } from './types'
+import type { AddPlayerToOptionsAction } from './types'
+import type { RemovePlayerFromOptionsAction } from './types'
+import type { StartGameFromOptionsAction } from './types'
 import { EXAMPLE_OPTIONS } from '~/common/constants'
 
 describe('the action creators', () => {

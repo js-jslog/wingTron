@@ -1,5 +1,5 @@
 import * as ActionCreators from '~/duck/actions/'
-import * as ActionOperations from '../'
+import * as ActionOperations from './'
 
 describe('the pre-dispatch action operations', () => {
 

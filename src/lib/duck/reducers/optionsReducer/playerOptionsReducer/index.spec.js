@@ -1,8 +1,8 @@
 // @flow
 
 import { EXAMPLE_OPTIONS } from '~/common/constants'
-import { INITIAL_STATE } from '../constants'
-import { playerOptionsReducer } from '../'
+import { INITIAL_STATE } from './constants'
+import { playerOptionsReducer } from '.'
 
 describe('the exceptional cases', () => {
   test('that the reducer returns the input state if no matching action types are found', () => {

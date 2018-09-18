@@ -1,7 +1,7 @@
 // @flow
 
 import type { PlayerOptions } from '~/common/flow-types'
-import { optionsReducer } from '../'
+import { optionsReducer } from './'
 
 // TODO: review how to make the typing work with the combineReducer function
 describe('the exceptional cases', () => {

@@ -1,6 +1,6 @@
 // @flow
 
-import { gameReducer } from '../'
+import { gameReducer } from './'
 
 // TODO: are these the tests that we need here? Do we also want tests that the appropriate functions are called
 describe('the gameReducer', () => {

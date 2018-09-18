@@ -1,6 +1,6 @@
 // @flow
 
-import { matchOptionsToState } from '../'
+import { matchOptionsToState } from './'
 import { EXAMPLE_MATCH, EXAMPLE_OPTIONS } from '~/common/constants'
 
 describe('the options to game state transformation', () => {

@@ -1,10 +1,10 @@
 // @flow
 
-import { paths } from '../'
-import { EXAMPLE_PATHS } from '../constants'
+import { paths } from './'
+import { EXAMPLE_PATHS } from './constants'
 import { EXAMPLE_OPTIONS } from '~/common/constants'
-import * as CoordsToInitialPath from '../coordsToInitialPath'
-import * as PathArrayToPaths from '../pathArrayToPaths'
+import * as CoordsToInitialPath from './coordsToInitialPath'
+import * as PathArrayToPaths from './pathArrayToPaths'
 
 describe('the paths reducer', () => {
 

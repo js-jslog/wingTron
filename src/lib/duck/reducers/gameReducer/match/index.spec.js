@@ -1,8 +1,8 @@
 // @flow
 
-import { match } from '../'
+import { match } from './'
 import { EXAMPLE_MATCH, EXAMPLE_OPTIONS } from '~/common/constants'
-import * as MatchOptionsToState from '../matchOptionsToState'
+import * as MatchOptionsToState from './matchOptionsToState'
 
 describe('the exceptional usage', () => {
 

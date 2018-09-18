@@ -1,8 +1,8 @@
 // @flow
 
 import { EXAMPLE_OPTIONS } from '~/common/constants'
-import { INITIAL_STATE } from '../constants'
-import { matchOptionsReducer } from '../'
+import { INITIAL_STATE } from './constants'
+import { matchOptionsReducer } from '.'
 
 describe('the exceptional cases', () => {
 
