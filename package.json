@@ -11,6 +11,7 @@
     "docs:prod": "webpack --mode production",
     "test": "jest",
     "test:watch": "npm test -- --watch",
+    "test:u": "npm test -- --updateSnapshot",
     "flow": "flow",
     "flow-typed": "flow-typed"
   },

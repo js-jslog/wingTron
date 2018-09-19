@@ -17,7 +17,7 @@ Object {
       Object {
         "colour": "rgba(255,0,0, 0.5)",
         "direction": "0",
-        "start_coord_x": "150",
+        "start_coord_x": "151",
         "start_coord_y": "100",
         "turn_left_keycode": "37",
         "turn_right_keycode": "39",
@@ -25,7 +25,7 @@ Object {
       Object {
         "colour": "rgba(0,0,255, 0.5)",
         "direction": "3.141592653589793",
-        "start_coord_x": "150",
+        "start_coord_x": "149",
         "start_coord_y": "100",
         "turn_left_keycode": "65",
         "turn_right_keycode": "68",
@@ -53,11 +53,11 @@ Object {
           "id": "0",
           "path": Array [
             Array [
-              150,
+              151,
               100,
             ],
             Array [
-              150,
+              151,
               100,
             ],
           ],
@@ -66,11 +66,11 @@ Object {
           "id": "1",
           "path": Array [
             Array [
-              150,
+              149,
               100,
             ],
             Array [
-              150,
+              149,
               100,
             ],
           ],
@@ -112,7 +112,7 @@ Object {
       Object {
         "colour": "rgba(255,0,0, 0.5)",
         "direction": "0",
-        "start_coord_x": "150",
+        "start_coord_x": "151",
         "start_coord_y": "100",
         "turn_left_keycode": "37",
         "turn_right_keycode": "39",
@@ -120,7 +120,7 @@ Object {
       Object {
         "colour": "rgba(0,0,255, 0.5)",
         "direction": "3.141592653589793",
-        "start_coord_x": "150",
+        "start_coord_x": "149",
         "start_coord_y": "100",
         "turn_left_keycode": "65",
         "turn_right_keycode": "68",
