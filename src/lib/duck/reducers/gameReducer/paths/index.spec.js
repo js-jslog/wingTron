@@ -3,8 +3,7 @@
 import { paths } from './'
 import { EXAMPLE_PATHS } from './constants'
 import { EXAMPLE_OPTIONS } from '~/common/constants'
-import * as CoordsToInitialPath from './coordsToInitialPath'
-import * as PathArrayToPaths from './pathArrayToPaths'
+import * as PlayerOptionsToInitialPaths from './playerOptionsToInitialPaths'
 
 describe('the paths reducer', () => {
 
@@ -25,23 +24,17 @@ describe('the paths reducer', () => {
     expect(state_out).toBeFalsy()
   })
 
-  it('should use it\'s two support functions to produce a Paths object', () => {
+  it('should use the playerOptionsToInitialPaths function when the start game action is handled', () => {
 
     const options = EXAMPLE_OPTIONS
-    const p0 = options.players[0]
-    const p1 = options.players[1]
     const action = {
       type: 'START_GAME_FROM_OPTIONS',
       options: options
     }
-    const coordsToInitialPathSpy = jest.spyOn(CoordsToInitialPath, 'coordsToInitialPath')
-    const pathArrayToPathsSpy = jest.spyOn(PathArrayToPaths, 'pathArrayToPaths')
+    const playerOptionsToInitialPathsSpy = jest.spyOn(PlayerOptionsToInitialPaths, 'playerOptionsToInitialPaths')
     const state_out = paths(undefined, action)
 
-    expect(coordsToInitialPathSpy).toBeCalledTimes(2)
-    expect(coordsToInitialPathSpy).toBeCalledWith([ p0.start_coord_x, p0.start_coord_y ])
-    expect(coordsToInitialPathSpy).toBeCalledWith([ p1.start_coord_x, p1.start_coord_y ])
-
-    expect(pathArrayToPathsSpy).toBeCalledTimes(1)
+    expect(playerOptionsToInitialPathsSpy).toBeCalledTimes(1)
+    expect(playerOptionsToInitialPathsSpy).toBeCalledWith(EXAMPLE_OPTIONS.players)
   })
 })

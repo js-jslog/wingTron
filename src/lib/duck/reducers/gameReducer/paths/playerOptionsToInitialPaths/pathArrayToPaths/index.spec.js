@@ -1,6 +1,6 @@
 // @flow
 
-import { EXAMPLE_PATHS } from '../constants'
+import { EXAMPLE_PATHS } from '../../constants'
 import { pathArrayToPaths } from './'
 
 describe('the conversion of an array of Path objects to a proper Paths object', () => {

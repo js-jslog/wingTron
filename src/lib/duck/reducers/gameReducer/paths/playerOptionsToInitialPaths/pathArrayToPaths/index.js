@@ -1,6 +1,6 @@
 // @flow
 
-import type { Path, Paths } from '../types'
+import type { Path, Paths } from '../../types'
 
 export const pathArrayToPaths = (path_array: $ReadOnlyArray<Path>): Paths => {
 

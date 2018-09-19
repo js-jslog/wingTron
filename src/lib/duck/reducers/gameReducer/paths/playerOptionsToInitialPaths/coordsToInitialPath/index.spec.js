@@ -10,13 +10,10 @@ describe('the creation of a Paths object from initial coordinates', () => {
     const { start_coord_x } = EXAMPLE_OPTIONS.players[0]
     const { start_coord_y } = EXAMPLE_OPTIONS.players[0]
     const coord = [
-      start_coord_x,
-      start_coord_y
+      parseInt(start_coord_x),
+      parseInt(start_coord_y)
     ]
-    const expected_path = [
-      [ parseInt(coord[0]), parseInt(coord[1]) ],
-      [ parseInt(coord[0]), parseInt(coord[1]) ]
-    ]
+    const expected_path = [ coord, coord ]
 
     const path = coordsToInitialPath(coord)
 
