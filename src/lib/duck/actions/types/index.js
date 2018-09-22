@@ -1,6 +1,7 @@
 // @flow
 
 import type { Options } from '~/common/flow-types'
+import type { Players } from '~/common/flow-types'
 
 export type UpdateOptionsAction = {|
   +type: 'UPDATE_OPTIONS',
@@ -21,9 +22,15 @@ export type StartGameFromOptionsAction = {|
   +options: Options
 |}
 
+export type ProgressPlayerPaths = {|
+  +type: 'PROGRESS_PLAYER_PATHS',
+  +players: Players
+|}
+
 export type Action =
   | UpdateOptionsAction
   | AddPlayerToOptionsAction
   | RemovePlayerFromOptionsAction
   | StartGameFromOptionsAction
+  | ProgressPlayerPaths
 

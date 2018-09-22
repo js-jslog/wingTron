@@ -26,5 +26,30 @@ describe('the integration of all the reducers', () => {
     
     expect(store.getState()).toMatchSnapshot()
   })
+
+  test('the store after a game is created and progressed a few steps', () => {
+
+    const store = createStore(rootReducer)
+
+    const start_game_action = {
+      type: 'START_GAME_FROM_OPTIONS',
+      options: store.getState().options
+    }
+    store.dispatch(start_game_action)
+
+    const progress_paths_action = {
+      type: 'PROGRESS_PLAYER_PATHS',
+      players: store.getState().game.players
+    }
+    store.dispatch(progress_paths_action)
+    progress_paths_action.players = store.getState().game.players
+    store.dispatch(progress_paths_action)
+    progress_paths_action.players = store.getState().game.players
+    store.dispatch(progress_paths_action)
+    progress_paths_action.players = store.getState().game.players
+    store.dispatch(progress_paths_action)
+
+    expect(store.getState()).toMatchSnapshot()
+  })
 })
 
