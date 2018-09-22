@@ -15,8 +15,6 @@ export const getRelevantPlayerDirection = (players: Players, path_id: string): ?
   return matching_directions_filtered[0]
 }
     
-const returnPlayerDirectionIfPathMatches = (player: Player, path_id: string): number|null => {
-  const return_val = ( player.path === path_id ? player.direction : null )
-
-  return return_val
-}
+const returnPlayerDirectionIfPathMatches = (player: Player, path_id: string): number|null => (
+  player.path === path_id ? player.direction : null
+)
