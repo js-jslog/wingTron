@@ -11,12 +11,7 @@ export const kinkRelevantPaths = (event: any, players: Players, paths_in: Paths)
     return paths_in
   }
 
-  let match_found = false
-
-  const paths_out = { ...paths_in }
-  paths_out.byId = { ...paths_in.byId }
-
-  paths_out.allIds.forEach(path_id => {
+  const paths_to_kink = paths_in.allIds.filter(path_id => {
     // TODO; need to handle the thrown error from getRelevantPlayerDirection
     // so that player is known to be defined
     const player = getRelevantPlayerByPath(players, path_id)
@@ -25,21 +20,24 @@ export const kinkRelevantPaths = (event: any, players: Players, paths_in: Paths)
     // $FlowFixMe
     const { turn_right_keycode } = player
 
-    if (event.keyCode === turn_left_keycode || event.keyCode === turn_right_keycode) {
-      match_found = true
-
-      const path = kinkPath(paths_out.byId[path_id].path)
-    
-      paths_out.byId[path_id] = {
-        id: path_id,
-        path
-      }
-    }
+    return (event.keyCode === turn_left_keycode || event.keyCode === turn_right_keycode)
   })
 
-  if (!match_found) {
+  if (paths_to_kink.length === 0) {
     return paths_in
   }
+
+  const paths_out = { ...paths_in }
+  paths_out.byId = { ...paths_in.byId }
+
+  paths_to_kink.forEach(path_id => {
+    const path = kinkPath(paths_out.byId[path_id].path)
+
+    paths_out.byId[path_id] = {
+      id: path_id,
+      path
+    }
+  })
 
   return paths_out
 }
