@@ -1,9 +1,9 @@
 // @flow
 
-import { players } from '../'
+import { players } from './'
 import { EXAMPLE_OPTIONS } from '~/common/constants'
-import { EXAMPLE_PLAYERS } from '../constants'
-import * as PlayerOptionsToState from '../playerOptionsToState'
+import { EXAMPLE_PLAYERS } from './constants'
+import * as PlayerOptionsToState from './playerOptionsToState'
 
 describe('the exceptional usage', () => {
 
@@ -28,26 +28,5 @@ describe('the exceptional usage', () => {
     const state_out = players(undefined, unrelated_action)
 
     expect(state_out).toBeFalsy()
-  })
-})
-
-describe('the reducers response to the start game action', () => {
-
-  test('that the playerOptionsToState function is called', () => {
-
-    const spy = jest.spyOn(PlayerOptionsToState, 'playerOptionsToState')
-
-    const state_in = EXAMPLE_PLAYERS
- 
-    const options =  { ...EXAMPLE_OPTIONS }
-
-    const action = {
-      type: 'START_GAME_FROM_OPTIONS',
-      options: options
-    }
-
-    const state_out = players(state_in, action)
-
-    expect(spy).toBeCalledTimes(1)
   })
 })

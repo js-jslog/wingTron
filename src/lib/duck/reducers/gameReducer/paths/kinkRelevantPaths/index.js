@@ -23,9 +23,7 @@ export const kinkRelevantPaths = (event: any, players: Players, paths_in: Paths)
     return (event.keyCode === turn_left_keycode || event.keyCode === turn_right_keycode)
   })
 
-  if (paths_to_kink.length === 0) {
-    return paths_in
-  }
+  if (paths_to_kink.length === 0) return paths_in
 
   const paths_out = { ...paths_in }
   paths_out.byId = { ...paths_in.byId }
