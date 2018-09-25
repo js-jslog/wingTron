@@ -4,6 +4,7 @@ import type { Paths } from './types'
 import type { Action } from '~/common/flow-types'
 import { playerOptionsToInitialPaths } from './playerOptionsToInitialPaths'
 import { progressPaths } from './progressPaths'
+import { kinkRelevantPaths } from './kinkRelevantPaths'
 
 export const paths = (state_in: Paths|null=null, action: Action): Paths|null => {
   switch(action.type) {
@@ -22,6 +23,16 @@ export const paths = (state_in: Paths|null=null, action: Action): Paths|null => 
 
       const { players } = action
       const paths = progressPaths(players, state_in)
+
+      return paths
+    }
+
+    case 'HANDLE_KEY_EVENT': {
+
+      const { event } = action
+      const { players } = action
+
+      const paths = kinkRelevantPaths(event, players, state_in)
 
       return paths
     }

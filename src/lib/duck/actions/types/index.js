@@ -27,10 +27,17 @@ export type ProgressPlayerPaths = {|
   +players: Players
 |}
 
+export type HandleKeyEvent = {|
+  +type: 'HANDLE_KEY_EVENT',
+  +event: any,
+  +players: Players
+|}
+
 export type Action =
   | UpdateOptionsAction
   | AddPlayerToOptionsAction
   | RemovePlayerFromOptionsAction
   | StartGameFromOptionsAction
   | ProgressPlayerPaths
+  | HandleKeyEvent
 

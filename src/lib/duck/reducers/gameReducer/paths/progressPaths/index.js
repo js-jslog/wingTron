@@ -8,6 +8,7 @@ import { progressPathInDirection } from './progressPathInDirection'
 export const progressPaths = (players: Players, paths: Paths): Paths => {
 
   const paths_out = { ...paths }
+  paths_out.byId = { ...paths.byId }
 
   paths_out.allIds.forEach(path_id => {
     // TODO; need to handle the thrown error from getRelevantPlayerDirection

@@ -31,3 +31,9 @@ export const progressPlayerPaths = (players: Players): ProgressPlayerPaths => ({
   type: 'PROGRESS_PLAYER_PATHS',
   players
 })
+
+export const handleKeyEvent = (event: any, players: Players): handleKeyEvent => ({
+  type: 'HANDLE_KEY_EVENT',
+  event,
+  players
+})
