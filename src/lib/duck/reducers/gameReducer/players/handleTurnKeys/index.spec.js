@@ -46,5 +46,19 @@ describe('the handling of turn key presses', () => {
 
     expect(players_out).toBe(players_in)
   })
+
+  it('should return a new object if any matches are found', () => {
+
+    const players_in = EXAMPLE_PLAYERS
+    const event = {
+      type: 'keydown',
+      keyCode: 37
+    }
+
+    const players_out = handleTurnKeys(event, players_in)
+
+    expect(players_out).not.toEqual(players_in)
+  })
+
 })
 

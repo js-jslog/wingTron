@@ -130,6 +130,117 @@ Object {
 }
 `;
 
+exports[`the integration of all the reducers the store after a game is created and progressed a few steps with some turns 1`] = `
+Object {
+  "game": Object {
+    "match": Object {
+      "field_height": 200,
+      "field_width": 200,
+      "matches": 10,
+    },
+    "paths": Object {
+      "allIds": Array [
+        "0",
+        "1",
+      ],
+      "byId": Object {
+        "0": Object {
+          "id": "0",
+          "path": Array [
+            Array [
+              152,
+              97,
+            ],
+            Array [
+              155,
+              97,
+            ],
+            Array [
+              155,
+              100,
+            ],
+            Array [
+              151,
+              100,
+            ],
+          ],
+        },
+        "1": Object {
+          "id": "1",
+          "path": Array [
+            Array [
+              148,
+              103,
+            ],
+            Array [
+              145,
+              103,
+            ],
+            Array [
+              145,
+              100,
+            ],
+            Array [
+              149,
+              100,
+            ],
+          ],
+        },
+      },
+    },
+    "players": Object {
+      "allIds": Array [
+        "0",
+        "1",
+      ],
+      "byId": Object {
+        "0": Object {
+          "colour": "rgba(255,0,0, 0.5)",
+          "direction": -3.141592653589793,
+          "id": "0",
+          "path": "0",
+          "turn_left_keycode": 37,
+          "turn_right_keycode": 39,
+        },
+        "1": Object {
+          "colour": "rgba(0,0,255, 0.5)",
+          "direction": 0,
+          "id": "1",
+          "path": "1",
+          "turn_left_keycode": 65,
+          "turn_right_keycode": 68,
+        },
+      },
+    },
+  },
+  "options": Object {
+    "match": Object {
+      "field_height": "200",
+      "field_width": "200",
+      "matches": "10",
+    },
+    "players": Array [
+      Object {
+        "colour": "rgba(255,0,0, 0.5)",
+        "direction": "0",
+        "start_coord_x": "151",
+        "start_coord_y": "100",
+        "turn_left_keycode": "37",
+        "turn_right_keycode": "39",
+      },
+      Object {
+        "colour": "rgba(0,0,255, 0.5)",
+        "direction": "3.141592653589793",
+        "start_coord_x": "149",
+        "start_coord_y": "100",
+        "turn_left_keycode": "65",
+        "turn_right_keycode": "68",
+      },
+    ],
+  },
+}
+`;
+
 exports[`the integration of all the reducers the store after a game start 1`] = `
 Object {
   "game": Object {

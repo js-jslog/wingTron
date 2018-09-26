@@ -27,11 +27,11 @@ export const handleTurnKeys = (event: any, players_in: Players): Players => {
     const { turn_left_keycode } = player
 
     if (event.keyCode === turn_left_keycode) {
-      player = turnPlayer90('LEFT', player)
+      players_out.byId[player_id] = turnPlayer90('LEFT', player)
     } else {
-      player = turnPlayer90('RIGHT', player)
+      players_out.byId[player_id] = turnPlayer90('RIGHT', player)
     }
   })
     
-  return players_in
+  return players_out
 }
