@@ -2,7 +2,7 @@
 
 import { EXAMPLE_PLAYERS } from '~/common/constants'
 import { EXAMPLE_PATHS } from '~/common/constants'
-import { precipitateRenderablePlayer } from './precipitateRenderablePlayer'
+import { precipitateRenderablePlayer } from '../precipitateRenderablePlayer'
 import { drawPlayer } from './'
 
 describe('the drawing of a player on canvas context', () => {
