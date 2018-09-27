@@ -11,6 +11,9 @@ export type { PlayerOptionsSet } from '~/duck/reducers/optionsReducer/playerOpti
 
 export type { Game } from '~/duck/reducers/gameReducer'
 export type { Match } from '~/duck/reducers/gameReducer/match/types'
+export type { Coord } from '~/duck/reducers/gameReducer/paths/types'
+export type { Path } from '~/duck/reducers/gameReducer/paths/types'
+export type { NamedPath } from '~/duck/reducers/gameReducer/paths/types'
 export type { Paths } from '~/duck/reducers/gameReducer/paths/types'
 export type { Player } from '~/duck/reducers/gameReducer/players/types'
 export type { Players } from '~/duck/reducers/gameReducer/players/types'
