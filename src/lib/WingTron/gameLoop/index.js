@@ -1,6 +1,4 @@
-import { updatePlayerPathsAction, updateCollisionMatrixAction, updatePlayerDeathsAction } from '~/GameActions'
-import GameStore from '~/GameStore.js'
-import { drawField, drawPaths, drawPlayers } from '~/CanvasDrawer.js'
+// @flow
 
 class GameLoop {
 
@@ -14,11 +12,6 @@ class GameLoop {
   fps_estimate = 60
   frames_this_second = 0
   last_fps_update = 0
-
-  addCanvas(canvas) {
-
-    this.ctx = canvas.getContext('2d')
-  }
 
   run(timestamp) {
 
@@ -51,19 +44,6 @@ class GameLoop {
       this.draw()
 
       this.frame_id = requestAnimationFrame(this.run.bind(this, new Date().getTime()))
-  }
-
-  update(loop_delta) {
-
-    updatePlayerPathsAction()
-    updateCollisionMatrixAction(updatePlayerDeathsAction)
-  }
-
-  draw() {
-
-    drawField(this.ctx)
-    drawPaths(this.ctx)
-    drawPlayers(this.ctx)
   }
 
   panic() {

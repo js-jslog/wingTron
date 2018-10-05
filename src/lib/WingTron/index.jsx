@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react'
 import setKeyBindings from '~/setKeyBindings.js'
 import GameLoop from '~/GameLoop.js'
@@ -6,10 +8,19 @@ import GameStore from '~/GameStore.js'
 import { updateOptionsAction, addPlayerAction, removePlayerAction } from '~/OptionsActions'
 import { startGameAction } from '~/GameActions'
 
+
+import { createStore } from 'redux'
+import { rootReducer } from '~/duck/reducers'
+import { progressPlayerPaths } from '~/duck/actions'
+import { drawField } from './canvasDrawer'
+import { drawPaths } from './canvasDrawer'
+import { drawPlayers } from './canvasDrawer'
+
 class WingTron extends Component {
 
   constructor(props) {
     super(props)
+    this.store = createStore(rootReducer)
     this.state = {
       field_width: undefined,
       field_height: undefined,
@@ -48,6 +59,21 @@ class WingTron extends Component {
 
 export default WingTron
 
+// functions to be consumed by the game loop
+export function update(loop_delta) {
+
+  this.store.dispatch(progressPlayerPaths(store.getState().game.players))
+  //updateCollisionMatrixAction(updatePlayerDeathsAction)
+}
+
+export function  draw() {
+
+  drawField(this.ctx, this.store.getState().match)
+  drawPaths(this.ctx, this.store.getState().players, this.store.getState().paths)
+  drawPlayers(this.ctx, this.store.getState().players, this.store.getState().paths)
+}
+
+// functions to be consumed by the control panel
 // TODO: this needs to be promisafied so that we can actually return the options current value, rather than just the value we have set it to
 export function getOptions() {
   if (OptionsStore.options === undefined) {
