@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 //import setKeyBindings from '~/setKeyBindings.js'
 import GameLoop from './GameLoop'
 import GameCanvas from './GameCanvas'
+import KeyHandler from './KeyHandler'
 
 type Props = {
   update_interval?: number
@@ -20,6 +21,7 @@ export class WingTron extends Component<Props, null> {
       <div>
         <GameLoop { ...this.props } />
         <GameCanvas />
+        <KeyHandler />
       </div>
     )
   }

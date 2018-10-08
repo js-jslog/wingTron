@@ -32,7 +32,7 @@ render(
     <Provider store={store}>
       <div>
         <WingTron update_interval='2000' />
-        {/*<DevTools />*/}
+        <DevTools />
       </div>
     </Provider>
   </AppContainer>,

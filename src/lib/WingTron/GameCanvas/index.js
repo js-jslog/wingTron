@@ -25,7 +25,6 @@ class GameCanvasComponent extends Component<Game, null> {
 
   componentDidMount() {
     const canvas = this.refs.canvas
-    canvas.style.width = '50%'
     this.ctx = canvas.getContext('2d')
   }
 
