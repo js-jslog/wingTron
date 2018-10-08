@@ -2,6 +2,7 @@
 
 import type { Options } from '~/common/flow-types'
 import type { Players } from '~/common/flow-types'
+import type { Game } from '~/common/flow-types'
 
 export type UpdateOptionsAction = {|
   +type: 'UPDATE_OPTIONS',
@@ -27,6 +28,11 @@ export type ProgressPlayerPaths = {|
   +players: Players
 |}
 
+export type SetRenderableGame = {|
+  +type: 'SET_RENDERABLE_GAME',
+  +game: Game
+|}
+
 export type HandleKeyEvent = {|
   +type: 'HANDLE_KEY_EVENT',
   +event: any,
@@ -39,5 +45,6 @@ export type Action =
   | RemovePlayerFromOptionsAction
   | StartGameFromOptionsAction
   | ProgressPlayerPaths
+  | SetRenderableGame
   | HandleKeyEvent
 
