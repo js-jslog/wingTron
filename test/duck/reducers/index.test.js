@@ -1,12 +1,11 @@
 // @flow
 
-// TODO: have these tests use action creators instead of
-// manually rolling the actions
 import { EXAMPLE_OPTIONS } from '~/common/constants'
 import { rootReducer } from '~/duck/reducers'
 import { createStore } from 'redux'
 import { progressPlayerPaths } from '~/duck/actions'
 import { startGameFromOptions } from '~/duck/actions'
+import { setRenderableGame } from '~/duck/actions'
 import { handleKeyEvent } from '~/duck/actions'
 
 describe('the integration of all the reducers', () => {
@@ -78,6 +77,49 @@ describe('the integration of all the reducers', () => {
     store.dispatch(handleKeyEvent(p1_turn_right_event, store.getState().game.players))
     store.dispatch(progressPlayerPaths(store.getState().game.players))
     store.dispatch(progressPlayerPaths(store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+
+    expect(store.getState()).toMatchSnapshot()
+  })
+
+  test('the store after a game is created, progressed and set up for rendering', () => {
+
+    const p0_turn_left_event = {
+      type: 'keydown',
+      keyCode: 37
+    }
+    const p1_turn_left_event = {
+      type: 'keydown',
+      keyCode: 65
+    }
+    const p0_turn_right_event = {
+      type: 'keydown',
+      keyCode: 37
+    }
+    const p1_turn_right_event = {
+      type: 'keydown',
+      keyCode: 65
+    }
+    const store = createStore(rootReducer)
+
+    store.dispatch(startGameFromOptions(store.getState().options))
+
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+
+    store.dispatch(handleKeyEvent(p0_turn_left_event, store.getState().game.players))
+    store.dispatch(handleKeyEvent(p1_turn_left_event, store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+
+    store.dispatch(handleKeyEvent(p0_turn_right_event, store.getState().game.players))
+    store.dispatch(handleKeyEvent(p1_turn_right_event, store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+    store.dispatch(progressPlayerPaths(store.getState().game.players))
+    store.dispatch(setRenderableGame(store.getState().game))
     store.dispatch(progressPlayerPaths(store.getState().game.players))
 
     expect(store.getState()).toMatchSnapshot()
