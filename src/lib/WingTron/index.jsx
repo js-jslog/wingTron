@@ -4,16 +4,25 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-//import setKeyBindings from '~/setKeyBindings.js'
+import * as ActionCreators from '~/duck/actions'
+
 import GameLoop from './GameLoop'
 import GameCanvas from './GameCanvas'
 import KeyHandler from './KeyHandler'
 
 type Props = {
+  callback?: Function,
   update_interval?: number
 }
 
-export class WingTron extends Component<Props, null> {
+class WingTronComponent extends Component<Props, null> {
+
+  constructor(props: Props) {
+    super(props)
+    if (props.callback) {
+      props.callback(this.startGame.bind(this))
+    }
+  }
 
   render() {
 
@@ -25,41 +34,24 @@ export class WingTron extends Component<Props, null> {
       </div>
     )
   }
-}
 
-/**
-  // functions to be consumed by the control panel
-  // TODO: this needs to be promisafied so that we can actually return the options current value, rather than just the value we have set it to
-export function getOptions() {
-  if (OptionsStore.options === undefined) {
-    updateOptionsAction(OptionsStore.DEFAULT_OPTIONS)
-    return JSON.stringify(OptionsStore.DEFAULT_OPTIONS)
+  startGame() {
+    this.props.actionCreators.startGameFromOptions(this.props.options)
   }
-
-  return JSON.stringify(OptionsStore.options)
 }
 
-export function addPlayer() {
-  addPlayerAction()
+const mapStateToProps = (state) => {
+  return {
+    ...state,
+  }
 }
 
-export function removePlayer(index) {
-  removePlayerAction(index)
-}
+const mapDispatchToProps = (dispatch) => ({
+  actionCreators: bindActionCreators(ActionCreators, dispatch)
+})
 
-export function registerOptionsChangeCallback(callback) {
-  OptionsStore.on('options_updated', callback)
-}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WingTronComponent)
 
-export function updateGameOptions(options) {
-  updateOptionsAction(JSON.parse(options))
-}
-
-export function startGame() {
-  startGameAction()
-}
-
-export function registerDeathChangeCallback(callback) {
-  GameStore.on('player_deaths_updated', callback) 
-}
- **/

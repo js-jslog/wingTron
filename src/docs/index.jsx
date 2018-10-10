@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { AppContainer } from 'react-hot-loader';
 
-import { WingTron } from '~/WingTron/index.jsx'
+import { App } from './App'
 import { DevTools } from './DevTools'
 
 import { rootReducer } from '~/duck/reducers'
@@ -31,7 +31,7 @@ render(
   <AppContainer>
     <Provider store={store}>
       <div>
-        <WingTron update_interval='2000' />
+        <App />
         <DevTools />
       </div>
     </Provider>
