@@ -2,39 +2,22 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { createLogger } from 'redux-logger';
 import { AppContainer } from 'react-hot-loader';
 
 import { App } from './App'
 import { DevTools } from './DevTools'
 
-import { rootReducer } from '~/duck/reducers'
-import { startGameFromOptions } from '~/duck/actions'
-
 import './styles.css';
 
-const logger = createLogger();
-
-const enhancer = compose(
-  applyMiddleware(logger),
-  DevTools.instrument()
-)
-
-const store = createStore(rootReducer, undefined, enhancer);
-store.dispatch(startGameFromOptions(store.getState().options))
 
 const rootElement = document.getElementById('app');
 
 render(
   <AppContainer>
-    <Provider store={store}>
       <div>
         <App />
-        <DevTools />
+        {/*      <DevTools />*/}
       </div>
-    </Provider>
   </AppContainer>,
   // $FlowFixMe
   rootElement

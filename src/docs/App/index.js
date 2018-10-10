@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import WingTron from '~/WingTron/index.jsx'
+import { WingTron } from '~/WingTron/index.jsx'
 import { ControlPanelRedux } from './ControlPanelRedux'
 
 export class App extends Component<null, null> {

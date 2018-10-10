@@ -1,57 +1,56 @@
 // @flow
 
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { createLogger } from 'redux-logger';
 
-import * as ActionCreators from '~/duck/actions'
-
+import { rootReducer } from '~/duck/reducers'
 import GameLoop from './GameLoop'
 import GameCanvas from './GameCanvas'
 import KeyHandler from './KeyHandler'
 
-type Props = {
-  callback?: Function,
-  update_interval?: number
-}
+import { startGameFromOptions } from '~/duck/actions'
 
-class WingTronComponent extends Component<Props, null> {
+
+import type { State } from '~/common/flow-types'
+
+export class WingTron extends Component<Props, State> {
+
+  store = undefined
 
   constructor(props: Props) {
     super(props)
+
     if (props.callback) {
       props.callback(this.startGame.bind(this))
     }
+
+    const logger = createLogger();
+
+    const enhancer = compose(
+      applyMiddleware(logger)
+      //DevTools.instrument()
+    )
+    this.store = createStore(rootReducer, undefined, enhancer);
+    this.startGame()
   }
 
   render() {
 
     return (
+    <Provider store={this.store}>
       <div>
         <GameLoop { ...this.props } />
         <GameCanvas />
         <KeyHandler />
       </div>
+    </Provider>
     )
   }
 
   startGame() {
-    this.props.actionCreators.startGameFromOptions(this.props.options)
+    this.store.dispatch(startGameFromOptions(this.store.getState().options))
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    ...state,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  actionCreators: bindActionCreators(ActionCreators, dispatch)
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WingTronComponent)
 
