@@ -7,12 +7,16 @@ import { render } from 'react-dom';
 import { WingTron } from '~/WingTron/index.jsx'
 import { ControlPanelRedux } from './ControlPanelRedux'
 
-export class App extends Component<null, null> {
+type State = {
+  startGame: Function | null
+}
+
+export class App extends Component<null, State> {
 
   constructor() {
     super()
     this.state = {
-      startGame: undefined
+      startGame: null
     }
   }
 
@@ -21,17 +25,18 @@ export class App extends Component<null, null> {
     return (
       <div>
         <WingTron
-          callback={ this.functionFromWingTron.bind(this) }
-          update_interval='2000'
+          auto_start_game={ false }
+          startGame_callback={ this.functionFromWingTron.bind(this) }
+          update_interval={ 2000 }
         />
         <ControlPanelRedux
-          test={ this.state.startGame }
+          startGame={ this.state.startGame }
         />
       </div>
     )
   }
 
-  functionFromWingTron(params) {
+  functionFromWingTron(params: Function) {
     this.setState({
       startGame: params
     })

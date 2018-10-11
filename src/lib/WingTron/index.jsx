@@ -12,18 +12,24 @@ import KeyHandler from './KeyHandler'
 
 import { startGameFromOptions } from '~/duck/actions'
 
+import type { Store } from 'redux'
 
-import type { State } from '~/common/flow-types'
+type Props = {
+  auto_start_game: boolean,
+  startGame_callback: Function,
+  update_interval: number,
+  store?: Store
+}
 
-export class WingTron extends Component<Props, State> {
+export class WingTron extends Component<Props, null> {
 
-  store = undefined
+  store: Store
 
   constructor(props: Props) {
     super(props)
 
-    if (props.callback) {
-      props.callback(this.startGame.bind(this))
+    if (props.startGame_callback) {
+      props.startGame_callback(this.startGame.bind(this))
     }
 
     const logger = createLogger();
@@ -32,8 +38,10 @@ export class WingTron extends Component<Props, State> {
       applyMiddleware(logger)
       //DevTools.instrument()
     )
-    this.store = createStore(rootReducer, undefined, enhancer);
-    this.startGame()
+    this.store = props.store || createStore(rootReducer, undefined, enhancer);
+    if (props.auto_start_game !== false) {
+      this.startGame()
+    }
   }
 
   render() {

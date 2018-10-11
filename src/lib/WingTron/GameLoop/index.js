@@ -37,7 +37,18 @@ class GameLoopComponent extends Component<Props, null> {
   constructor(props) {
     super(props)
     this.update_interval = props.update_interval || this.update_interval
-    this.run(+ new Date())
+  }
+
+  componentDidUpdate() {
+
+    // TODO: there should probably be a boolean on the game 
+    // object which says whether the game is underway or not
+    if (this.props.paths) {
+      this.run(+ new Date())
+    } else {
+      this.cancel()
+    }
+
   }
 
   render() {

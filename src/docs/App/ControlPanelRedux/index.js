@@ -2,21 +2,23 @@
 
 import React, { Component } from 'react'
 
-export class ControlPanelRedux extends Component<any, null> {
+type Props = {|
+  startGame: Function | null
+|}
 
-  test = function () {
-    alert('test')
-  }
+export class ControlPanelRedux extends Component<Props, null> {
+
+  startGame: Function | null
 
   render() {
 
-    if (typeof this.props.test == 'function') {
-      this.test = this.props.test
+    if (typeof this.props.startGame == 'function') {
+      this.startGame = this.props.startGame
     }
 
     return (
       <div>
-        <button onClick={this.test}>
+        <button onClick={this.startGame}>
           Start Game
         </button>
       </div>
