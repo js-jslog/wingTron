@@ -14,11 +14,19 @@ import { startGameFromOptions } from '~/duck/actions'
 
 import type { Store } from 'redux'
 
-type Props = {
+type PropsStoreProvided = {
+}
+type PropsStoreRequired = {
+  startGame_callback: Function
+}
+type PropsDefault = {
   auto_start_game: boolean,
-  startGame_callback: Function,
   update_interval: number,
-  store?: Store
+  include_store: boolean
+}
+type Props = {
+  ...PropsDefault,
+  ...PropsStoreProvided | PropsStoreRequired
 }
 
 export class WingTron extends Component<Props, null> {

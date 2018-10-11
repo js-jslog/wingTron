@@ -1,4 +1,3 @@
-
 // @flow
 
 import React, { Component } from 'react';
@@ -11,10 +10,10 @@ type State = {
   startGame: Function | null
 }
 
-export class App extends Component<null, State> {
+export class AppWithoutStore extends Component<Object, State> {
 
-  constructor() {
-    super()
+  constructor(props: Object) {
+    super(props)
     this.state = {
       startGame: null
     }

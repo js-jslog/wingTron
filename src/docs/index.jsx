@@ -1,71 +1,23 @@
 // @flow
 
-import React from 'react';
-import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
+import React from 'react'
+import { render } from 'react-dom'
+// TODO: delete this npm module
+// import { AppContainer } from 'react-hot-loader'
 
-import { App } from './App'
-import { DevTools } from './DevTools'
+import { AppWithoutStore } from './AppWithoutStore'
+import { AppWithStore } from './AppWithStore'
 
 import './styles.css';
 
 
-const rootElement = document.getElementById('app');
+const rootElement = document.getElementById('app')
 
 render(
-  <AppContainer>
-      <div>
-        <App />
-        {/*      <DevTools />*/}
-      </div>
-  </AppContainer>,
+  <div>
+  <AppWithoutStore />
+  <AppWithStore />
+  </div>,
   // $FlowFixMe
   rootElement
 )
-/**
-render(
-  <AppContainer>
-    <Provider store={store}>
-      <div>
-        <h1>Wing-Tron:</h1>
-        <div id='gameContainer' style={{width: '25%'}}>
-          <WingTron />
-        </div>
-        <div id='controlPanel'>
-          <ControlPanel />
-        </div>
-        <DevTools />
-      </div>
-    </Provider>
-  </AppContainer>,
-  // $FlowFixMe
-  rootElement
-)
-
-// $FlowFixMe
-if (module.hot) {
-  // $FlowFixMe
-  module.hot.accept('~/WingTron', () => {
-    const NextApp = require('~/WingTron').default
-    render(
-      <AppContainer>
-        <Provider store={store}>
-          <div>
-            <h1>Wing-Tron:</h1>
-            <div id='gameContainer' style={{width: '25%'}}>
-              <NextApp />
-            </div>
-            <div id='controlPanel'>
-              <ControlPanel />
-            </div>
-            <DevTools />
-          </div>
-        </Provider>
-      </AppContainer>,
-  // $FlowFixMe
-      rootElement
-    )
-  })
-}
- **/
-
