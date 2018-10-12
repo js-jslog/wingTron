@@ -13,15 +13,10 @@ export class ControlPanelRedux extends Component<Props, null> {
 
   render() {
 
-    let options = {
-      match: {},
-      players: []
-    }
-    if (this.props.getOptions) {
-      options = this.props.getOptions()
-    }
-    const { match } = options
-    const { players } = options
+    const options = this.props.getOptions && this.props.getOptions()
+
+    const match = options && options.players || {}
+    const players = options && options.players || []
 
     return (
       <div>
