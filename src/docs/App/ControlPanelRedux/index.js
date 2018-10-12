@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import { PlayerOptionsSetUI } from './PlayerOptionsSet'
+import { StartGameButton } from './StartGameButton'
 
 type Props = {|
   startGame: Function | null,
@@ -10,33 +11,21 @@ type Props = {|
 
 export class ControlPanelRedux extends Component<Props, null> {
 
-  startGame: Function | null
-  getOptions: Function | null
-
   render() {
-
-    if (typeof this.props.startGame == 'function') {
-      this.startGame = this.props.startGame
-    }
-    if (typeof this.props.getOptions == 'function') {
-      this.getOptions = this.props.getOptions
-    }
 
     let options = {
       match: {},
       players: []
     }
-    if (this.getOptions) {
-      options = this.getOptions()
+    if (this.props.getOptions) {
+      options = this.props.getOptions()
     }
     const { match } = options
     const { players } = options
 
     return (
       <div>
-        <button onClick={this.startGame}>
-          Start Game
-        </button>
+        <StartGameButton startGame={ this.props.startGame } />
         <h2>Players:</h2>
         <div ref='player_sections'>
           <PlayerOptionsSetUI players={ players } />
