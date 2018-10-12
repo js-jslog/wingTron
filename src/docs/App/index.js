@@ -6,11 +6,13 @@ import { render } from 'react-dom';
 import { WingTron } from '~/WingTron/index.js'
 import { ControlPanelRedux } from './ControlPanelRedux'
 
+import type { Options } from '~/common/flow-types'
+
 type Props = Object
 
 type State = {|
   startGame: Function | null,
-  getOptions: Function | null
+  options: Options | null
 |}
 
 export class App extends Component<Props, State> {
@@ -19,7 +21,7 @@ export class App extends Component<Props, State> {
     super(props)
     this.state = {
       startGame: null,
-      getOptions: null
+      options: null
     }
   }
 
@@ -31,27 +33,27 @@ export class App extends Component<Props, State> {
           { ...this.props }
           auto_start_game={ false }
           startGame_callback={ this.wingTron_startGame.bind(this) }
-          getOptions_callback={ this.wingTron_getOptions.bind(this) }
+          optionsListener={ this.setOptions.bind(this) }
           update_interval={ 500 }
         >
           { this.props.children }
         </WingTron>
         <ControlPanelRedux
           startGame={ this.state.startGame }
-          getOptions={ this.state.getOptions }
+          options={ this.state.options }
         />
       </div>
     )
   }
 
-  wingTron_startGame(params: Function) {
+  wingTron_startGame(func: Function) {
     this.setState({
-      startGame: params
+      startGame: func
     })
   }
-  wingTron_getOptions(params: Function) {
+  setOptions(options: Options) {
     this.setState({
-      getOptions: params
+      options: options
     })
   }
 }

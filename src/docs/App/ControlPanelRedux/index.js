@@ -4,16 +4,18 @@ import React, { Component } from 'react'
 import { PlayerOptionsSetUI } from './PlayerOptionsSet'
 import { StartGameButton } from './StartGameButton'
 
+import type { Options } from '~/common/flow-types'
+
 type Props = {|
   startGame: Function | null,
-  getOptions: Function | null
+  options: Options | null
 |}
 
 export class ControlPanelRedux extends Component<Props, null> {
 
   render() {
 
-    const options = this.props.getOptions && this.props.getOptions()
+    const { startGame, options } = this.props
 
     const match = options && options.players || {}
     const players = options && options.players || []

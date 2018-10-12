@@ -13,14 +13,22 @@ import { startGameFromOptions } from '~/duck/actions'
 
 import type { Store } from 'redux'
 
-type Props = {
-  auto_start_game?: boolean,
+type CallbackFunctionProps= {
   startGame_callback?: Function,
-  getOptions_callback?: Function,
+  optionsListener?: Function,
+}
+
+type DevelopmentProps = {
   update_interval?: number,
-  children?: Object,
   enhancer?: Object,
-  store?: Store
+}
+
+type Props = {
+  children: Object,
+  auto_start_game?: boolean,
+  store?: Store,
+  ...CallbackFunctionProps,
+  ...DevelopmentProps
 }
 
 export class WingTron extends Component<Props, null> {
@@ -32,13 +40,14 @@ export class WingTron extends Component<Props, null> {
 
     // $FlowFixMe
     props.startGame_callback(this.startGame.bind(this))
-    // $FlowFixMe
-    props.getOptions_callback(this.getOptions.bind(this))
 
     this.store = props.store || createStore(rootReducer, undefined, this.props.enhancer);
     if (props.auto_start_game !== false) {
       this.startGame()
     }
+
+    this.store.subscribe(this.apiCallbackInterface.bind(this))
+    this.apiCallbackInterface()
   }
 
   render() {
@@ -59,12 +68,11 @@ export class WingTron extends Component<Props, null> {
     this.store.dispatch(startGameFromOptions(this.store.getState().options))
   }
 
-  getOptions() {
-    return this.store.getState().options
-  }
-
-  registerOptionsUpdateCallback(optionsUpdateCallback: Function) {
-    // store subscribe to options change
-  }
+  apiCallbackInterface() {
+    if (this.props.optionsListener) {
+      // $FlowFixMe
+      this.props.optionsListener(this.store.getState().options)
+    }
+  } 
 }
 
