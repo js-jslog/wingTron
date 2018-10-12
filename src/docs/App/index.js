@@ -9,7 +9,8 @@ import { ControlPanelRedux } from './ControlPanelRedux'
 type Props = Object
 
 type State = {|
-  startGame: Function | null
+  startGame: Function | null,
+  getOptions: Function | null
 |}
 
 export class App extends Component<Props, State> {
@@ -17,7 +18,8 @@ export class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      startGame: null
+      startGame: null,
+      getOptions: null
     }
   }
 
@@ -28,21 +30,29 @@ export class App extends Component<Props, State> {
         <WingTron
           { ...this.props }
           auto_start_game={ false }
-          startGame_callback={ this.functionFromWingTron.bind(this) }
+          startGame_callback={ this.wingTron_startGame.bind(this) }
+          getOptions_callback={ this.wingTron_getOptions.bind(this) }
           update_interval={ 500 }
         >
           { this.props.children }
         </WingTron>
         <ControlPanelRedux
           startGame={ this.state.startGame }
+          getOptions={ this.state.getOptions }
         />
       </div>
     )
   }
 
-  functionFromWingTron(params: Function) {
+  wingTron_startGame(params: Function) {
     this.setState({
       startGame: params
     })
   }
+  wingTron_getOptions(params: Function) {
+    this.setState({
+      getOptions: params
+    })
+  }
 }
+

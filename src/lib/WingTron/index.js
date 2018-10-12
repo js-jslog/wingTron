@@ -16,6 +16,7 @@ import type { Store } from 'redux'
 type Props = {
   auto_start_game?: boolean,
   startGame_callback?: Function,
+  getOptions_callback?: Function,
   update_interval?: number,
   children?: Object,
   enhancer?: Object,
@@ -29,10 +30,10 @@ export class WingTron extends Component<Props, null> {
   constructor(props: Props) {
     super(props)
 
-    if (props.startGame_callback) {
-      // $FlowFixMe
-      props.startGame_callback(this.startGame.bind(this))
-    }
+    // $FlowFixMe
+    props.startGame_callback(this.startGame.bind(this))
+    // $FlowFixMe
+    props.getOptions_callback(this.getOptions.bind(this))
 
     this.store = props.store || createStore(rootReducer, undefined, this.props.enhancer);
     if (props.auto_start_game !== false) {
@@ -56,6 +57,14 @@ export class WingTron extends Component<Props, null> {
 
   startGame() {
     this.store.dispatch(startGameFromOptions(this.store.getState().options))
+  }
+
+  getOptions() {
+    return this.store.getState().options
+  }
+
+  registerOptionsUpdateCallback(optionsUpdateCallback: Function) {
+    // store subscribe to options change
   }
 }
 
