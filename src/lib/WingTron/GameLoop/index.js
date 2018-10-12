@@ -8,13 +8,9 @@ import * as ActionCreators from '~/duck/actions'
 
 import type { Game } from '~/common/flow-types'
 
-type ActionCreatorsType = {
-  actionCreators: Object
-}
-
 type Props = {
   ...Game,
-  ...ActionCreatorsType,
+  actionCreators: Object,
   update_interval?: number
 }
 
@@ -94,11 +90,7 @@ class GameLoopComponent extends Component<Props, null> {
   }
 
   update(loop_delta: number) {
-    if (this.props.actionCreators) {
-      this.props.actionCreators.progressPlayerPaths(this.props.players)
-    } else {
-      throw new Error('Update has been called before the GameLoop has bound it\'s action creators')
-    }
+    this.props.actionCreators.progressPlayerPaths(this.props.players)
 
     this.store_updates ++
   }
@@ -109,11 +101,7 @@ class GameLoopComponent extends Component<Props, null> {
       paths: this.props.paths,
       match: this.props.match
     }
-    if (this.props.actionCreators) {
-      this.props.actionCreators.setRenderableGame(game)
-    } else {
-      throw new Error('setGameStateAsRenderable has been called before the GameLoop has bound it\'s action creators')
-    }
+    this.props.actionCreators.setRenderableGame(game)
 
     this.store_renders ++
   }

@@ -10,18 +10,14 @@ import * as ActionCreators from '~/duck/actions'
 
 import type { Game } from '~/common/flow-types'
 
-type ActionCreatorsType = {
-  actionCreators: Object
-}
-
 type Props = {
   ...Game,
-  ...ActionCreatorsType
+  actionCreators: Object
 }
 
 class GameCanvasComponent extends Component<Game, null> {
 
-  ctx = undefined
+  ctx: CanvasRenderingContext2D
 
   componentDidMount() {
     const canvas = this.refs.canvas
@@ -48,9 +44,17 @@ class GameCanvasComponent extends Component<Game, null> {
 
   draw() {
 
-    drawField(this.ctx, this.props.match)
-    drawPaths(this.ctx, this.props.paths, this.props.players)
-    drawPlayers(this.ctx, this.props.players, this.props.paths)
+    const { match } = this.props
+    const { paths } = this.props
+    const { players } = this.props
+
+    if ( !match || !paths || !players ) {
+      throw new Error("Draw has been called without required properties")
+    }
+
+    drawField(this.ctx, match)
+    drawPaths(this.ctx, paths, players)
+    drawPlayers(this.ctx, players, paths)
   }
 }
 

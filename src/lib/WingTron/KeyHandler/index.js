@@ -8,13 +8,9 @@ import * as ActionCreators from '~/duck/actions'
 
 import type { Players } from '~/common/flow-types'
 
-type ActionCreatorsType = {
-  actionCreators: Object
-}
-
 type Props = {
-  ...Players,
-  ...ActionCreatorsType
+  players: { ...Players },
+  actionCreators: Object
 }
 
 class KeyHandlerComponent extends Component<Props, null> {
@@ -26,6 +22,8 @@ class KeyHandlerComponent extends Component<Props, null> {
     document.addEventListener('keyup', this.handleKeyEvent.bind(this))
   }
 
+  // TODO: can I get away without a render, and if I can't, does this
+  // need to be a react component?
   render() {
 
     return (
