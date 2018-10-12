@@ -2,8 +2,7 @@
 
 import React, { Component } from 'react'
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { createLogger } from 'redux-logger';
+import { createStore } from 'redux';
 
 import { rootReducer } from '~/duck/reducers'
 import GameLoop from './GameLoop'
@@ -15,9 +14,11 @@ import { startGameFromOptions } from '~/duck/actions'
 import type { Store } from 'redux'
 
 type Props = {
-  auto_start_game: boolean,
-  startGame_callback: Function,
-  update_interval: number,
+  auto_start_game?: boolean,
+  startGame_callback?: Function,
+  update_interval?: number,
+  children?: Object,
+  enhancer?: Object,
   store?: Store
 }
 
@@ -29,16 +30,11 @@ export class WingTron extends Component<Props, null> {
     super(props)
 
     if (props.startGame_callback) {
+      // $FlowFixMe
       props.startGame_callback(this.startGame.bind(this))
     }
 
-    const logger = createLogger();
-
-    const enhancer = compose(
-      applyMiddleware(logger)
-      //DevTools.instrument()
-    )
-    this.store = props.store || createStore(rootReducer, undefined, enhancer);
+    this.store = props.store || createStore(rootReducer, undefined, this.props.enhancer);
     if (props.auto_start_game !== false) {
       this.startGame()
     }
@@ -47,13 +43,14 @@ export class WingTron extends Component<Props, null> {
   render() {
 
     return (
-    <Provider store={this.store}>
-      <div>
-        <GameLoop { ...this.props } />
-        <GameCanvas />
-        <KeyHandler />
-      </div>
-    </Provider>
+      <Provider store={this.store}>
+        <div>
+          <GameLoop { ...this.props } />
+          <GameCanvas />
+          <KeyHandler />
+          { this.props.children }
+        </div>
+      </Provider>
     )
   }
 

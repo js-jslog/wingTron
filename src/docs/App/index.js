@@ -8,9 +8,9 @@ import { ControlPanelRedux } from './ControlPanelRedux'
 
 type Props = Object
 
-type State = {
+type State = {|
   startGame: Function | null
-}
+|}
 
 export class App extends Component<Props, State> {
 
@@ -26,10 +26,13 @@ export class App extends Component<Props, State> {
     return (
       <div>
         <WingTron
+          { ...this.props }
           auto_start_game={ false }
           startGame_callback={ this.functionFromWingTron.bind(this) }
           update_interval={ 500 }
-        />
+        >
+          { this.props.children }
+        </WingTron>
         <ControlPanelRedux
           startGame={ this.state.startGame }
         />
