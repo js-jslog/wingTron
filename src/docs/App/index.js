@@ -34,13 +34,13 @@ export class App extends Component<Props, State> {
     return (
       <div>
         <WingTron
-          { ...this.props }
+          setApiFunction_startGame={ this.setStartGame.bind(this) }
+          setApiFunction_updateMatchOption={ this.setUpdateMatchOption.bind(this) }
+          setApiFunction_updatePlayerOption={ this.setUpdatePlayerOption.bind(this) }
+          handleStoreChange_options={ this.setOptions.bind(this) }
           auto_start_game={ false }
-          startGame_callback={ this.wingTron_startGame.bind(this) }
-          updateMatchOption_callback={ this.wingTron_updateMatchOption.bind(this) }
-          updatePlayerOption_callback={ this.wingTron_updatePlayerOption.bind(this) }
-          optionsListener={ this.setOptions.bind(this) }
           update_interval={ 500 }
+          { ...this.props }
         >
           { this.props.children }
         </WingTron>
@@ -54,17 +54,17 @@ export class App extends Component<Props, State> {
     )
   }
 
-  wingTron_startGame(func: Function) {
+  setStartGame(func: Function) {
     this.setState({
       startGame: func
     })
   }
-  wingTron_updateMatchOption(func: Function) {
+  setUpdateMatchOption(func: Function) {
     this.setState({
       updateMatchOption: func
     })
   }
-  wingTron_updatePlayerOption(func: Function) {
+  setUpdatePlayerOption(func: Function) {
     this.setState({
       updatePlayerOption: func
     })
