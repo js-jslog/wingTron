@@ -10,11 +10,16 @@ import GameCanvas from './GameCanvas'
 import KeyHandler from './KeyHandler'
 
 import { startGameFromOptions } from '~/duck/actions'
+import { updateOptions } from '~/duck/actions'
 
+import type { Options } from '~/common/flow-types'
 import type { Store } from 'redux'
+import type { Node } from 'react'
 
 type CallbackFunctionProps= {
   startGame_callback?: Function,
+  updateOptions_callback?: Function,
+  updatePlayerOption_callback?: Function,
   optionsListener?: Function,
 }
 
@@ -24,7 +29,7 @@ type DevelopmentProps = {
 }
 
 type Props = {
-  children: Object,
+  children: Node,
   auto_start_game?: boolean,
   store?: Store,
   ...CallbackFunctionProps,
@@ -39,7 +44,11 @@ export class WingTron extends Component<Props, null> {
     super(props)
 
     // $FlowFixMe
-    props.startGame_callback(this.startGame.bind(this))
+    if (props.startGame_callback) props.startGame_callback(this.startGame.bind(this))
+    // $FlowFixMe
+    if (props.updateOptions_callback) props.updateOptions_callback(this.updateOptions.bind(this))
+    // $FlowFixMe
+    if (props.updatePlayerOption_callback) props.updatePlayerOption_callback(this.updatePlayerOption.bind(this))
 
     this.store = props.store || createStore(rootReducer, undefined, this.props.enhancer);
     if (props.auto_start_game !== false) {
@@ -66,6 +75,16 @@ export class WingTron extends Component<Props, null> {
 
   startGame() {
     this.store.dispatch(startGameFromOptions(this.store.getState().options))
+  }
+
+  updateOptions(options: Options) {
+    this.store.dispatch(updateOptions(options))
+  }
+
+  updatePlayerOption(player: number, property: string, value: string) {
+    const options = this.store.getState().options
+    options.players[player][property] = value
+    this.updateOptions(options)
   }
 
   apiCallbackInterface() {

@@ -11,8 +11,9 @@ import type { Options } from '~/common/flow-types'
 type Props = Object
 
 type State = {|
+  options: Options | null,
   startGame: Function | null,
-  options: Options | null
+  updatePlayerOption: Function | null
 |}
 
 export class App extends Component<Props, State> {
@@ -21,6 +22,7 @@ export class App extends Component<Props, State> {
     super(props)
     this.state = {
       startGame: null,
+      updatePlayerOption: this.adviseUnconnected,
       options: null
     }
   }
@@ -33,6 +35,7 @@ export class App extends Component<Props, State> {
           { ...this.props }
           auto_start_game={ false }
           startGame_callback={ this.wingTron_startGame.bind(this) }
+          updatePlayerOption_callback={ this.wingTron_updatePlayerOption.bind(this) }
           optionsListener={ this.setOptions.bind(this) }
           update_interval={ 500 }
         >
@@ -40,6 +43,7 @@ export class App extends Component<Props, State> {
         </WingTron>
         <ControlPanelRedux
           startGame={ this.state.startGame }
+          updatePlayerOption={ this.state.updatePlayerOption }
           options={ this.state.options }
         />
       </div>
@@ -51,10 +55,21 @@ export class App extends Component<Props, State> {
       startGame: func
     })
   }
+  wingTron_updatePlayerOption(func: Function) {
+    this.setState({
+      updatePlayerOption: func
+    })
+  }
   setOptions(options: Options) {
     this.setState({
       options: options
     })
+  }
+  adviseUnconnected() {
+    const warning = ''
+    + 'It looks like you have a component trying to call a function which has not been'
+    + ' successfully connected to the app inside the WingTron component'
+    window.alert(warning)
   }
 }
 
