@@ -78,6 +78,7 @@ export class PlayerOptionsUI extends Component<Props, null> {
   }
 }
 
+// TODO: this is preventing the onChange handler from being called
 const translateKeyCode = (event: SyntheticEvent) => {
   event.preventDefault()
   event.target.value = event.keyCode
