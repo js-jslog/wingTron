@@ -12,8 +12,9 @@ type Props = Object
 
 type State = {|
   options: Options | null,
-  startGame: Function | null,
-  updatePlayerOption: Function | null
+  startGame: Function,
+  updateMatchOption: Function,
+  updatePlayerOption: Function,
 |}
 
 export class App extends Component<Props, State> {
@@ -21,7 +22,8 @@ export class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      startGame: null,
+      startGame: this.adviseUnconnected,
+      updateMatchOption: this.adviseUnconnected,
       updatePlayerOption: this.adviseUnconnected,
       options: null
     }
@@ -35,6 +37,7 @@ export class App extends Component<Props, State> {
           { ...this.props }
           auto_start_game={ false }
           startGame_callback={ this.wingTron_startGame.bind(this) }
+          updateMatchOption_callback={ this.wingTron_updateMatchOption.bind(this) }
           updatePlayerOption_callback={ this.wingTron_updatePlayerOption.bind(this) }
           optionsListener={ this.setOptions.bind(this) }
           update_interval={ 500 }
@@ -43,6 +46,7 @@ export class App extends Component<Props, State> {
         </WingTron>
         <ControlPanelRedux
           startGame={ this.state.startGame }
+          updateMatchOption={ this.state.updateMatchOption }
           updatePlayerOption={ this.state.updatePlayerOption }
           options={ this.state.options }
         />
@@ -53,6 +57,11 @@ export class App extends Component<Props, State> {
   wingTron_startGame(func: Function) {
     this.setState({
       startGame: func
+    })
+  }
+  wingTron_updateMatchOption(func: Function) {
+    this.setState({
+      updateMatchOption: func
     })
   }
   wingTron_updatePlayerOption(func: Function) {

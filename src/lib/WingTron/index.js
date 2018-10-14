@@ -19,6 +19,7 @@ import type { Node } from 'react'
 type CallbackFunctionProps= {
   startGame_callback?: Function,
   updateOptions_callback?: Function,
+  updateMatchOption_callback?: Function,
   updatePlayerOption_callback?: Function,
   optionsListener?: Function,
 }
@@ -47,6 +48,8 @@ export class WingTron extends Component<Props, null> {
     if (props.startGame_callback) props.startGame_callback(this.startGame.bind(this))
     // $FlowFixMe
     if (props.updateOptions_callback) props.updateOptions_callback(this.updateOptions.bind(this))
+    // $FlowFixMe
+    if (props.updateMatchOption_callback) props.updateMatchOption_callback(this.updateMatchOption.bind(this))
     // $FlowFixMe
     if (props.updatePlayerOption_callback) props.updatePlayerOption_callback(this.updatePlayerOption.bind(this))
 
@@ -79,6 +82,12 @@ export class WingTron extends Component<Props, null> {
 
   updateOptions(options: Options) {
     this.store.dispatch(updateOptions(options))
+  }
+
+  updateMatchOption(property: string, value: string) {
+    const options = this.store.getState().options
+    options.match[property] = value
+    this.updateOptions(options)
   }
 
   updatePlayerOption(player: number, property: string, value: string) {
