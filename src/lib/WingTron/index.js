@@ -12,21 +12,24 @@ import KeyHandler from './KeyHandler'
 import { startGameFromOptions } from '~/duck/actions'
 import { updateOptions } from '~/duck/actions'
 
+import { generateRandomPlayerColour } from './generateRandomPlayerColour'
+
 import type { Options } from '~/common/flow-types'
 import type { Store } from 'redux'
 import type { Node } from 'react'
 
 type CallbackFunctionProps= {
   setApiFunction_startGame?: Function,
+  setApiFunction_addPlayer?: Function,
   setApiFunction_updateOptions?: Function,
   setApiFunction_updateMatchOption?: Function,
   setApiFunction_updatePlayerOption?: Function,
-  handleStoreChange_options?: Function,
+  handleStoreChange_options?: Function
 }
 
 type DevelopmentProps = {
   update_interval?: number,
-  enhancer?: Object,
+  enhancer?: Object
 }
 
 type Props = {
@@ -73,6 +76,18 @@ export class WingTron extends Component<Props, null> {
     this.store.dispatch(startGameFromOptions(this.store.getState().options))
   }
 
+  addPlayer() {
+    const options = this.store.getState().options
+    const player0_clone = { ...options.players[0] }
+    const new_player_id = options.players.length
+    const direction = Math.random() * Math.PI * 2
+    const colour = generateRandomPlayerColour()
+    player0_clone.direction = direction
+    player0_clone.colour = colour
+    options.players[new_player_id] = player0_clone
+    this.updateOptions(options)
+  }
+
   updateOptions(options: Options) {
     this.store.dispatch(updateOptions(options))
   }
@@ -92,12 +107,15 @@ export class WingTron extends Component<Props, null> {
   setApiFunctionCallbacks(props: Props) {
 
     const { setApiFunction_startGame } = props
+    const { setApiFunction_addPlayer } = props
     const { setApiFunction_updateOptions } = props
     const { setApiFunction_updateMatchOption } = props
     const { setApiFunction_updatePlayerOption } = props
 
     // $FlowFixMe
     if (setApiFunction_startGame) setApiFunction_startGame(this.startGame.bind(this))
+    // $FlowFixMe
+    if (setApiFunction_addPlayer) setApiFunction_addPlayer(this.addPlayer.bind(this))
     // $FlowFixMe
     if (setApiFunction_updateOptions) setApiFunction_updateOptions(this.updateOptions.bind(this))
     // $FlowFixMe

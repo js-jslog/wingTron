@@ -13,6 +13,7 @@ type Props = Object
 type State = {|
   options: Options | null,
   startGame: Function,
+  addPlayer: Function,
   updateMatchOption: Function,
   updatePlayerOption: Function,
 |}
@@ -23,6 +24,7 @@ export class App extends Component<Props, State> {
     super(props)
     this.state = {
       startGame: this.adviseUnconnected,
+      addPlayer: this.adviseUnconnected,
       updateMatchOption: this.adviseUnconnected,
       updatePlayerOption: this.adviseUnconnected,
       options: null
@@ -35,6 +37,7 @@ export class App extends Component<Props, State> {
       <div>
         <WingTron
           setApiFunction_startGame={ this.setStartGame.bind(this) }
+          setApiFunction_addPlayer={ this.setAddPlayer.bind(this) }
           setApiFunction_updateMatchOption={ this.setUpdateMatchOption.bind(this) }
           setApiFunction_updatePlayerOption={ this.setUpdatePlayerOption.bind(this) }
           handleStoreChange_options={ this.setOptions.bind(this) }
@@ -46,6 +49,7 @@ export class App extends Component<Props, State> {
         </WingTron>
         <ControlPanelRedux
           startGame={ this.state.startGame }
+          addPlayer={ this.state.addPlayer }
           updateMatchOption={ this.state.updateMatchOption }
           updatePlayerOption={ this.state.updatePlayerOption }
           options={ this.state.options }
@@ -57,6 +61,11 @@ export class App extends Component<Props, State> {
   setStartGame(func: Function) {
     this.setState({
       startGame: func
+    })
+  }
+  setAddPlayer(func: Function) {
+    this.setState({
+      addPlayer: func
     })
   }
   setUpdateMatchOption(func: Function) {
