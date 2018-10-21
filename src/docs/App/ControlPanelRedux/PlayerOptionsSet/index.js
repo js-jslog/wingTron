@@ -9,7 +9,8 @@ import type { PlayerOptionsSet } from '~/common/flow-types'
 
 type Props = {
   players: PlayerOptionsSet,
-  updatePlayerOption: Function
+  updatePlayerOption: Function,
+  removePlayer: Function
 }
 
 export class PlayerOptionsSetUI extends Component<Props, null> {
@@ -22,6 +23,7 @@ export class PlayerOptionsSetUI extends Component<Props, null> {
         index={ index }
         player={ player }
         updatePlayerOption={ this.props.updatePlayerOption }
+        removePlayer={ this.props.removePlayer }
       />
     ))
 

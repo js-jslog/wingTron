@@ -21,6 +21,7 @@ import type { Node } from 'react'
 type CallbackFunctionProps= {
   setApiFunction_startGame?: Function,
   setApiFunction_addPlayer?: Function,
+  setApiFunction_removePlayer?: Function,
   setApiFunction_updateOptions?: Function,
   setApiFunction_updateMatchOption?: Function,
   setApiFunction_updatePlayerOption?: Function,
@@ -88,6 +89,12 @@ export class WingTron extends Component<Props, null> {
     this.updateOptions(options)
   }
 
+  removePlayer(index: number) {
+    const options = this.store.getState().options
+    options.players.splice(index, 1)
+    this.updateOptions(options)
+  }
+
   updateOptions(options: Options) {
     this.store.dispatch(updateOptions(options))
   }
@@ -108,6 +115,7 @@ export class WingTron extends Component<Props, null> {
 
     const { setApiFunction_startGame } = props
     const { setApiFunction_addPlayer } = props
+    const { setApiFunction_removePlayer } = props
     const { setApiFunction_updateOptions } = props
     const { setApiFunction_updateMatchOption } = props
     const { setApiFunction_updatePlayerOption } = props
@@ -116,6 +124,8 @@ export class WingTron extends Component<Props, null> {
     if (setApiFunction_startGame) setApiFunction_startGame(this.startGame.bind(this))
     // $FlowFixMe
     if (setApiFunction_addPlayer) setApiFunction_addPlayer(this.addPlayer.bind(this))
+    // $FlowFixMe
+    if (setApiFunction_removePlayer) setApiFunction_removePlayer(this.removePlayer.bind(this))
     // $FlowFixMe
     if (setApiFunction_updateOptions) setApiFunction_updateOptions(this.updateOptions.bind(this))
     // $FlowFixMe

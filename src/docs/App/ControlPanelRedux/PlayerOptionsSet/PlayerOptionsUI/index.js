@@ -8,7 +8,8 @@ import type { PlayerOptions } from '~/common/flow-types'
 type Props = {
   index: number,
   player: PlayerOptions,
-  updatePlayerOption: Function
+  updatePlayerOption: Function,
+  removePlayer: Function
 }
 
 export class PlayerOptionsUI extends Component<Props, null> {
@@ -64,7 +65,7 @@ export class PlayerOptionsUI extends Component<Props, null> {
             onChange={this.updatePlayerOption.bind(this)} />
         </div>
         <div>
-          <button onClick={this.updatePlayerOption.bind(this)}>Remove this player</button>
+          <button onClick={this.removePlayer.bind(this)}>Remove this player</button>
         </div>
       </div>
     )
@@ -75,6 +76,11 @@ export class PlayerOptionsUI extends Component<Props, null> {
     const { className } = event.target
     const { value } = event.target
     this.props.updatePlayerOption(index, className, value)
+  }
+
+  removePlayer(event: SyntheticEvent) {
+    const { index } = this.props
+    this.props.removePlayer(index)
   }
 }
 

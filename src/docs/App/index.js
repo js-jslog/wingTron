@@ -14,6 +14,7 @@ type State = {|
   options: Options | null,
   startGame: Function,
   addPlayer: Function,
+  removePlayer: Function,
   updateMatchOption: Function,
   updatePlayerOption: Function,
 |}
@@ -25,6 +26,7 @@ export class App extends Component<Props, State> {
     this.state = {
       startGame: this.adviseUnconnected,
       addPlayer: this.adviseUnconnected,
+      removePlayer: this.adviseUnconnected,
       updateMatchOption: this.adviseUnconnected,
       updatePlayerOption: this.adviseUnconnected,
       options: null
@@ -38,6 +40,7 @@ export class App extends Component<Props, State> {
         <WingTron
           setApiFunction_startGame={ this.setStartGame.bind(this) }
           setApiFunction_addPlayer={ this.setAddPlayer.bind(this) }
+          setApiFunction_removePlayer={ this.setRemovePlayer.bind(this) }
           setApiFunction_updateMatchOption={ this.setUpdateMatchOption.bind(this) }
           setApiFunction_updatePlayerOption={ this.setUpdatePlayerOption.bind(this) }
           handleStoreChange_options={ this.setOptions.bind(this) }
@@ -50,6 +53,7 @@ export class App extends Component<Props, State> {
         <ControlPanelRedux
           startGame={ this.state.startGame }
           addPlayer={ this.state.addPlayer }
+          removePlayer={ this.state.removePlayer }
           updateMatchOption={ this.state.updateMatchOption }
           updatePlayerOption={ this.state.updatePlayerOption }
           options={ this.state.options }
@@ -66,6 +70,11 @@ export class App extends Component<Props, State> {
   setAddPlayer(func: Function) {
     this.setState({
       addPlayer: func
+    })
+  }
+  setRemovePlayer(func: Function) {
+    this.setState({
+      removePlayer: func
     })
   }
   setUpdateMatchOption(func: Function) {
