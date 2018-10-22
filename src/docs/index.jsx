@@ -4,7 +4,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createLogger } from 'redux-logger';
 import { compose, applyMiddleware } from 'redux';
-// import { AppContainer } from 'react-hot-loader'; // TODO: remove this package
 
 import { App } from './App'
 import { DevTools } from './DevTools'
