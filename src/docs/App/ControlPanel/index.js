@@ -17,7 +17,7 @@ type Props = {|
   updatePlayerOption: Function
 |}
 
-export class ControlPanelRedux extends Component<Props, null> {
+export class ControlPanel extends Component<Props, null> {
 
   render() {
 

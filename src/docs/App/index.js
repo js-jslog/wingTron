@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 import { WingTron } from '~/WingTron/index.js'
-import { ControlPanelRedux } from './ControlPanelRedux'
+import { ControlPanel } from './ControlPanel'
 
 import type { Options } from '~/common/flow-types'
 
@@ -45,12 +45,12 @@ export class App extends Component<Props, State> {
           setApiFunction_updatePlayerOption={ this.setUpdatePlayerOption.bind(this) }
           handleStoreChange_options={ this.setOptions.bind(this) }
           auto_start_game={ false }
-          update_interval={ 500 }
+          update_interval={ 20 }
           { ...this.props }
         >
           { this.props.children }
         </WingTron>
-        <ControlPanelRedux
+        <ControlPanel
           startGame={ this.state.startGame }
           addPlayer={ this.state.addPlayer }
           removePlayer={ this.state.removePlayer }
