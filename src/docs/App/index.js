@@ -45,7 +45,7 @@ export class App extends Component<Props, State> {
           setApiFunction_updatePlayerOption={ this.setUpdatePlayerOption.bind(this) }
           handleStoreChange_options={ this.setOptions.bind(this) }
           auto_start_game={ false }
-          update_interval={ 20 }
+          update_interval={ 500 }
           { ...this.props }
         >
           { this.props.children }

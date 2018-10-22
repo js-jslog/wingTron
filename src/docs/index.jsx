@@ -20,7 +20,9 @@ const enhancer = compose(
 
 render(
   <div>
-    <App />
+    <App enhancer={ enhancer }>
+      <DevTools />
+    </App>
   </div>,
   // $FlowFixMe
   rootElement
