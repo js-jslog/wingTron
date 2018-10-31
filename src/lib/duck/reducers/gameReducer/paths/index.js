@@ -29,7 +29,7 @@ export const paths = (state_in: Paths|null=null, action: Action): Paths|null => 
 
     case 'HANDLE_KEY_EVENT': {
 
-      if (state_in === null) throw new Error
+      if (state_in === null) return state_in
 
       const { event } = action
       const { players } = action

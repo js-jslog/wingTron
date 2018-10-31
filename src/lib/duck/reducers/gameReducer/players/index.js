@@ -16,7 +16,7 @@ export const players = (state_in: Players|null=null, action: Action): Players|nu
 
     case 'HANDLE_KEY_EVENT': {
 
-      if (state_in === null) throw new Error
+      if (state_in === null) return state_in
 
       const { event } = action
       return handleTurnKeys(event, state_in)
