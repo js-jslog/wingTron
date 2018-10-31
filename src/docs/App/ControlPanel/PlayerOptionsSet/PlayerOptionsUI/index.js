@@ -71,23 +71,22 @@ export class PlayerOptionsUI extends Component<Props, null> {
     )
   }
 
-  updatePlayerOption(event: SyntheticEvent) {
+  updatePlayerOption(event: SyntheticKeyboardEvent<*>) {
     const { index } = this.props
-    const { className } = event.target
-    const { value } = event.target
+    const { className } = event.currentTarget
+    const { value } = event.currentTarget
     this.props.updatePlayerOption(index, className, value)
   }
 
-  removePlayer(event: SyntheticEvent) {
+  removePlayer(event: SyntheticMouseEvent<*>) {
     const { index } = this.props
     this.props.removePlayer(index)
   }
 }
 
-// TODO: this is preventing the onChange handler from being called
-const translateKeyCode = (event: SyntheticEvent) => {
+// TODO: this is isn't working yet
+const translateKeyCode = (event: SyntheticKeyboardEvent<*>) => {
   event.preventDefault()
-  event.target.value = event.keyCode
-  return false;
+  // change current target to keyCode and trigger a new onChange
 }
 
