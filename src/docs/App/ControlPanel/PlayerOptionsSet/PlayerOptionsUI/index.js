@@ -46,15 +46,15 @@ export class PlayerOptionsUI extends Component<Props, null> {
           <input
             className='turn_left_keycode'
             value={ player.turn_left_keycode }
-            onChange={this.updatePlayerOption.bind(this)}
-            onKeyDown={ translateKeyCode }
+            onKeyDown={ this.translateKeyCodeAndUpdatePlayerOption.bind(this) }
+            onChange={ this.doNothing } // the value has already been updated during the keyDown event
           />
           <span>Right key</span>
           <input
             className='turn_right_keycode'
             value={ player.turn_right_keycode }
-            onChange={ this.updatePlayerOption.bind(this) }
-            onKeyDown={ translateKeyCode }
+            onKeyDown={ this.translateKeyCodeAndUpdatePlayerOption.bind(this) }
+            onChange={ this.doNothing } // the value has already been updated during the keyDown event
           />
         </div>
         <div>
@@ -78,15 +78,18 @@ export class PlayerOptionsUI extends Component<Props, null> {
     this.props.updatePlayerOption(index, className, value)
   }
 
+  translateKeyCodeAndUpdatePlayerOption(event: SyntheticKeyboardEvent<*>) {
+    const { index } = this.props
+    const { className } = event.currentTarget
+    const { keyCode } = event
+    this.props.updatePlayerOption(index, className, keyCode)
+  }
+
   removePlayer(event: SyntheticMouseEvent<*>) {
     const { index } = this.props
     this.props.removePlayer(index)
   }
-}
 
-// TODO: this is isn't working yet
-const translateKeyCode = (event: SyntheticKeyboardEvent<*>) => {
-  event.preventDefault()
-  // change current target to keyCode and trigger a new onChange
+  doNothing() {}
 }
 

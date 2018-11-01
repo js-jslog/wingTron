@@ -34,7 +34,7 @@ export class MatchOptionsUI extends Component<Props, null> {
     )
   }
 
-  updateMatchOption(event: SyntheticEvent<*>) {
+  updateMatchOption(event: SyntheticKeyboardEvent<*>) {
     const { className } = event.currentTarget
     const { value } = event.currentTarget
     this.props.updateMatchOption(className, value)
