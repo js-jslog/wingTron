@@ -47,6 +47,12 @@ Host demo on GitHub Pages:
 * On your GitHub repo page, click the **settings** tab and scroll down to the **GitHub Pages** heading. Pick `master branch /docs folder` in the **source** dropdown, And BOOM, your demo page is already live on the internet for free.
 * Note: Sometimes it might take about an hour for the page to actually start hosting. Adding /index.html after the url works instantly for whatever reason.
 
+Run the demo inside a docker container
+
+* `docker run -p 8000:80 -v "$PWD"s/:/usr/local/apache2/htdocs/ httpd:2.4`
+* This is only really relevant if you can't be bothered setting up node and npm or you are having some kind of problem with it
+* This will use the compiled version of the app in the docs folder so you will need to compile the project each time you make a change which you want to view
+
 ## What about CSS?
 
 ### Inline styles
