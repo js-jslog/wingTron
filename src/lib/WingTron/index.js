@@ -16,11 +16,11 @@ import { generateRandomPlayerColour } from './generateRandomPlayerColour'
 
 import type { Options } from '~/common/flow-types'
 import type { Store } from 'redux'
-import type { Node } from 'react'
+import type { ChildrenArray } from 'react'
 
 type CallbackFunctionProps= {
-  setApiFunction_startGame?: Function,
-  setApiFunction_addPlayer?: Function,
+  setApiFunction_startGame: Function,
+  setApiFunction_addPlayer: Function,
   setApiFunction_removePlayer?: Function,
   setApiFunction_updateOptions?: Function,
   setApiFunction_updateMatchOption?: Function,
@@ -34,12 +34,13 @@ type DevelopmentProps = {
 }
 
 type Props = {
-  children: Node,
+  children: ChildrenArray<any>,
   auto_start_game?: boolean,
   store?: Store,
   ...CallbackFunctionProps,
   ...DevelopmentProps
 }
+
 
 export class WingTron extends Component<Props, null> {
 
@@ -48,10 +49,13 @@ export class WingTron extends Component<Props, null> {
   constructor(props: Props) {
     super(props)
 
+    // BUG: this shouldn't be necessary given that I've defined the store type above, but it is
+    const store_pointer: Store = this.store
+
     this.setApiFunctionCallbacks(props)
 
     this.store = props.store || createStore(rootReducer, undefined, this.props.enhancer);
-    this.store.subscribe(this.callStoreChangeHanders.bind(this))
+    store_pointer.subscribe(this.callStoreChangeHanders.bind(this))
     this.callStoreChangeHanders()
 
     if (props.auto_start_game !== false) {
@@ -61,13 +65,16 @@ export class WingTron extends Component<Props, null> {
 
   render() {
 
+    // BUG: this shouldn't be necessary given that children is typed in the Props type above, but it is
+    const children: ChildrenArray<any> = this.props.children
+
     return (
       <Provider store={this.store}>
         <div>
           <GameLoop { ...this.props } />
           <GameCanvas />
           <KeyHandler />
-          { this.props.children }
+          { children }
         </div>
       </Provider>
     )
@@ -111,19 +118,17 @@ export class WingTron extends Component<Props, null> {
     this.updateOptions(options)
   }
 
-  setApiFunctionCallbacks(props: Props) {
+  setApiFunctionCallbacks(props: Props2) {
 
-    const { setApiFunction_startGame } = props
+    const setApiFunction_startGamei: ?Function = props.setApiFunction_startGame
     const { setApiFunction_addPlayer } = props
     const { setApiFunction_removePlayer } = props
     const { setApiFunction_updateOptions } = props
     const { setApiFunction_updateMatchOption } = props
     const { setApiFunction_updatePlayerOption } = props
 
-    // $FlowFixMe
-    if (setApiFunction_startGame) setApiFunction_startGame(this.startGame.bind(this))
-    // $FlowFixMe
-    if (setApiFunction_addPlayer) setApiFunction_addPlayer(this.addPlayer.bind(this))
+    if (props.setApiFunction_startGame) props.setApiFunction_startGame(this.startGame.bind(this))
+    if (props.setApiFunction_addPlayer !== undefined) props.setApiFunction_addPlayer(this.addPlayer.bind(this))
     // $FlowFixMe
     if (setApiFunction_removePlayer) setApiFunction_removePlayer(this.removePlayer.bind(this))
     // $FlowFixMe
@@ -141,4 +146,7 @@ export class WingTron extends Component<Props, null> {
     }
   } 
 }
+
+type Props2 =
+  & CallbackFunctionProps
 
